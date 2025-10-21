@@ -1,0 +1,768 @@
+/* Uploaded on: 08/08/2022 11:12:43 */
+ html {
+  line-height: 1;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box; }
+
+*, *::before, *::after {
+  box-sizing: inherit; }
+
+body, h1, h2, h3, h4, h5, h6, ul, ol, li, p, pre, blockquote, figure, hr {
+  margin: 0;
+  padding: 0; }
+
+body {
+  background-color: #fff;
+  font-family: "Heebo","Helvetica Neue","Arial","sans-serif";
+  -webkit-font-smoothing: antialiased; }
+
+main {
+  display: block; }
+
+a {
+  background-color: transparent;
+  text-decoration: none; }
+
+ul {
+  list-style: none; }
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted; }
+
+b, strong {
+  font-weight: bolder; }
+
+img {
+  border-style: none; }
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0; }
+
+input, textarea, select, button {
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  overflow: visible; }
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:active, input:-webkit-autofill:focus {
+  background-color: transparent !important;
+  box-shadow: 0 0 0 1000px white inset !important; }
+
+button, select {
+  text-transform: none; }
+
+button * {
+  pointer-events: none; }
+
+button, [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button; }
+
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0; }
+
+button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focusring, [type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText; }
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em; }
+
+textarea {
+  overflow: auto; }
+
+[type="checkbox"], [type="radio"] {
+  box-sizing: border-box;
+  padding: 0; }
+
+[type="number"]::-webkit-inner-spin-button, [type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px; }
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+noscript {
+  display: block;
+  margin-bottom: 1em;
+  margin-top: 1em; }
+
+#ajaxBusy {
+  display: none !important; }
+
+#vtexIdUI-global-loader {
+  background: rgba(0, 0, 0, 0.2) !important; }
+
+.1-columns {
+  -webkit-flex-basis: 8.33333%;
+      -ms-flex-preferred-size: 8.33333%;
+          flex-basis: 8.33333%;
+  margin-right: 3%; }
+
+.2-columns {
+  -webkit-flex-basis: 16.66667%;
+      -ms-flex-preferred-size: 16.66667%;
+          flex-basis: 16.66667%;
+  margin-right: 3%; }
+
+.3-columns {
+  -webkit-flex-basis: 25%;
+      -ms-flex-preferred-size: 25%;
+          flex-basis: 25%;
+  margin-right: 3%; }
+
+.4-columns {
+  -webkit-flex-basis: 33.33333%;
+      -ms-flex-preferred-size: 33.33333%;
+          flex-basis: 33.33333%;
+  margin-right: 3%; }
+
+.5-columns {
+  -webkit-flex-basis: 41.66667%;
+      -ms-flex-preferred-size: 41.66667%;
+          flex-basis: 41.66667%;
+  margin-right: 3%; }
+
+.6-columns {
+  -webkit-flex-basis: 50%;
+      -ms-flex-preferred-size: 50%;
+          flex-basis: 50%;
+  margin-right: 3%; }
+
+.7-columns {
+  -webkit-flex-basis: 58.33333%;
+      -ms-flex-preferred-size: 58.33333%;
+          flex-basis: 58.33333%;
+  margin-right: 3%; }
+
+.8-columns {
+  -webkit-flex-basis: 66.66667%;
+      -ms-flex-preferred-size: 66.66667%;
+          flex-basis: 66.66667%;
+  margin-right: 3%; }
+
+.9-columns {
+  -webkit-flex-basis: 75%;
+      -ms-flex-preferred-size: 75%;
+          flex-basis: 75%;
+  margin-right: 3%; }
+
+.10-columns {
+  -webkit-flex-basis: 83.33333%;
+      -ms-flex-preferred-size: 83.33333%;
+          flex-basis: 83.33333%;
+  margin-right: 3%; }
+
+.11-columns {
+  -webkit-flex-basis: 91.66667%;
+      -ms-flex-preferred-size: 91.66667%;
+          flex-basis: 91.66667%;
+  margin-right: 3%; }
+
+.12-columns {
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%;
+  margin-right: 3%; }
+
+div#vtexIdContainer {
+  position: fixed;
+  top: 0;
+  left: 0; }
+
+div#vtexIdContainer *:not(.vtexIdUI-close) {
+  font-family: Heebo; }
+
+div#vtexIdContainer .vtexIdUI-loading {
+  background: #1a1a1a; }
+
+div#vtexIdContainer label {
+  color: #1a1a1a;
+  font-size: 10px;
+  letter-spacing: 1px;
+  line-height: 12px;
+  font-weight: 500;
+  text-transform: uppercase; }
+
+div#vtexIdContainer label[for='inputPassword'] a {
+  display: none; }
+
+div#vtexIdContainer input {
+  border-radius: 0;
+  box-shadow: none;
+  border-color: #f2f2f2;
+  color: #000;
+  font-size: 12px;
+  letter-spacing: 0.43px;
+  line-height: 14px;
+  padding: 0 14px;
+  height: 40px; }
+
+div#vtexIdContainer input:-webkit-autofill {
+  box-shadow: 0 0 0 30px #fff inset; }
+
+div#vtexIdContainer input:active, div#vtexIdContainer input:focus {
+  outline: none; }
+
+div#vtexIdContainer input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0; }
+
+div#vtexIdContainer input::-webkit-input-placeholder {
+  color: #8d8d8d;
+  opacity: 1; }
+
+div#vtexIdContainer input:-ms-input-placeholder {
+  color: #8d8d8d;
+  opacity: 1; }
+
+div#vtexIdContainer input::placeholder {
+  color: #8d8d8d;
+  opacity: 1; }
+
+div#vtexIdContainer .vtexIdUI {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  width: 360px;
+  left: 52%; }
+
+div#vtexIdContainer .vtexIdUI .vtexIdUI-close {
+  display: block;
+  top: 0;
+  right: 0;
+  width: 22px;
+  height: 18px;
+  background: #d1d3d4;
+  font-size: 0;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1);
+  z-index: 10; }
+
+div#vtexIdContainer .vtexIdUI .vtexIdUI-close::before {
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  width: 12px;
+  height: 12px;
+  content: '';
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIxMnB4IiBoZWlnaHQ9IjEycHgiIHZpZXdCb3g9IjAgMCAxMiAxMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4gICAgICAgIDx0aXRsZT5pY25fY3Jvc3Mtc21hbGw8L3RpdGxlPiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4gICAgPGcgaWQ9IkhvbWUiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPiAgICAgICAgPHBhdGggZD0iTTYsNS4wNTQxMDMyNiBMOS41MjcwNTE2MywxLjUyNzA1MTYzIEwxMC40NzI5NDg0LDIuNDcyOTQ4MzcgTDYuOTQ1ODk2NzQsNiBMMTAuNDcyOTQ4NCw5LjUyNzA1MTYzIEw5LjUyNzA1MTYzLDEwLjQ3Mjk0ODQgTDYsNi45NDU4OTY3NCBMMi40NzI5NDgzNywxMC40NzI5NDg0IEwxLjUyNzA1MTYzLDkuNTI3MDUxNjMgTDUuMDU0MTAzMjYsNiBMMS41MjcwNTE2MywyLjQ3Mjk0ODM3IEwyLjQ3Mjk0ODM3LDEuNTI3MDUxNjMgTDYsNS4wNTQxMDMyNiBaIiBpZD0iaWNuX2Nyb3NzLXNtYWxsIiBmaWxsPSIjNWQ1ZDVkIiBmaWxsLXJ1bGU9Im5vbnplcm8iPjwvcGF0aD4gICAgPC9nPjwvc3ZnPg=="); }
+
+div#vtexIdContainer .vtexIdUI .vtexIdUI-close:hover {
+  opacity: 0.8; }
+
+div#vtexIdContainer .vtexIdUI .modal-header {
+  width: 100%;
+  height: 66px;
+  background: #f2f2f2;
+  font-size: 16px;
+  letter-spacing: 0.53px;
+  line-height: 19px;
+  text-align: center;
+  font-weight: 400;
+  border-bottom: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+@media (max-width: 1023px) {
+  div#vtexIdContainer .vtexIdUI {
+    width: 310px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; } }
+
+div#vtexIdContainer .vtexIdUI-page {
+  background: #fff;
+  min-height: auto; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-body .control-group a.dead-link {
+  color: #c20b19;
+  font-size: 0; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-body .control-group a.dead-link::before {
+  letter-spacing: 1px;
+  line-height: 15px;
+  text-align: right;
+  font-weight: 500;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1);
+  display: block;
+  content: "Olvid\E9   mi contrase\F1" "a / No tengo contrase\F1" "a";
+  font-size: 10px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector h4 {
+  margin: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+          align-content: center;
+  font-size: 0; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector h4::before {
+  display: block;
+  content: "Elija una opci\F3n para iniciar sesi\F3n:";
+  font-size: 15px;
+  color: #404040;
+  letter-spacing: 0.5px;
+  line-height: 22px;
+  font-weight: 400; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector h4 span {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+          align-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 30px 30px 28px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list :nth-child(1) {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 1;
+      -ms-flex-order: 1;
+          order: 1; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list :nth-child(2) {
+  -webkit-box-ordinal-group: 4;
+  -webkit-order: 3;
+      -ms-flex-order: 3;
+          order: 3; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list :nth-child(3) {
+  -webkit-box-ordinal-group: 5;
+  -webkit-order: 4;
+      -ms-flex-order: 4;
+          order: 4; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list :nth-child(4) {
+  -webkit-box-ordinal-group: 3;
+  -webkit-order: 2;
+      -ms-flex-order: 2;
+          order: 2; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li {
+  margin: 0;
+  margin-bottom: 10px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li button {
+  outline: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithAccessKeyBtn {
+  width: 300px;
+  height: 48px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 2px solid #404040;
+  border-radius: 0;
+  background: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  color: #404040;
+  box-shadow: none;
+  text-shadow: none;
+  font-size: 0;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1); }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithAccessKeyBtn:hover {
+  border-color: #000; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithAccessKeyBtn:hover::before {
+  color: #000; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithAccessKeyBtn::before {
+  letter-spacing: 3px;
+  line-height: 16px;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1);
+  display: block;
+  content: "Recibir c\F3" "digo de acceso";
+  font-size: 13px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithAccessKeyBtn i, div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithAccessKeyBtn span {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithUserAndPasswordBtn {
+  width: 300px;
+  height: 48px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 2px solid #8d8d8d;
+  border-radius: 0;
+  background: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  color: #8d8d8d;
+  box-shadow: none;
+  text-shadow: none;
+  font-size: 0;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1); }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithUserAndPasswordBtn:hover {
+  border-color: #5d5d5d; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithUserAndPasswordBtn:hover::before {
+  color: #5d5d5d; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithUserAndPasswordBtn::before {
+  letter-spacing: 3px;
+  line-height: 16px;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1);
+  display: block;
+  content: "Ingresar mail y contrase\F1" "a";
+  font-size: 13px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithUserAndPasswordBtn i, div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #loginWithUserAndPasswordBtn span {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-google-plus {
+  width: 300px;
+  height: 48px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 2px solid #c62b00;
+  border-radius: 0;
+  background: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  color: #c62b00;
+  box-shadow: none;
+  text-shadow: none;
+  font-size: 0;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1); }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-google-plus:hover {
+  border-color: #890000; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-google-plus:hover::before {
+  color: #890000; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-google-plus::before {
+  letter-spacing: 3px;
+  line-height: 16px;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1);
+  display: block;
+  content: "Ingresar con google";
+  font-size: 13px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-google-plus i, div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-google-plus span {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-facebook {
+  width: 300px;
+  height: 48px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 2px solid #3b5998;
+  border-radius: 0;
+  background: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+  color: #3b5998;
+  box-shadow: none;
+  text-shadow: none;
+  font-size: 0;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1); }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-facebook:hover {
+  border-color: #1c3a78; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-facebook:hover::before {
+  color: #1c3a78; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-facebook::before {
+  letter-spacing: 3px;
+  line-height: 16px;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1);
+  display: block;
+  content: "Ingresar con facebook";
+  font-size: 13px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-facebook i, div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .modal-body .vtexIdUI-providers-list > li #vtexIdUI-facebook span {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-classic-login .vtexIdUI-header .vtexIdUI-user {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-classic-login .modal-body {
+  padding: 18px 30px 26px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-classic-login .modal-body #inputEmail {
+  margin-bottom: 17px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-email-confirmation .modal-body {
+  padding: 38px 30px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-confirm-access-code .modal-body {
+  padding: 30px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-confirm-access-code .modal-body label.info-code[for='access-code'] {
+  margin-bottom: 15px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-confirm-access-code .modal-body label.info-code[for='access-code'] span {
+  color: #404040;
+  font-weight: 500; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-confirm-access-code .modal-body label.info-code[for='access-code'] strong {
+  margin-top: 10px;
+  font-size: 13px;
+  display: block;
+  text-transform: initial;
+  color: #1a1a1a; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-auth-selector .vtexIdUI-header .vtexIdUI-user {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-change-pswd .vtexIdUI-header .vtexIdUI-user {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-change-pswd .info-why {
+  margin-bottom: 10px; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-change-pswd .vtexid-password-requirements-list {
+  margin-left: 0; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-change-pswd .vtexid-password-requirements-list > li .vtexid-icon-checkmark:not(.ng-hide) {
+  background-color: #fff; }
+
+div#vtexIdContainer .vtexIdUI-page#vtexIdUI-change-pswd .vtexid-password-requirements-list > li::before {
+  display: inline-block;
+  content: '\2022';
+  color: #1a1a1a;
+  font-size: 15px;
+  width: 4px;
+  margin-right: 6px;
+  margin-left: 20px; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer {
+  max-width: calc(100% - 60px);
+  margin: auto;
+  background: #fff;
+  padding: 0;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+          align-content: center;
+  height: 83px;
+  border-color: #f8f8f8; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer::before, div#vtexIdContainer .vtexIdUI-page .modal-footer::after {
+  display: none; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer .vtexIdUI-back-link {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+          align-content: center;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1); }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer .vtexIdUI-back-link i {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+          align-content: center;
+  margin-right: 6px; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer .vtexIdUI-back-link i::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  background: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='14px' height='14px' viewBox='0 0 14 14' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 53 (72520) - https://sketchapp.com --%3E%3Ctitle%3Eicn_angle-left%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='Home' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cpolygon id='icn_angle-left' fill='%23000000' fill-rule='nonzero' transform='translate(6.349784, 7.007749) rotate(-180.000000) translate(-6.349784, -7.007749) ' points='2.28527005 1.69940053 3.71472995 0.300599467 10.4142985 7.14700869 3.69922884 13.7148979 2.30077116 12.2851021 7.58570151 7.11600647'%3E%3C/polygon%3E%3C/g%3E%3C/svg%3E"); }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer .vtexIdUI-back-link:hover {
+  text-decoration: none;
+  opacity: 0.8; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer .vtexIdUI-back-link span {
+  color: #000;
+  font-size: 11px;
+  letter-spacing: 1px;
+  line-height: 17px;
+  font-weight: 600;
+  text-transform: uppercase; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #classicLoginBtn, div#vtexIdContainer .vtexIdUI-page .modal-footer #sendAccessKeyBtn, div#vtexIdContainer .vtexIdUI-page .modal-footer #confirmLoginAccessKeyBtn, div#vtexIdContainer .vtexIdUI-page .modal-footer #tryChangePswdBtn, div#vtexIdContainer .vtexIdUI-page .modal-footer #changePswdBtn {
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  background: #c20b19;
+  color: #fff;
+  font-weight: bold;
+  line-height: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 150px;
+  font-size: 0;
+  height: 48px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+          align-content: center;
+  transition: all 250ms cubic-bezier(0.4, 0, 1, 1); }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #classicLoginBtn:hover, div#vtexIdContainer .vtexIdUI-page .modal-footer #sendAccessKeyBtn:hover, div#vtexIdContainer .vtexIdUI-page .modal-footer #confirmLoginAccessKeyBtn:hover, div#vtexIdContainer .vtexIdUI-page .modal-footer #tryChangePswdBtn:hover, div#vtexIdContainer .vtexIdUI-page .modal-footer #changePswdBtn:hover {
+  background: #890000; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #classicLoginBtn:active, div#vtexIdContainer .vtexIdUI-page .modal-footer #sendAccessKeyBtn:active, div#vtexIdContainer .vtexIdUI-page .modal-footer #confirmLoginAccessKeyBtn:active, div#vtexIdContainer .vtexIdUI-page .modal-footer #tryChangePswdBtn:active, div#vtexIdContainer .vtexIdUI-page .modal-footer #changePswdBtn:active {
+  background: #890000; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #classicLoginBtn::before, div#vtexIdContainer .vtexIdUI-page .modal-footer #sendAccessKeyBtn::before, div#vtexIdContainer .vtexIdUI-page .modal-footer #confirmLoginAccessKeyBtn::before, div#vtexIdContainer .vtexIdUI-page .modal-footer #tryChangePswdBtn::before, div#vtexIdContainer .vtexIdUI-page .modal-footer #changePswdBtn::before {
+  letter-spacing: 3px;
+  display: block;
+  content: "Entrar";
+  font-size: 14px; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #classicLoginBtn::before {
+  content: "Entrar"; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #sendAccessKeyBtn::before {
+  content: "Entrar"; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #confirmLoginAccessKeyBtn::before {
+  content: "Confirmar"; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #tryChangePswdBtn::before {
+  content: "Registrar"; }
+
+div#vtexIdContainer .vtexIdUI-page .modal-footer #changePswdBtn::before {
+  content: "Aceptar"; }
+
+div#vtexIdContainer .vtexid-icon-lock {
+  display: none; }

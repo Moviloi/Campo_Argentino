@@ -1,0 +1,3140 @@
+ @charset "UTF-8";
+/* IMPORTANTE: ESTE ARCHIVO SOLO ES PARA EDICIÓN DEL CLIENTE, NO SUBIR */
+
+.collection-flags {
+  top: 8px;
+  left: 0;
+}
+.produto .collection-flags {
+  top: 16px;
+  left: 0;
+}
+
+.flag {
+ border-top-right-radius: 5px;
+ border-bottom-right-radius: 5px;
+}
+
+.collection-flags .flag::before {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+/* flag pequenasempresas */
+
+.flag.pequenasempresas{
+  font-size: 0;
+  height: 55px;
+}
+.flag.pequenasempresas::before{
+  content: " ";
+  width: 110px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/PequenasEmpresas.png) center no-repeat;
+  background-size: cover;  
+  
+}
+
+/* flag cucardaimparable */
+
+.flag.cucardaimparable{
+  font-size: 0;
+  height: 81px;
+}
+.flag.cucardaimparable::before{
+  content: " ";
+  width: 100px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/CUCARDAIMPARABLE.png) center no-repeat;
+  background-size: cover;  
+  
+}
+
+/* flag arrasadoras */
+
+.flag.arrasadoras {
+  color: #FFFFFF;
+  font-size: 9px;
+  padding: 5px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+  
+}
+
+/* flag ahora12y18 */
+
+.flag.ahora12y18{
+  font-size: 0;
+  height: 45px;
+}
+.flag.ahora12y18::before{
+  content: " ";
+  width: 75px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/ahora12y18cucarda.png) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag ahora6 */
+
+.flag.ahora6{
+  font-size: 0;
+  height:67px;
+}
+.flag.ahora6::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Ahora6v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag cordobesa6 */
+
+.flag.cordobesa6{
+  font-size: 0;
+  height: 67px;
+}
+.flag.cordobesa6::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Cordobesa6v.jpg) center no-repeat;
+  background-size: cover;
+}
+
+/* flag hipotecario24 */
+
+.flag.hipotecario24{
+  font-size: 0;
+  height: 67px;
+}
+.flag.hipotecario24::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Hipotecario24.jpg) center no-repeat;
+  background-size: cover;
+    
+}
+
+/* flag naranja6 */
+
+.flag.naranja6{
+  font-size: 0;
+  height: 67px;
+}
+.flag.naranja6::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Naranja6v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag naranja9 */
+
+.flag.naranja9{
+  font-size: 0;
+  height: 67px;
+}
+.flag.naranja9::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Naranja9v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag hipotecario11 */
+
+.flag.hipotecario11{
+  font-size: 0;
+  height: 67px;
+}
+.flag.hipotecario11::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Hipotecario11v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag ahora12 */
+
+.flag.ahora12{
+  font-size: 0;
+  height: 67px;
+}
+.flag.ahora12::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Ahora12v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag hipotecario12 */
+
+.flag.hipotecario12{
+  font-size: 0;
+  height: 67px;
+}
+.flag.hipotecario12::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Hipotecario12v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag naranja12 */
+
+.flag.naranja12{
+  font-size: 0;
+  height: 67px;
+}
+.flag.naranja12::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Naranja12v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag ahora18 */
+
+.flag.ahora18{
+  font-size: 0;
+  height: 67px;
+}
+.flag.ahora18::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Ahora18v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag cordobesa20 */
+
+.flag.cordobesa20{
+  font-size: 0;
+  height: 67px;
+}
+.flag.cordobesa20::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Cordobesa20v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag ahora24 */
+
+.flag.ahora24{
+  font-size: 0;
+  height: 67px;
+}
+.flag.ahora24::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Ahora24v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag ahora30 */
+
+.flag.ahora30{
+  font-size: 0;
+  height: 67px;
+}
+.flag.ahora30::before{
+  content: " ";
+  width: 37px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Ahora30v.jpg) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag hotsale */
+
+.flag.hotsale {
+  font-size: 0;
+  height: 45px;
+}
+.flag.hotsale::before{
+  content: " ";
+  width: 55px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/Hotsale2021icon.png) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag cucardahotsale */
+
+.flag.cucardahotsale {
+  font-size: 0;
+  height: 45px;
+}
+.flag.cucardahotsale::before{
+  content: " ";
+  width: 38px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/HotSaleCucarda.png) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag exclusivo-online */
+
+.flag.exclusivo-online {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+  
+}
+/* flag cyber-monday */
+
+.flag.cyber-monday{
+  font-size: 0;
+  height: 45px;
+}
+.flag.cyber-monday::before{
+  content: " ";
+  width: 100px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/cybermondayicon.png) center no-repeat;
+  background-size: cover;
+  
+}
+/* flag cyber-week */
+
+.flag.cyber-week{
+  font-size: 0;
+  height: 45px;
+}
+.flag.cyber-week::before{
+  content: " ";
+  width: 100px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/cyberweek.png) center no-repeat;
+  background-size: cover;
+  
+}
+
+
+/* flag la-segunda-unidad-80 */
+
+.flag.la-2da-unidad-80 {
+ font-size: 0;
+} 
+
+.flag.la-2da-unidad-80::before {
+  content: '80% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+     
+/* flag la-segunda-unidad-50 */
+
+.flag.la-2da-unidad-50 {
+ font-size: 0;
+} 
+
+.flag.la-2da-unidad-50::before {
+  content: '50% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+
+/* flag descuento-10 */
+
+.flag.descuento-10 {
+ font-size: 0;
+} 
+
+.flag.descuento-10::before {
+  content: '10% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag descuento-15 */
+
+.flag.descuento-15 {
+ font-size: 0;
+} 
+
+.flag.descuento-15::before {
+  content: '15% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag descuento-20 */
+
+.flag.descuento-20 {
+ font-size: 0;
+} 
+
+.flag.descuento-20::before {
+  content: '20% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag descuento-25 */
+
+.flag.descuento-25 {
+ font-size: 0;
+} 
+
+.flag.descuento-25::before {
+  content: '25% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 3x2 */
+
+.flag.promo-3x2 {
+ font-size: 0;
+} 
+
+.flag.promo-3x2::before {
+  content: 'Agregá 3 y pagá 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+
+}
+
+/* flag exclusivo salta */
+
+.flag.exclusivo-salta {
+ font-size: 0;
+} 
+
+.flag.exclusivo-salta::before {
+  content: 'Exclusivo Salta';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+/* flag exclusivo Tucumán y Santiago del Estero */
+
+.flag.exclusivo-tucuman-santiago {
+ font-size: 0;
+} 
+
+.flag.exclusivo-tucuman-santiago::before {
+  content: 'Exclusivo Tucumán y Santiago del Estero';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag kit pileta de regalo */
+
+.flag.kit-pileta-de-regalo {
+ font-size: 0;
+} 
+
+.flag.kit-pileta-de-regalo::before {
+  content: 'Kit de pequeñas piscinas de regalo';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag agregalo junto a tu pileta */
+
+.flag.agregalo-junto-a-tu-pileta {
+ font-size: 0;
+} 
+
+.flag.agregalo-junto-a-tu-pileta::before {
+  content: 'Agregalo junto a tu pileta';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+
+} 
+
+/* flag promo 4x3 */
+
+.flag.promo-4x3 {
+ font-size: 0;
+} 
+
+.flag.promo-4x3::before {
+  content: 'Agregá 4 y pagá 3';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 4x99 */
+
+.flag.promo-4x99 {
+ font-size: 0;
+} 
+
+.flag.promo-4x99::before {
+  content: 'Agregá 4 y pagá $99';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 2x70 */
+
+.flag.promo-2x70 {
+ font-size: 0;
+} 
+
+.flag.promo-2x70::before {
+  content: '2 x $70';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 2x250 */
+
+.flag.promo-2x250 {
+ font-size: 0;
+} 
+
+.flag.promo-2x250::before {
+  content: 'Llevá 2kg por $250';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+}
+
+/* flag promo 2x800 */
+
+.flag.promo-2x800 {
+ font-size: 0;
+} 
+
+.flag.promo-2x800::before {
+  content: '2 x $800';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 2x160 */
+
+.flag.promo-2x160 {
+ font-size: 0;
+} 
+
+.flag.promo-2x160::before {
+  content: '2 x $160';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 2x700 */
+
+.flag.promo-2x700 {
+ font-size: 0;
+} 
+
+.flag.promo-2x700::before {
+  content: '2 x $700';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+/* flag promo 2x89 */
+
+.flag.promo-2x89 {
+ font-size: 0;
+}
+
+.flag.promo-2x89::before {
+  content: '2 x $89';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 2x400 */
+
+.flag.promo-2x400 {
+ font-size: 0;
+} 
+
+.flag.promo-2x400::before {
+  content: '2 x $400';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 3x30 */
+
+.flag.promo-3x30 {
+ font-size: 0;
+} 
+
+.flag.promo-3x30::before {
+  content: '3 x $30';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 2x1399 */
+
+.flag.promo-2x1399 {
+ font-size: 0;
+} 
+
+.flag.promo-2x1399::before {
+  content: '2x1399';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 2x999 */
+
+.flag.promo-2x999 {
+ font-size: 0;
+} 
+
+.flag.promo-2x999::before {
+  content: '2x999';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag descuento-30 */
+
+.flag.descuento-30 {
+ font-size: 0;
+} 
+
+.flag.descuento-30::before {
+  content: '30% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+/* flag promo 2x1 */
+
+.flag.promo-2x1 {
+ font-size: 0;
+} 
+
+.flag.promo-2x1::before {
+  content: 'Agregá 2 y pagá 1';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+ }
+
+/* flag la-segunda-unidad-70 */
+
+.flag.la-2da-unidad-70 {
+ font-size: 0;
+} 
+
+.flag.la-2da-unidad-70::before {
+  content: '70% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo-123 */
+
+.flag.promo-123 {
+ font-size: 0;
+} 
+
+.flag.promo-123::before {
+  content: 'Promo 1,2,3';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 10x80 */
+
+.flag.promo-10x80 {
+ font-size: 0;
+} 
+
+.flag.promo-10x80::before {
+  content: '10 x $80';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 10x895 */
+
+.flag.promo-10x895 {
+ font-size: 0;
+} 
+
+.flag.promo-10x895::before {
+  content: '10 x $89,5';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* Precios cuidados*/
+
+.flag.precios-cuidados{
+  font-size: 0;
+  height: 35px;
+}
+.flag.precios-cuidados::before{
+  content: " ";
+  width: 100px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/cucarda_precioscuidados2020.png) center no-repeat;
+  background-size: cover;
+}
+  
+
+/* flag La 2da unidad 60 */
+.flag.la-2da-unidad-60 {
+ font-size: 0;
+}
+.flag.la-2da-unidad-60::before {
+  content: '60% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+  
+
+/* flag La 2da unidad 40 */
+.flag.la-2da-unidad-40 {
+ font-size: 0;
+}
+.flag.la-2da-unidad-40::before {
+  content: '40% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+
+/* flag La 2da unidad 70 */
+.flag.la-2da-unidad-70 {
+ font-size: 0;
+}
+.flag.la-2da-unidad-70::before {
+  content: '70% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+
+/* flag La 2da unidad 90 */
+.flag.la-2da-unidad-90 {
+ font-size: 0;
+}
+.flag.la-2da-unidad-90::before {
+  content: '90% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+
+/* flag descuento-35 */
+
+.flag.descuento-35 {
+ font-size: 0;
+} 
+
+.flag.descuento-35::before {
+  content: '35% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+  }
+
+/* flag descuento-40 */
+
+.flag.descuento-40 {
+ font-size: 0;
+} 
+
+.flag.descuento-40::before {
+  content: '40% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+  }
+
+/* flag promo 4x2 */
+
+.flag.promo-4x2 {
+ font-size: 0;
+} 
+
+.flag.promo-4x2::before {
+  content: 'Agregá 4 y pagá 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 8x120 */
+
+.flag.promo-8x120 {
+ font-size: 0;
+} 
+
+.flag.promo-8x120::before {
+  content: '8 x $120';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+} 
+
+/* flag promo 12x6 */
+
+.flag.promo-12x6 {
+ font-size: 0;
+} 
+
+.flag.promo-12x6::before {
+  content: 'Agregá 12 y pagá 6';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+} 
+
+/* flag promo 8x130 */
+
+.flag.promo-8x130 {
+ font-size: 0;
+} 
+
+.flag.promo-8x130::before {
+  content: '8 x $130';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 2x370 */
+
+.flag.promo-2x370 {
+ font-size: 0;
+} 
+
+.flag.promo-2x370::before {
+  content: '2 x $370';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 4x150 */
+
+.flag.promo-4x150 {
+ font-size: 0;
+} 
+
+.flag.promo-4x150::before {
+  content: '4 x $150';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+} 
+
+/* flag promo 3x800 */
+
+.flag.promo-3x800 {
+ font-size: 0;
+} 
+
+.flag.promo-3x800::before {
+  content: '3 x $800';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 2x69 */
+
+.flag.promo-2x69 {
+ font-size: 0;
+} 
+
+.flag.promo-2x69::before {
+  content: '2 x $69';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+
+/* flag promo 6x4 */
+
+.flag.promo-6x4 {
+ font-size: 0;
+} 
+
+.flag.promo-6x4::before {
+  content: 'Agregá 6 y pagá 4';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+/* flag promo 5x50 */
+
+.flag.promo-5x50 {
+ font-size: 0;
+} 
+
+.flag.promo-5x50::before {
+  content: '5 x $50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+
+/* flag promo 5x99 */
+
+.flag.promo-5x99 {
+ font-size: 0;
+} 
+
+.flag.promo-5x99::before {
+  content: '5 x $99';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+
+/* flag promo 5x3 */
+
+.flag.promo-5x3 {
+ font-size: 0;
+} 
+
+.flag.promo-5x3::before {
+  content: 'Agregá 5 y pagá 3';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+/* flag promo 5x55 */
+
+.flag.promo-5x55 {
+ font-size: 0;
+} 
+
+.flag.promo-5x55::before {
+  content: '5 x $55';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+
+/* flag promo 6x50 */
+
+.flag.promo-6x50 {
+ font-size: 0;
+} 
+
+.flag.promo-6x50::before {
+  content: '6 x $50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag navidad-2x1 */
+
+.flag.navidad-2x1 {
+ font-size: 0;
+} 
+
+.flag.navidad-2x1::before {
+  content: '2 x 1';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag todox50 */
+
+.flag.todox50 {
+ font-size: 0;
+} 
+
+.flag.todox50::before {
+  content: 'Todo x $50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag todox70 */
+
+.flag.todox70 {
+ font-size: 0;
+} 
+
+.flag.todox70::before {
+  content: 'Todo x $70';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag todox100 */
+
+.flag.todox100 {
+ font-size: 0;
+} 
+
+.flag.todox100::before {
+  content: 'Todo x $100';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag todox150 */
+
+.flag.todox150 {
+ font-size: 0;
+} 
+
+.flag.todox150::before {
+  content: 'Todo x $150';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag todox200 */
+
+.flag.todox200 {
+ font-size: 0;
+} 
+
+.flag.todox200::before {
+  content: 'Todo x $200';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag navidad-solo-posadas-2x1 */
+
+.flag.navidad-solo-posadas-2x1 {
+ font-size: 0;
+} 
+
+.flag.navidad-solo-posadas-2x1::before {
+  content: '2 x 1 SOLO POSADAS';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag coca-cola-3l-2x300 */
+
+.flag.coca-cola-3l-2x300 {
+ font-size: 0;
+} 
+
+.flag.coca-cola-3l-2x300::before {
+  content: '2 x $ 300';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+  
+
+/* flag La 2da unidad 30 */
+.flag.la-2da-unidad-30 {
+ font-size: 0;
+}
+.flag.la-2da-unidad-30::before {
+  content: '30% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag espumantes 30 off */
+.flag.espumantes-30-off {
+ font-size: 0;
+}
+.flag.espumantes-30-off::before {
+  content: '30% OFF';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 2x200 */
+
+.flag.promo-2x200 {
+ font-size: 0;
+} 
+
+.flag.promo-2x200::before {
+  content: '2 x $200';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 3x200 */
+
+.flag.promo-3x200 {
+ font-size: 0;
+} 
+
+.flag.promo-3x200::before {
+  content: '3 x $200';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 2x239 */
+
+.flag.promo-2x239 {
+ font-size: 0;
+} 
+
+.flag.promo-2x239::before {
+  content: '2 x $229';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 4x229 */
+
+.flag.promo-4x229 {
+ font-size: 0;
+} 
+
+.flag.promo-4x229::before {
+  content: '4 x $229';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+
+/* flag promo 2x50 */
+
+.flag.promo-2x50 {
+ font-size: 0;
+} 
+
+.flag.promo-2x50::before {
+  content: '2 x $50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+}
+
+/* flag promo 2x70 */
+
+.flag.promo-2x70 {
+ font-size: 0;
+} 
+
+.flag.promo-2x70::before {
+  content: '2 x $70';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+}
+
+/* flag promo 2x150 */
+
+.flag.promo-2x150 {
+ font-size: 0;
+} 
+
+.flag.promo-2x150::before {
+  content: '2 x $150';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+}
+
+/* flag promo 2x159 */
+
+.flag.promo-2x159 {
+ font-size: 0;
+} 
+
+.flag.promo-2x159::before {
+  content: '2 x $159';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+}
+
+
+/* flag promo 3x200 */
+
+.flag.promo-3x200 {
+ font-size: 0;
+} 
+
+.flag.promo-3x200::before {
+  content: '3 x $200';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag promo 3x109 */
+
+.flag.promo-3x109 {
+ font-size: 0;
+} 
+
+.flag.promo-3x109::before {
+  content: '3 x $109,9 c/u';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag promo 3x150 */
+
+.flag.promo-3x150 {
+ font-size: 0;
+} 
+
+.flag.promo-3x150::before {
+  content: '3 x $150';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag promo 3x100 */
+
+.flag.promo-3x100 {
+ font-size: 0;
+} 
+
+.flag.promo-3x100::before {
+  content: '3 x $100';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag promo 3x70 */
+
+.flag.promo-3x70 {
+ font-size: 0;
+} 
+
+.flag.promo-3x70::before {
+  content: '3 x $70';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 4x70 */
+
+.flag.promo-4x70 {
+ font-size: 0;
+} 
+
+.flag.promo-4x70::before {
+  content: '4 x $70';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 4x299 */
+
+.flag.promo-4x299 {
+ font-size: 0;
+} 
+
+.flag.promo-4x299::before {
+  content: '4 x $299';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 2x390 */
+
+.flag.promo-2x390 {
+ font-size: 0;
+} 
+
+.flag.promo-2x390::before {
+  content: '2 x $390';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 4x100 */
+
+.flag.promo-4x100 {
+ font-size: 0;
+} 
+
+.flag.promo-4x100::before {
+  content: '4 x $100';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 6x200 */
+
+.flag.promo-6x200 {
+ font-size: 0;
+} 
+
+.flag.promo-6x200::before {
+  content: '6 x $200';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 6x100 */
+
+.flag.promo-6x100 {
+ font-size: 0;
+} 
+
+.flag.promo-6x100::before {
+  content: '6 x $100';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+  
+}
+
+/* flag promo 5x50 */
+
+.flag.promo-5x50 {
+ font-size: 0;
+} 
+
+.flag.promo-5x50::before {
+  content: '5 x $50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 6x50 */
+
+.flag.promo-6x50 {
+ font-size: 0;
+} 
+
+.flag.promo-6x50::before {
+  content: '6 x $50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag promo 6x3 */
+
+.flag.promo-6x3 {
+ font-size: 0;
+} 
+
+.flag.promo-6x3::before {
+  content: 'Agregá 6 y pagá 3';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}  
+ 
+
+/* flag promo 3x50 */
+
+.flag.promo-3x50 {
+ font-size: 0;
+} 
+
+.flag.promo-3x50::before {
+  content: '3 x $50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+ 
+}
+
+/* flag promo 2x100 */
+
+.flag.promo-2x100 {
+ font-size: 0;
+} 
+
+.flag.promo-2x100::before {
+  content: '2 x $100';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+
+/* flag promo 5x100 */
+
+.flag.promo-5x100 {
+ font-size: 0;
+} 
+
+.flag.promo-5x100::before {
+  content: '5 x $100';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+
+/* flag promo 5x200 */
+
+.flag.promo-5x200 {
+ font-size: 0;
+} 
+
+.flag.promo-5x200::before {
+  content: '5 x $200';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+
+/* flag Llevando 2 238 cada unidad */
+
+.flag.llevando-2-238-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-238-cada-unidad::before {
+  content: '$238 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+/* flag Llevando 2 685 */
+
+.flag.llevando-2-685 {
+ font-size: 0;
+} 
+
+.flag.llevando-2-685::before {
+  content: '$685 llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+/* flag Llevando 2 569 cada unidad */
+
+.flag.llevando-2-569-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-569-cada-unidad::before {
+  content: '$569 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+
+/* flag Llevando 2 619 cada unidad */
+
+.flag.llevando-2-619-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-619-cada-unidad::before {
+  content: '$619 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+/* flag Llevando 2 314 cada unidad */
+
+.flag.llevando-2-314-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-314-cada-unidad::before {
+  content: '$314 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+
+/* flag Llevando 2 314 cada unidad */
+
+.flag.llevando-2-314-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-314-cada-unidad::before {
+  content: '$314 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+/* flag Llevando 2 638 cada unidad */
+
+.flag.llevando-2-638-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-638-cada-unidad::before {
+  content: '$638 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+
+/* flag Llevando 2 1398 cada unidad */
+
+.flag.llevando-2-1398-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-1398-cada-unidad::before {
+  content: '$1398 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 2x199 */
+
+.flag.promo-2x199 {
+ font-size: 0;
+} 
+
+.flag.promo-2x199::before {
+  content: '2 x $199';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+/* flag promo 2x60 */
+
+.flag.promo-2x60 {
+ font-size: 0;
+} 
+
+.flag.promo-2x60::before {
+  content: '2 x $60';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+/* flag promo 2x69 */
+
+.flag.promo-2x69 {
+ font-size: 0;
+} 
+
+.flag.promo-2x69::before {
+  content: '2 x $69';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+/* flag promo 2x90 */
+
+.flag.promo-2x90 {
+ font-size: 0;
+} 
+
+.flag.promo-2x90::before {
+  content: '2 x $90';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+/* flag promo 2x93,50 */
+
+.flag.promo-2x93,50 {
+ font-size: 0;
+} 
+
+.flag.promo-2x93,50::before {
+  content: '2 x $93,50';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+
+}
+/* flag promo 3x70 */
+
+.flag.promo-3x70 {
+ font-size: 0;
+} 
+
+.flag.promo-3x70::before {
+  content: '3 x $70';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+/* flag promo 3x99 */
+
+.flag.promo-3x99 {
+ font-size: 0;
+} 
+
+.flag.promo-3x99::before {
+  content: '3 x $99';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+
+}
+
+/* flag promo 3x980 */
+
+.flag.promo-3x980 {
+ font-size: 0;
+} 
+
+.flag.promo-3x980::before {
+  content: '3 x $980';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+
+}
+
+/* flag combinalo como quieras */
+
+.flag.combinalo-como-quieras {
+ font-size: 0;
+} 
+
+.flag.combinalo-como-queiras::before {
+  content: 'Combinalo como quieras';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19; 
+}
+  
+/* flag promo 5x70 */
+
+.flag.promo-5x70 {
+ font-size: 0;
+} 
+
+.flag.promo-5x70::before {
+  content: '5 x $70';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+/* flag promo 6x999 */
+
+.flag.promo-6x999 {
+ font-size: 0;
+} 
+
+.flag.promo-6x999::before {
+  content: '6 x $99,99 c/u';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+/* flag promo 6x90 */
+
+.flag.promo-6x90 {
+ font-size: 0;
+} 
+
+.flag.promo-6x90::before {
+  content: '6 x $90';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;    
+ 
+}
+/* flag promo 8x95 */
+
+.flag.promo-8x95 {
+ font-size: 0;
+} 
+
+.flag.promo-8x95::before {
+  content: '8 x $95';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;    
+   
+}
+/* flag promo 8x99 */
+
+.flag.promo-8x99 {
+ font-size: 0;
+} 
+
+.flag.promo-8x99::before {
+  content: '8 x $99';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+}
+
+/* flag promo 3x269 */
+
+.flag.promo-3x269 {
+ font-size: 0;
+} 
+
+.flag.promo-3x269::before {
+  content: '3 x $269';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+.flag.la-2da-unidad-40 {
+ font-size: 0;
+}
+.flag.la-2da-unidad-40::before {
+  content: '40% EN LA 2DA UNIDAD';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag Llevando 6 25 Off */
+
+.flag.llevando-6-25-off {
+ font-size: 0;
+} 
+
+.flag.llevando-6-25-off::before {
+  content: '25% Off Llevando 6';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}  
+
+/* flag Llevando 6 99,90 Off */
+
+.flag.llevando-6-99-off {
+ font-size: 0;
+} 
+
+.flag.llevando-6-99-off::before {
+  content: '$99,90 cada unidad Llevando 6';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}  
+
+/* flag Excepto-Chaco */
+
+.flag.excepto-chaco {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+
+/* flag Excepto San Juan y Posadas */
+
+.flag.excepto-san-juan-y-posadas {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+
+/* flag Excepto Tucuman */
+
+.flag.excepto-tucuman {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+
+/* flag Excepto Rafaela */
+
+.flag.excepto-rafaela {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+
+/* flag promo 3x399 */
+
+.flag.promo-3x399 {
+ font-size: 0;
+} 
+
+.flag.promo-3x399::before {
+  content: '3 x $399,99';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 3x450 */
+
+.flag.promo-3x450 {
+ font-size: 0;
+} 
+
+.flag.promo-3x450::before {
+  content: '3 x $450';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+/* flag promo 6x350 */
+
+.flag.promo-6x350 {
+ font-size: 0;
+} 
+
+.flag.promo-6x350::before {
+  content: '6 x $350';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+/* flag promo Cordoba y Santa Fe */
+
+.flag.cordoba-santa-fe-san-juan-y-mendoza {
+ font-size: 0;
+} 
+
+.flag.cordoba-santa-fe-san-juan-y-mendoza::before {
+  content: 'Córdoba, Santa Fé, Mendoza y San Juan';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}  
+
+/* flag promo Cordoba y Villa Maria */
+
+.flag.cordoba-y-villa-maria {
+ font-size: 0;
+} 
+
+.flag.cordoba-y-villa-maria::before {
+  content: 'Córdoba y Villa Maria';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}  
+
+/* flag promo Solo Cordoba */
+
+.flag.solo-cordoba {
+ font-size: 0;
+} 
+
+.flag.solo-cordoba::before {
+  content: 'Exclusivo Córdoba';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}  
+
+/* flag promo Solo Nea */
+
+.flag.solo-nea {
+ font-size: 0;
+} 
+
+.flag.solo-nea::before {
+  content: 'Exclusivo Nea';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}  
+
+/* flag Excepto-Villa- Maria */
+
+.flag.excepto-Villa-Maria {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+
+/* flag Promo-2x1-Solo-Cordoba */
+
+.flag.Promo-2x1-Solo-Cordoba {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+/* flag Excepto-Rosario */
+
+.flag.excepto-Rosario {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+/* flag Excepto-Rafaela */
+
+.flag.excepto-Rafaela {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a
+}
+
+/* flag promo 4x200 */
+
+.flag.promo-4x200 {
+ font-size: 0;
+} 
+
+.flag.promo-4x200::before {
+  content: '4 x $200';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag promo 6x5 */
+
+.flag.promo-6x5 {
+ font-size: 0;
+} 
+
+.flag.promo-6x5::before {
+  content: '6x5';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag promo 2x300 */
+
+.flag.promo-2x300 {
+ font-size: 0;
+} 
+
+.flag.promo-2x300::before {
+  content: '2 x $300';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag promo 3x650 */
+
+.flag.promo-3x650 {
+ font-size: 0;
+} 
+
+.flag.promo-3x650::before {
+  content: '3 x $650';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag promo 3x600 */
+
+.flag.promo-3x600 {
+ font-size: 0;
+} 
+
+.flag.promo-3x600::before {
+  content: '3 x $600';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+/* flag promo 3x500 */
+
+.flag.promo-3x500 {
+ font-size: 0;
+} 
+
+.flag.promo-3x500::before {
+  content: '3 x $500';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;   
+  
+}
+
+/* flag descuento-50 */
+
+.flag.descuento-50 {
+ font-size: 0;
+} 
+
+.flag.descuento-50::before {
+  content: '50% DE DESCUENTO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag noa-y-nea */
+
+.flag.noa-y-nea {
+ font-size: 0;
+} 
+
+.flag.noa-y-nea::before {
+  content: 'NOA Y NEA';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag centro-y-cuyo */
+
+.flag.centro-y-cuyo {
+ font-size: 0;
+} 
+
+.flag.centro-y-cuyo::before {
+  content: 'CENTRO Y CUYO';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag tienda-digital-mendoza */
+
+.flag.tienda-digital-mendoza {
+ font-size: 0;
+} 
+
+.flag.tienda-digital-mendoza::before {
+  content: 'TIENDA DIGITAL MENDOZA';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag cba-y-nea */
+
+.flag.cba-y-nea {
+ font-size: 0;
+} 
+
+.flag.cba-y-nea::before {
+  content: 'CORDOBA Y NEA';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag noa */
+
+.flag.noa {
+ font-size: 0;
+} 
+
+.flag.noa::before {
+  content: 'EXCLUSIVO NOA';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+  
+}
+
+/* flag Nivea Sun Eweek */
+
+.flag.nivea-sun-eweek {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a
+}
+
+/* flag Nivea Sun Eweek */
+
+.flag.nivea-sun-eweek {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a
+}
+/* flag Excepto-Cordoba */
+
+.flag.excepto-cordoba {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+
+/* flag Naranja 6 sin interés */
+
+.flag.naranja-6-sin-interes {
+ font-size: 0;
+ height: 45px;
+} 
+.flag.naranja-6-sin-interes::before{
+  content: " ";
+  width: 75px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/naranja6icon.png) center no-repeat;
+  background-size: cover;
+  
+  
+}
+/* flag Naranja 9 sin interés */
+
+.flag.naranja-9-sin-interes {
+ font-size: 0;
+ height: 45px;
+} 
+.flag.naranja-9-sin-interes::before{
+  content: " ";
+  width: 75px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/naranja9icon.png) center no-repeat;
+  background-size: cover;
+
+}
+/* flag Naranja 12 sin interés */
+
+.flag.naranja-12-sin-interes {
+ font-size: 0;
+ height: 45px;
+} 
+.flag.naranja-12-sin-interes::before{
+  content: " ";
+  width: 75px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/naranja12icon.png) center no-repeat;
+  background-size: cover;
+
+} 
+
+/* flag Hipotecario 11 sin interés */
+
+.flag.hipotecario-11-sin-interes {
+ font-size: 0;
+ height: 45px;
+} 
+.flag.hipotecario-11-sin-interes::before{
+  content: " ";
+  width: 75px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/hipo11icon.png) center no-repeat;
+  background-size: cover;
+
+} 
+
+/* flag Hipotecario 12 sin interés */
+
+.flag.hipotecario-12-sin-interes {
+font-size: 0;
+ height: 45px;
+} 
+.flag.hipotecario-12-sin-interes::before{
+  content: " ";
+  width: 75px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/hipo12icon.png) center no-repeat;
+  background-size: cover;
+
+
+}
+/* flag ahora3 */
+
+.flag.ahora3 {
+  font-size: 0;
+  height: 45px;
+}
+.flag.ahora3::before{
+  content: " ";
+  width: 75px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/ahora3cucarda.png) center no-repeat;
+  background-size: cover;
+
+}
+
+/* flag cordoba */
+
+.flag.cordoba {
+ font-size: 0;
+} 
+
+.flag.cordoba::before {
+  content: 'CÓRDOBA';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+    
+}
+
+/* flag Llevando 2 134,50 cada unidad */
+
+.flag.llevando-2-134-50-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-134-50-cada-unidad::before {
+  content: '$134,50 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag Llevando 1 20% */
+
+.flag.llevando-1-20 {
+ font-size: 0;
+} 
+
+.flag.llevando-1-20::before {
+  content: '1-20% dto';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag Llevando 1 20%, llevando 2 50%; 3x2 */
+
+.flag.llevando-1-20-50-3x2 {
+ font-size: 0;
+} 
+
+.flag.llevando-1-20-50-3x2::before {
+  content:'Llevando 1-20% dto,llevando 2-50% dto 2da unidad,llevando 3-3x2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag Llevando 2 50% */
+
+.flag.llevando-2-50 {
+ font-size: 0;
+} 
+
+.flag.llevando-2-50::before {
+  content: '2-2da unidad 50% dto';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag Llevando 3 3x2 */
+
+.flag.llevando-3-3x2 {
+ font-size: 0;
+} 
+
+.flag.llevando-3-3x2::before {
+  content: '3-3x2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag max2persona */
+
+.flag.max2persona {
+ font-size: 0;
+} 
+
+.flag.max2persona::before {
+  content: 'Máximo 2 p/persona';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+}
+
+/* flag Llevando 2 717 cada unidad */
+
+.flag.llevando-2-717-cada-unidad {
+ font-size: 0;
+} 
+
+.flag.llevando-2-717-cada-unidad::before {
+  content: '$717 cada unidad llevando 2';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;
+
+}
+/* flag Excepto-Chaco y Posadas */
+
+.flag.excepto-chaco-y-posadas {
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #1a1a1a;
+
+}
+
+/* flag clublibertad */
+
+.flag.clublibertad{
+  font-size: 0;
+  height: 70px;
+}
+.flag.clublibertad::before{
+  content: " ";
+  width: 70px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/cucardaclublibertad.png) center no-repeat;
+  background-size: cover;  
+    
+}
+     
+/* flag sociosclub20 */
+
+.flag.sociosclub20 {
+ font-size: 0;
+} 
+
+.flag.sociosclub20::before {
+  content: '+20% SOCIOS CLUB';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+     
+/* flag sociosclub10 */
+
+.flag.sociosclub10 {
+ font-size: 0;
+} 
+
+.flag.sociosclub10::before {
+  content: '+10% SOCIOS CLUB';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+
+/* flag sociosclub15 */
+
+.flag.sociosclub15 {
+ font-size: 0;
+} 
+
+.flag.sociosclub15::before {
+  content: '+15% SOCIOS CLUB';
+  color: #FFFFFF;
+  padding: 5px;
+  font-size: 9px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+  background-color: #C20B19;  
+  
+}
+
+/* flag cucardahotsale */
+
+.flag.cucardahotsale {
+  font-size: 0;
+  height: 112px;
+}
+.flag.cucardahotsale::before{
+  content: " ";
+  width: 95px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/HotSaleCucarda.png) center no-repeat;
+  background-size: cover;
+  
+}
+
+/* flag cucardahotweek */
+
+.flag.cucardahotweek {
+  font-size: 0;
+  height: 112px;
+}
+.flag.cucardahotweek::before{
+  content: " ";
+  width: 95px;
+  height: inherit;
+  position: absolute;
+  background: url(/arquivos/HotWeekCucarda.png) center no-repeat;
+  background-size: cover;
+  
+}
+

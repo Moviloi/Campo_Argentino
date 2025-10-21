@@ -1,0 +1,10 @@
+/* Uploaded on: 24/11/2020 14:50:37 */
+ /*  eslint-disable */
+
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', function() {
+		navigator.serviceWorker
+			.register('/files/service-worker.js')
+			.catch(e => console.warn('service worker registration error', e));
+	});
+}
