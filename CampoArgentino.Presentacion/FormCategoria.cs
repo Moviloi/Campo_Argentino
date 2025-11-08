@@ -73,19 +73,87 @@ namespace CampoArgentino.Presentacion
 
         private void OcultarColumnas()
         {
-            this.dataListado.Columns[0].Visible = false;
+            // Ocultar solo la columna ID, mantener "Seleccionar" visible
+            if (this.dataListado.Columns.Contains("idcategoria"))
+                this.dataListado.Columns["idcategoria"].Visible = false;
         }
 
         private void Mostrar()
         {
             this.dataListado.DataSource = NCategoria.Mostrar();
+
+            // Configurar columna de selección
+            ConfigurarColumnaSeleccion();
+
             this.OcultarColumnas();
             lblTotal.Text = "Total Registros: " + Convert.ToString(dataListado.Rows.Count);
+        }
+
+        private void ConfigurarColumnaSeleccion()
+        {
+            // Limpiar columnas antiguas primero
+            LimpiarColumnasAntiguas();
+
+            // Verificar si la columna ya existe
+            if (!dataListado.Columns.Contains("Seleccionar"))
+            {
+                // Crear columna de botón para selección
+                DataGridViewButtonColumn btnSeleccionarCol = new DataGridViewButtonColumn();
+                btnSeleccionarCol.Name = "Seleccionar";
+                btnSeleccionarCol.HeaderText = "Seleccionar";
+                btnSeleccionarCol.Text = "⬜"; // Cuadrado vacío (no seleccionado)
+                btnSeleccionarCol.UseColumnTextForButtonValue = true;
+                btnSeleccionarCol.Width = 80;
+                btnSeleccionarCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                btnSeleccionarCol.DefaultCellStyle.Font = new Font("Arial", 12);
+                btnSeleccionarCol.FlatStyle = FlatStyle.Flat;
+
+                // Insertar la columna al principio
+                dataListado.Columns.Insert(0, btnSeleccionarCol);
+            }
+
+            // Asegurarse de que la columna esté visible
+            dataListado.Columns["Seleccionar"].Visible = true;
+
+            // Inicializar el estado de selección de todas las filas
+            foreach (DataGridViewRow row in dataListado.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    // Por defecto, no seleccionado
+                    row.Cells["Seleccionar"].Value = "⬜";
+                    row.Cells["Seleccionar"].Tag = false;
+                    row.DefaultCellStyle.BackColor = Color.White;
+                }
+            }
+        }
+
+        private void LimpiarColumnasAntiguas()
+        {
+            // Eliminar la columna "Eliminar" si existe
+            if (dataListado.Columns.Contains("Eliminar"))
+            {
+                dataListado.Columns.Remove("Eliminar");
+            }
+
+            // También eliminar cualquier columna de checkbox existente
+            foreach (DataGridViewColumn col in dataListado.Columns)
+            {
+                if (col is DataGridViewCheckBoxColumn)
+                {
+                    dataListado.Columns.Remove(col);
+                    break;
+                }
+            }
         }
 
         private void BuscarNombre()
         {
             this.dataListado.DataSource = NCategoria.BuscarNombre(this.txtBuscar.Text);
+
+            // Reconfigurar columna de selección después de buscar
+            ConfigurarColumnaSeleccion();
+
             this.OcultarColumnas();
             lblTotal.Text = "Total Registros: " + Convert.ToString(dataListado.Rows.Count);
         }
@@ -105,68 +173,131 @@ namespace CampoArgentino.Presentacion
         {
             try
             {
-                DialogResult Opcion;
-                Opcion = MessageBox.Show("Realmente desea eliminar los registros",
-                    "Sistema Campo Argentino", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                // Contar cuántos están seleccionados
+                int cantidadSeleccionados = 0;
+                foreach (DataGridViewRow row in dataListado.Rows)
+                {
+                    if (!row.IsNewRow && row.Cells["Seleccionar"].Tag != null && (bool)row.Cells["Seleccionar"].Tag)
+                    {
+                        cantidadSeleccionados++;
+                    }
+                }
+
+                if (cantidadSeleccionados == 0)
+                {
+                    MensajeError("No hay categorías seleccionadas para eliminar");
+                    return;
+                }
+
+                DialogResult Opcion = MessageBox.Show(
+                    $"¿Realmente desea eliminar las {cantidadSeleccionados} categorías seleccionadas?\n\nEsta acción no se puede deshacer.",
+                    "Confirmar Eliminación",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button2);
 
                 if (Opcion == DialogResult.OK)
                 {
-                    string Codigo;
                     string Rpta = "";
+                    int eliminadosExitosos = 0;
+                    int errores = 0;
+                    System.Text.StringBuilder erroresDetallados = new System.Text.StringBuilder();
 
                     foreach (DataGridViewRow row in dataListado.Rows)
                     {
-                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        if (!row.IsNewRow && row.Cells["Seleccionar"].Tag != null && (bool)row.Cells["Seleccionar"].Tag)
                         {
-                            Codigo = Convert.ToString(row.Cells[1].Value);
-                            Rpta = NCategoria.Eliminar(Convert.ToInt32(Codigo));
+                            int idcategoria = Convert.ToInt32(row.Cells["idcategoria"].Value);
+                            string nombreCategoria = row.Cells["nombre"].Value?.ToString() ?? "Sin nombre";
+
+                            Rpta = NCategoria.Eliminar(idcategoria);
 
                             if (Rpta.Equals("OK"))
                             {
-                                this.MensajeOk("Se eliminó correctamente el registro");
+                                eliminadosExitosos++;
                             }
                             else
                             {
-                                this.MensajeError(Rpta);
+                                errores++;
+                                if (erroresDetallados.Length < 200) // Limitar longitud del mensaje
+                                {
+                                    erroresDetallados.AppendLine($"{nombreCategoria}: {Rpta}");
+                                }
                             }
                         }
                     }
+
+                    // Mostrar resumen
+                    if (errores == 0)
+                    {
+                        MensajeOk($"Se eliminaron correctamente {eliminadosExitosos} categorías");
+                    }
+                    else
+                    {
+                        string mensajeError = $"Proceso completado: {eliminadosExitosos} eliminadas, {errores} errores";
+                        if (erroresDetallados.Length > 0)
+                        {
+                            mensajeError += "\n\nErrores:\n" + erroresDetallados.ToString();
+                        }
+                        MensajeError(mensajeError);
+                    }
+
                     this.Mostrar();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + ex.StackTrace);
+                MensajeError($"Error inesperado al eliminar: {ex.Message}");
             }
         }
 
-        private void chkEliminar_CheckedChanged(object sender, EventArgs e)
+        private void dataListado_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (chkEliminar.Checked)
+            // Verificar si se hizo clic en la columna "Seleccionar"
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataListado.Columns["Seleccionar"].Index)
             {
-                this.dataListado.Columns[0].Visible = true;
-            }
-            else
-            {
-                this.dataListado.Columns[0].Visible = false;
-            }
-        }
+                DataGridViewRow row = dataListado.Rows[e.RowIndex];
+                bool estaSeleccionado = false;
 
-        private void dataListado_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dataListado.Columns["Eliminar"].Index)
-            {
-                DataGridViewCheckBoxCell ChkEliminar = (DataGridViewCheckBoxCell)dataListado.Rows[e.RowIndex].Cells["Eliminar"];
-                ChkEliminar.Value = !Convert.ToBoolean(ChkEliminar.Value);
+                // Obtener el estado actual del Tag
+                if (row.Cells["Seleccionar"].Tag != null)
+                {
+                    estaSeleccionado = (bool)row.Cells["Seleccionar"].Tag;
+                }
+
+                // Cambiar el estado
+                estaSeleccionado = !estaSeleccionado;
+
+                // Actualizar el texto del botón y el Tag
+                if (estaSeleccionado)
+                {
+                    row.Cells["Seleccionar"].Value = "✅"; // Checkbox marcado
+                    row.Cells["Seleccionar"].Tag = true;
+                    row.DefaultCellStyle.BackColor = Color.DarkGreen;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+                else
+                {
+                    row.Cells["Seleccionar"].Value = "⬜"; // Checkbox vacío
+                    row.Cells["Seleccionar"].Tag = false;
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                }
+
+                // Forzar el repintado de la fila
+                dataListado.InvalidateRow(e.RowIndex);
             }
         }
 
         private void dataListado_DoubleClick(object sender, EventArgs e)
         {
-            this.txtCategoriaID.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["idcategoria"].Value);
-            this.txtNombre.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["nombre"].Value);
-            this.txtDescripcion.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["descripcion"].Value);
-            this.tabControl1.SelectedIndex = 1;
+            if (this.dataListado.CurrentRow != null)
+            {
+                this.txtCategoriaID.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["idcategoria"].Value);
+                this.txtNombre.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["nombre"].Value);
+                this.txtDescripcion.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["descripcion"].Value);
+                this.tabControl1.SelectedIndex = 1;
+            }
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -189,40 +320,32 @@ namespace CampoArgentino.Presentacion
                 {
                     MensajeError("Falta ingresar algunos datos, serán remarcados");
                     errorIcono.SetError(txtNombre, "Ingrese un valor");
+                    return;
+                }
+
+                if (this.IsNuevo)
+                {
+                    rpta = NCategoria.Insertar(
+                        this.txtNombre.Text.Trim().ToUpper(),
+                        this.txtDescripcion.Text.Trim()
+                    );
                 }
                 else
                 {
-                    if (this.IsNuevo)
-                    {
-                        rpta = NCategoria.Insertar(
-                            this.txtNombre.Text.Trim().ToUpper(),
-                            this.txtDescripcion.Text.Trim()
-                        );
-                    }
-                    else
-                    {
-                        rpta = NCategoria.Editar(
-                            Convert.ToInt32(this.txtCategoriaID.Text),
-                            this.txtNombre.Text.Trim().ToUpper(),
-                            this.txtDescripcion.Text.Trim()
-                        );
-                    }
+                    rpta = NCategoria.Editar(
+                        Convert.ToInt32(this.txtCategoriaID.Text),
+                        this.txtNombre.Text.Trim().ToUpper(),
+                        this.txtDescripcion.Text.Trim()
+                    );
+                }
 
-                    if (rpta.Equals("OK"))
-                    {
-                        if (this.IsNuevo)
-                        {
-                            this.MensajeOk("Se insertó de forma correcta el registro");
-                        }
-                        else
-                        {
-                            this.MensajeOk("Se actualizó de forma correcta el registro");
-                        }
-                    }
-                    else
-                    {
-                        this.MensajeError(rpta);
-                    }
+                if (rpta.Equals("OK"))
+                {
+                    string mensaje = this.IsNuevo ?
+                        "Se insertó de forma correcta el registro" :
+                        "Se actualizó de forma correcta el registro";
+
+                    this.MensajeOk(mensaje);
 
                     this.IsNuevo = false;
                     this.IsEditar = false;
@@ -230,10 +353,14 @@ namespace CampoArgentino.Presentacion
                     this.Limpiar();
                     this.Mostrar();
                 }
+                else
+                {
+                    this.MensajeError(rpta);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + ex.StackTrace);
+                MensajeError($"Error al guardar la categoría: {ex.Message}");
             }
         }
 
@@ -260,13 +387,6 @@ namespace CampoArgentino.Presentacion
             this.Habilitar(false);
         }
 
-        private void FormCategoria_Load_1(object sender, EventArgs e)
-        {
-            this.Top = 0;
-            this.Left = 0;
-            this.Mostrar();
-            this.Habilitar(false);
-            this.Botones();
-        }
+      
     }
 }

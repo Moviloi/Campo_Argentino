@@ -65,6 +65,9 @@
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
+            dataListado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
             dataListado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -173,6 +176,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = Color.White;
             ClientSize = new Size(987, 698);
             Controls.Add(label3);

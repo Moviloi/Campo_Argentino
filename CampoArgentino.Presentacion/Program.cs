@@ -1,6 +1,8 @@
+using CampoArgentino.Presentacion;
+using OfficeOpenXml;
 using System;
 using System.Windows.Forms;
-using CampoArgentino.Presentacion;
+
 
 namespace CampoArgentino
 {
@@ -9,14 +11,13 @@ namespace CampoArgentino
         [STAThread]
         static void Main()
         {
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Mostrar el formulario de login primero
             FormLogin login = new FormLogin();
             login.ShowDialog();
-
-           
         }
     }
 }

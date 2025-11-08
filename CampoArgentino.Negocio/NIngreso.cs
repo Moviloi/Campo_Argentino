@@ -60,5 +60,23 @@ namespace CampoArgentino.Negocio
         {
             return new DIngreso().BuscarFechas(FechaInicio, FechaFin);
         }
+
+        // Método Insertar Ingreso Completo con Detalles
+        public static string InsertarIngresoCompleto(string NumeroDocumento, int Idproveedor, DateTime FechaCompra,
+            decimal Subtotal, decimal Impuestos, decimal Total, string Observaciones, int Idusuario, DataTable dtDetalle)
+        {
+            DIngreso Obj = new DIngreso()
+            {
+                NumeroDocumento = NumeroDocumento,
+                Idproveedor = Idproveedor,
+                FechaCompra = FechaCompra,
+                Subtotal = Subtotal,
+                Impuestos = Impuestos,
+                Total = Total,
+                Observaciones = Observaciones,
+                Idusuario = Idusuario
+            };
+            return Obj.InsertarIngresoCompleto(Obj, dtDetalle);
+        }
     }
 }

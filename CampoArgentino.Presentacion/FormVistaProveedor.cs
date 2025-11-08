@@ -121,6 +121,8 @@ namespace CampoArgentino.Presentacion
                 DialogResult = DialogResult.OK;
                 this.Close();
             }
+            //FormVistaProveedor_Ingreso frm = new FormVistaProveedor_Ingreso();
+            //frm.ShowDialog();
         }
 
         // Evento buscar al hacer click

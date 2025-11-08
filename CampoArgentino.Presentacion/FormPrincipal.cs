@@ -85,28 +85,10 @@ namespace CampoArgentino.Presentacion
             AbrirFormulario(frm);
         }
 
-        // ========== MÉTODOS DE CONSULTAS/REPORTES ==========
-        private void btnConsultas_Click(object sender, EventArgs e)
-        {
-            // Muestra el menú contextual de consultas
-            ContextMenuStrip menuConsultas = new ContextMenuStrip();
-
-            menuConsultas.Items.Add("Ventas", null, ventasToolStripMenuItem1_Click);
-            menuConsultas.Items.Add("Compras", null, comprasToolStripMenuItem1_Click);
-            menuConsultas.Items.Add("Clientes", null, clientesToolStripMenuItem1_Click);
-            menuConsultas.Items.Add("Proveedores", null, proveedoresToolStripMenuItem1_Click);
-            menuConsultas.Items.Add("Artículos", null, artículosToolStripMenuItem1_Click);
-            menuConsultas.Items.Add("Stock", null, stockToolStripMenuItem_Click);
-
-            // Mostrar el menú cerca del botón
-            Control source = (Control)sender;
-            menuConsultas.Show(source, new Point(0, source.Height));
-        }
-
         private void ventasToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             FormVistaArticulo_Venta frm = new FormVistaArticulo_Venta();
-            AbrirFormulario(frm);
+            AbrirFormularioEnPanel(frm);
         }
 
         private void comprasToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -187,13 +169,13 @@ namespace CampoArgentino.Presentacion
         {
             try
             {
-                // Cerrar el formulario actual si existe
+                // ✅ MEJOR - Cierra el form actual antes de abrir uno nuevo
                 if (panelContenedor.Controls.Count > 0)
                 {
                     Form formActual = panelContenedor.Controls[0] as Form;
                     if (formActual != null)
                     {
-                        formActual.Close();
+                        formActual.Close(); // Libera recursos correctamente
                     }
                     panelContenedor.Controls.Clear();
                 }
@@ -203,12 +185,13 @@ namespace CampoArgentino.Presentacion
                 formHijo.FormBorderStyle = FormBorderStyle.None;
                 formHijo.Dock = DockStyle.Fill;
                 panelContenedor.Controls.Add(formHijo);
-                panelContenedor.Tag = formHijo;
+                panelContenedor.Tag = formHijo; // ✅ Útil para referencia futura
                 formHijo.Show();
-                formHijo.BringToFront();
+                formHijo.BringToFront(); // ✅ Asegura que esté visible
             }
             catch (Exception ex)
             {
+                // ✅ MEJOR - Manejo de errores robusto
                 MessageBox.Show($"Error al abrir el formulario: {ex.Message}", "Error",
                               MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -224,7 +207,7 @@ namespace CampoArgentino.Presentacion
             AbrirFormulario(new FormInventario());
         }
 
-        
+
         private void ventasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnVentas_Click(sender, e);
@@ -271,10 +254,29 @@ namespace CampoArgentino.Presentacion
                 "Acerca de", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void btnInventario_Click_1(object sender, EventArgs e)
+        private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            // Tu método existente para abrir FormInventario
-            AbrirFormulario(new FormInventario());
+
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

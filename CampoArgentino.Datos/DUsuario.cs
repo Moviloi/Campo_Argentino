@@ -145,7 +145,7 @@ namespace CampoArgentino.Datos
             return rpta;
         }
 
-        // Método Eliminar (eliminación lógica)
+        // Método Eliminar
         public string Eliminar(DUsuario Usuario)
         {
             string rpta = "";

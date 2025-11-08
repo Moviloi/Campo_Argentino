@@ -53,7 +53,7 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(20, 15);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(296, 38);
+            lblTitulo.Size = new Size(281, 38);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Clientes para Ventas";
             // 
@@ -61,6 +61,9 @@
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
+            dataListado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
             dataListado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;

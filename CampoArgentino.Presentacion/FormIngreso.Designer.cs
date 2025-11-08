@@ -1,27 +1,38 @@
-﻿namespace CampoArgentino.Presentacion
+﻿using System;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace CampoArgentino.Presentacion
 {
     partial class FormIngreso
     {
         private System.ComponentModel.IContainer components = null;
+
+        // Main Controls
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.TabControl tabControl1;
+
+        // TabPage1 - Listado
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView dataListado;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Eliminar;
         private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.CheckBox chkEliminar;
         private System.Windows.Forms.Button btnAnular;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.DateTimePicker dtpFechaFin;
         private System.Windows.Forms.DateTimePicker dtpFechaInicio;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnImprimir;
+
+        // TabPage2 - Gestión
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.Button btnNuevo;
         private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtTotal;
@@ -38,11 +49,34 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtCompraID;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ErrorProvider errorIcono;
-        private System.Windows.Forms.ToolTip ttMensaje;
+
+        // Detalle Section
         private System.Windows.Forms.DataGridView dataListadoDetalle;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button btnImprimir;
+
+        // Article Management Panel
+        private System.Windows.Forms.Panel panelAgregarArticulo;
+        private System.Windows.Forms.Button btnAgregarArticulo;
+        private System.Windows.Forms.Button btnQuitarArticulo;
+        private System.Windows.Forms.TextBox txtCantidad;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtPrecioCompra;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cbArticulo;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtBuscarArticulo;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.DataGridView dataListadoArticulos;
+
+        // Additional Controls
+        private System.Windows.Forms.ErrorProvider errorIcono;
+        private System.Windows.Forms.ToolTip ttMensaje;
+
+        // Data
+        private DataTable dtDetalleIngreso;
+
+        // Para el TextBox de búsqueda (si no existe)
+        private TextBox txtBuscar;
 
         protected override void Dispose(bool disposing)
         {
@@ -55,16 +89,16 @@
 
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            components = new Container();
             panelHeader = new Panel();
             lblTitulo = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnNuevo = new Button();
             btnImprimir = new Button();
             dataListado = new DataGridView();
             Eliminar = new DataGridViewCheckBoxColumn();
             lblTotal = new Label();
-            chkEliminar = new CheckBox();
             btnAnular = new Button();
             btnBuscar = new Button();
             dtpFechaFin = new DateTimePicker();
@@ -72,6 +106,18 @@
             label3 = new Label();
             label2 = new Label();
             tabPage2 = new TabPage();
+            panelAgregarArticulo = new Panel();
+            label15 = new Label();
+            txtBuscarArticulo = new TextBox();
+            label14 = new Label();
+            cbArticulo = new ComboBox();
+            label13 = new Label();
+            txtPrecioCompra = new TextBox();
+            label12 = new Label();
+            txtCantidad = new TextBox();
+            btnQuitarArticulo = new Button();
+            btnAgregarArticulo = new Button();
+            dataListadoArticulos = new DataGridView();
             dataListadoDetalle = new DataGridView();
             label11 = new Label();
             groupBox1 = new GroupBox();
@@ -93,17 +139,18 @@
             label10 = new Label();
             btnCancelar = new Button();
             btnGuardar = new Button();
-            btnNuevo = new Button();
             errorIcono = new ErrorProvider(components);
             ttMensaje = new ToolTip(components);
             panelHeader.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataListado).BeginInit();
+            ((ISupportInitialize)dataListado).BeginInit();
             tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataListadoDetalle).BeginInit();
+            panelAgregarArticulo.SuspendLayout();
+            ((ISupportInitialize)dataListadoArticulos).BeginInit();
+            ((ISupportInitialize)dataListadoDetalle).BeginInit();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)errorIcono).BeginInit();
+            ((ISupportInitialize)errorIcono).BeginInit();
             SuspendLayout();
             // 
             // panelHeader
@@ -130,23 +177,23 @@
             // 
             // tabControl1
             // 
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Dock = DockStyle.Fill;
-            tabControl1.Location = new Point(0, 75);
+            tabControl1.Location = new Point(0, 83);
             tabControl1.Margin = new Padding(3, 4, 3, 4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1000, 525);
+            tabControl1.Size = new Size(1000, 504);
             tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(btnNuevo);
             tabPage1.Controls.Add(btnImprimir);
             tabPage1.Controls.Add(dataListado);
             tabPage1.Controls.Add(lblTotal);
-            tabPage1.Controls.Add(chkEliminar);
             tabPage1.Controls.Add(btnAnular);
             tabPage1.Controls.Add(btnBuscar);
             tabPage1.Controls.Add(dtpFechaFin);
@@ -157,9 +204,25 @@
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3, 4, 3, 4);
-            tabPage1.Size = new Size(992, 492);
+            tabPage1.Size = new Size(992, 471);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Listado";
+            // 
+            // btnNuevo
+            // 
+            btnNuevo.BackColor = Color.FromArgb(0, 0, 64);
+            btnNuevo.FlatAppearance.BorderSize = 0;
+            btnNuevo.FlatStyle = FlatStyle.Flat;
+            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = Color.White;
+            btnNuevo.Location = new Point(781, 8);
+            btnNuevo.Margin = new Padding(3, 4, 3, 4);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(105, 81);
+            btnNuevo.TabIndex = 11;
+            btnNuevo.Text = "&Nuevo Compra";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += btnNuevo_Click;
             // 
             // btnImprimir
             // 
@@ -181,18 +244,21 @@
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
+            dataListado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
             dataListado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataListado.Columns.AddRange(new DataGridViewColumn[] { Eliminar });
-            dataListado.Location = new Point(20, 134);
+            dataListado.Location = new Point(6, 134);
             dataListado.Margin = new Padding(3, 4, 3, 4);
             dataListado.Name = "dataListado";
             dataListado.ReadOnly = true;
             dataListado.RowHeadersWidth = 51;
             dataListado.RowTemplate.Height = 24;
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataListado.Size = new Size(950, 334);
+            dataListado.Size = new Size(978, 329);
             dataListado.TabIndex = 9;
             dataListado.CellContentClick += dataListado_CellContentClick;
             dataListado.DoubleClick += dataListado_DoubleClick;
@@ -203,7 +269,7 @@
             Eliminar.MinimumWidth = 6;
             Eliminar.Name = "Eliminar";
             Eliminar.ReadOnly = true;
-            Eliminar.Width = 125;
+            Eliminar.Width = 58;
             // 
             // lblTotal
             // 
@@ -215,20 +281,6 @@
             lblTotal.Size = new Size(45, 20);
             lblTotal.TabIndex = 8;
             lblTotal.Text = "Total:";
-            // 
-            // chkEliminar
-            // 
-            chkEliminar.AutoSize = true;
-            chkEliminar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chkEliminar.ForeColor = Color.FromArgb(52, 73, 94);
-            chkEliminar.Location = new Point(20, 99);
-            chkEliminar.Margin = new Padding(3, 4, 3, 4);
-            chkEliminar.Name = "chkEliminar";
-            chkEliminar.Size = new Size(74, 24);
-            chkEliminar.TabIndex = 7;
-            chkEliminar.Text = "Anular";
-            chkEliminar.UseVisualStyleBackColor = true;
-            chkEliminar.CheckedChanged += chkEliminar_CheckedChanged;
             // 
             // btnAnular
             // 
@@ -307,6 +359,7 @@
             // tabPage2
             // 
             tabPage2.BackColor = Color.White;
+            tabPage2.Controls.Add(panelAgregarArticulo);
             tabPage2.Controls.Add(dataListadoDetalle);
             tabPage2.Controls.Add(label11);
             tabPage2.Controls.Add(groupBox1);
@@ -314,18 +367,166 @@
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3, 4, 3, 4);
-            tabPage2.Size = new Size(992, 492);
+            tabPage2.Size = new Size(992, 471);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Mantenimiento";
+            tabPage2.Text = "Gestión de Ingreso";
+            // 
+            // panelAgregarArticulo
+            // 
+            panelAgregarArticulo.BackColor = Color.FromArgb(248, 249, 250);
+            panelAgregarArticulo.BorderStyle = BorderStyle.FixedSingle;
+            panelAgregarArticulo.Controls.Add(label15);
+            panelAgregarArticulo.Controls.Add(txtBuscarArticulo);
+            panelAgregarArticulo.Controls.Add(label14);
+            panelAgregarArticulo.Controls.Add(cbArticulo);
+            panelAgregarArticulo.Controls.Add(label13);
+            panelAgregarArticulo.Controls.Add(txtPrecioCompra);
+            panelAgregarArticulo.Controls.Add(label12);
+            panelAgregarArticulo.Controls.Add(txtCantidad);
+            panelAgregarArticulo.Controls.Add(btnQuitarArticulo);
+            panelAgregarArticulo.Controls.Add(btnAgregarArticulo);
+            panelAgregarArticulo.Controls.Add(dataListadoArticulos);
+            panelAgregarArticulo.Location = new Point(20, 320);
+            panelAgregarArticulo.Name = "panelAgregarArticulo";
+            panelAgregarArticulo.Size = new Size(950, 150);
+            panelAgregarArticulo.TabIndex = 3;
+            panelAgregarArticulo.Visible = false;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label15.Location = new Point(20, 40);
+            label15.Name = "label15";
+            label15.Size = new Size(55, 20);
+            label15.TabIndex = 0;
+            label15.Text = "Buscar:";
+            // 
+            // txtBuscarArticulo
+            // 
+            txtBuscarArticulo.BorderStyle = BorderStyle.FixedSingle;
+            txtBuscarArticulo.Location = new Point(20, 60);
+            txtBuscarArticulo.Name = "txtBuscarArticulo";
+            txtBuscarArticulo.PlaceholderText = "Buscar artículo...";
+            txtBuscarArticulo.Size = new Size(120, 27);
+            txtBuscarArticulo.TabIndex = 5;
+            txtBuscarArticulo.TextChanged += txtBuscarArticulo_TextChanged;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label14.Location = new Point(150, 40);
+            label14.Name = "label14";
+            label14.Size = new Size(64, 20);
+            label14.TabIndex = 0;
+            label14.Text = "Artículo:";
+            // 
+            // cbArticulo
+            // 
+            cbArticulo.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbArticulo.FormattingEnabled = true;
+            cbArticulo.Location = new Point(150, 60);
+            cbArticulo.Name = "cbArticulo";
+            cbArticulo.Size = new Size(300, 28);
+            cbArticulo.TabIndex = 6;
+            cbArticulo.SelectedIndexChanged += cbArticulo_SelectedIndexChanged;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label13.Location = new Point(700, 40);
+            label13.Name = "label13";
+            label13.Size = new Size(110, 20);
+            label13.TabIndex = 0;
+            label13.Text = "Precio Compra:";
+            // 
+            // txtPrecioCompra
+            // 
+            txtPrecioCompra.BorderStyle = BorderStyle.FixedSingle;
+            txtPrecioCompra.Location = new Point(700, 60);
+            txtPrecioCompra.Name = "txtPrecioCompra";
+            txtPrecioCompra.Size = new Size(100, 27);
+            txtPrecioCompra.TabIndex = 9;
+            txtPrecioCompra.Text = "0.00";
+            txtPrecioCompra.TextAlign = HorizontalAlignment.Right;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.Location = new Point(600, 40);
+            label12.Name = "label12";
+            label12.Size = new Size(72, 20);
+            label12.TabIndex = 0;
+            label12.Text = "Cantidad:";
+            // 
+            // txtCantidad
+            // 
+            txtCantidad.BorderStyle = BorderStyle.FixedSingle;
+            txtCantidad.Location = new Point(600, 60);
+            txtCantidad.Name = "txtCantidad";
+            txtCantidad.Size = new Size(80, 27);
+            txtCantidad.TabIndex = 8;
+            txtCantidad.Text = "1";
+            txtCantidad.TextAlign = HorizontalAlignment.Right;
+            // 
+            // btnQuitarArticulo
+            // 
+            btnQuitarArticulo.BackColor = Color.FromArgb(231, 76, 60);
+            btnQuitarArticulo.FlatAppearance.BorderSize = 0;
+            btnQuitarArticulo.FlatStyle = FlatStyle.Flat;
+            btnQuitarArticulo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnQuitarArticulo.ForeColor = Color.White;
+            btnQuitarArticulo.Location = new Point(820, 100);
+            btnQuitarArticulo.Name = "btnQuitarArticulo";
+            btnQuitarArticulo.Size = new Size(110, 35);
+            btnQuitarArticulo.TabIndex = 11;
+            btnQuitarArticulo.Text = "&Quitar";
+            btnQuitarArticulo.UseVisualStyleBackColor = false;
+            btnQuitarArticulo.Click += btnQuitarArticulo_Click;
+            // 
+            // btnAgregarArticulo
+            // 
+            btnAgregarArticulo.BackColor = Color.FromArgb(46, 204, 113);
+            btnAgregarArticulo.FlatAppearance.BorderSize = 0;
+            btnAgregarArticulo.FlatStyle = FlatStyle.Flat;
+            btnAgregarArticulo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAgregarArticulo.ForeColor = Color.White;
+            btnAgregarArticulo.Location = new Point(700, 100);
+            btnAgregarArticulo.Name = "btnAgregarArticulo";
+            btnAgregarArticulo.Size = new Size(110, 35);
+            btnAgregarArticulo.TabIndex = 10;
+            btnAgregarArticulo.Text = "&Agregar";
+            btnAgregarArticulo.UseVisualStyleBackColor = false;
+            btnAgregarArticulo.Click += btnAgregarArticulo_Click;
+            // 
+            // dataListadoArticulos
+            // 
+            dataListadoArticulos.AllowUserToAddRows = false;
+            dataListadoArticulos.AllowUserToDeleteRows = false;
+            dataListadoArticulos.BackgroundColor = Color.White;
+            dataListadoArticulos.BorderStyle = BorderStyle.Fixed3D;
+            dataListadoArticulos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataListadoArticulos.Location = new Point(20, 90);
+            dataListadoArticulos.Name = "dataListadoArticulos";
+            dataListadoArticulos.ReadOnly = true;
+            dataListadoArticulos.RowHeadersWidth = 51;
+            dataListadoArticulos.RowTemplate.Height = 24;
+            dataListadoArticulos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataListadoArticulos.Size = new Size(570, 50);
+            dataListadoArticulos.TabIndex = 12;
+            dataListadoArticulos.Visible = false;
+            dataListadoArticulos.DoubleClick += dataListadoArticulos_DoubleClick;
             // 
             // dataListadoDetalle
             // 
-            dataListadoDetalle.AllowUserToAddRows = false;
             dataListadoDetalle.AllowUserToDeleteRows = false;
             dataListadoDetalle.BackgroundColor = Color.White;
             dataListadoDetalle.BorderStyle = BorderStyle.Fixed3D;
             dataListadoDetalle.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataListadoDetalle.Location = new Point(20, 350);
+            dataListadoDetalle.Location = new Point(20, 480);
             dataListadoDetalle.Margin = new Padding(3, 4, 3, 4);
             dataListadoDetalle.Name = "dataListadoDetalle";
             dataListadoDetalle.ReadOnly = true;
@@ -339,7 +540,7 @@
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label11.ForeColor = Color.FromArgb(52, 73, 94);
-            label11.Location = new Point(20, 320);
+            label11.Location = new Point(20, 450);
             label11.Name = "label11";
             label11.Size = new Size(161, 23);
             label11.TabIndex = 1;
@@ -365,7 +566,6 @@
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(btnCancelar);
             groupBox1.Controls.Add(btnGuardar);
-            groupBox1.Controls.Add(btnNuevo);
             groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.FromArgb(52, 73, 94);
             groupBox1.Location = new Point(20, 20);
@@ -431,7 +631,6 @@
             txtImpuestos.Size = new Size(150, 27);
             txtImpuestos.TabIndex = 15;
             txtImpuestos.Text = "0.00";
-            txtImpuestos.TextChanged += txtImpuestos_TextChanged;
             // 
             // label7
             // 
@@ -453,7 +652,6 @@
             txtSubtotal.Size = new Size(150, 27);
             txtSubtotal.TabIndex = 13;
             txtSubtotal.Text = "0.00";
-            txtSubtotal.TextChanged += txtSubtotal_TextChanged;
             // 
             // label6
             // 
@@ -578,22 +776,6 @@
             btnGuardar.UseVisualStyleBackColor = false;
             btnGuardar.Click += btnGuardar_Click;
             // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.FromArgb(41, 128, 185);
-            btnNuevo.FlatAppearance.BorderSize = 0;
-            btnNuevo.FlatStyle = FlatStyle.Flat;
-            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(580, 230);
-            btnNuevo.Margin = new Padding(3, 4, 3, 4);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(107, 41);
-            btnNuevo.TabIndex = 0;
-            btnNuevo.Text = "&Nuevo";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevo_Click;
-            // 
             // errorIcono
             // 
             errorIcono.ContainerControl = this;
@@ -621,15 +803,19 @@
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataListado).EndInit();
+            ((ISupportInitialize)dataListado).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataListadoDetalle).EndInit();
+            panelAgregarArticulo.ResumeLayout(false);
+            panelAgregarArticulo.PerformLayout();
+            ((ISupportInitialize)dataListadoArticulos).EndInit();
+            ((ISupportInitialize)dataListadoDetalle).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)errorIcono).EndInit();
+            ((ISupportInitialize)errorIcono).EndInit();
             ResumeLayout(false);
 
         }
+        private Button btnNuevo;
     }
 }

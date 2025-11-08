@@ -17,7 +17,6 @@
         private Button btnCancelar;
         private Button btnEditar;
         private Button btnGuardar;
-        private Button btnNuevo;
         private CheckBox chkNotificar;
         private TextBox txtStockMaximo;
         private Label label6;
@@ -52,6 +51,7 @@
             lblTitulo = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnNuevo = new Button();
             dataListado = new DataGridView();
             lblTotal = new Label();
             btnBuscar = new Button();
@@ -77,7 +77,6 @@
             btnCancelar = new Button();
             btnEditar = new Button();
             btnGuardar = new Button();
-            btnNuevo = new Button();
             ttMensaje = new ToolTip(components);
             errorIcono = new ErrorProvider(components);
             panelHeader.SuspendLayout();
@@ -110,24 +109,26 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(20, 15);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(327, 38);
+            lblTitulo.Size = new Size(343, 38);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Configuración de Alertas";
             // 
             // tabControl1
             // 
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(17, 101);
+            tabControl1.Location = new Point(0, 83);
             tabControl1.Margin = new Padding(3, 4, 3, 4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(953, 574);
+            tabControl1.Size = new Size(987, 574);
             tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(btnNuevo);
             tabPage1.Controls.Add(dataListado);
             tabPage1.Controls.Add(lblTotal);
             tabPage1.Controls.Add(btnBuscar);
@@ -137,25 +138,44 @@
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3, 4, 3, 4);
-            tabPage1.Size = new Size(945, 541);
+            tabPage1.Size = new Size(979, 541);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Listado de Artículos";
+            // 
+            // btnNuevo
+            // 
+            btnNuevo.BackColor = Color.FromArgb(255, 128, 0);
+            btnNuevo.FlatAppearance.BorderSize = 0;
+            btnNuevo.FlatStyle = FlatStyle.Flat;
+            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = Color.White;
+            btnNuevo.Location = new Point(573, 47);
+            btnNuevo.Margin = new Padding(3, 4, 3, 4);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(107, 41);
+            btnNuevo.TabIndex = 8;
+            btnNuevo.Text = "&Nuevo";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += btnNuevo_Click;
             // 
             // dataListado
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
+            dataListado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
             dataListado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataListado.Location = new Point(14, 134);
+            dataListado.Location = new Point(8, 134);
             dataListado.Margin = new Padding(3, 4, 3, 4);
             dataListado.Name = "dataListado";
             dataListado.ReadOnly = true;
             dataListado.RowHeadersWidth = 51;
             dataListado.RowTemplate.Height = 24;
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataListado.Size = new Size(894, 371);
+            dataListado.Size = new Size(963, 371);
             dataListado.TabIndex = 7;
             dataListado.DoubleClick += dataListado_DoubleClick;
             // 
@@ -217,7 +237,7 @@
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3, 4, 3, 4);
-            tabPage2.Size = new Size(945, 541);
+            tabPage2.Size = new Size(979, 541);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Configuración";
             // 
@@ -249,7 +269,7 @@
             btnAplicarGlobal.Location = new Point(150, 140);
             btnAplicarGlobal.Margin = new Padding(3, 4, 3, 4);
             btnAplicarGlobal.Name = "btnAplicarGlobal";
-            btnAplicarGlobal.Size = new Size(107, 41);
+            btnAplicarGlobal.Size = new Size(130, 41);
             btnAplicarGlobal.TabIndex = 4;
             btnAplicarGlobal.Text = "&Aplicar a Todos";
             btnAplicarGlobal.UseVisualStyleBackColor = false;
@@ -261,7 +281,7 @@
             numStockMaximoGlobal.Margin = new Padding(3, 4, 3, 4);
             numStockMaximoGlobal.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numStockMaximoGlobal.Name = "numStockMaximoGlobal";
-            numStockMaximoGlobal.Size = new Size(100, 27);
+            numStockMaximoGlobal.Size = new Size(130, 27);
             numStockMaximoGlobal.TabIndex = 3;
             numStockMaximoGlobal.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
@@ -271,7 +291,7 @@
             numStockMinimoGlobal.Margin = new Padding(3, 4, 3, 4);
             numStockMinimoGlobal.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numStockMinimoGlobal.Name = "numStockMinimoGlobal";
-            numStockMinimoGlobal.Size = new Size(100, 27);
+            numStockMinimoGlobal.Size = new Size(130, 27);
             numStockMinimoGlobal.TabIndex = 2;
             numStockMinimoGlobal.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
@@ -280,7 +300,7 @@
             label8.AutoSize = true;
             label8.Location = new Point(50, 92);
             label8.Name = "label8";
-            label8.Size = new Size(94, 20);
+            label8.Size = new Size(83, 20);
             label8.TabIndex = 1;
             label8.Text = "Stock Máx.:";
             // 
@@ -289,7 +309,7 @@
             label7.AutoSize = true;
             label7.Location = new Point(50, 52);
             label7.Name = "label7";
-            label7.Size = new Size(90, 20);
+            label7.Size = new Size(80, 20);
             label7.TabIndex = 0;
             label7.Text = "Stock Mín.:";
             // 
@@ -307,7 +327,6 @@
             groupBox1.Controls.Add(btnCancelar);
             groupBox1.Controls.Add(btnEditar);
             groupBox1.Controls.Add(btnGuardar);
-            groupBox1.Controls.Add(btnNuevo);
             groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.FromArgb(52, 73, 94);
             groupBox1.Location = new Point(14, 26);
@@ -327,7 +346,7 @@
             chkNotificar.Location = new Point(150, 180);
             chkNotificar.Margin = new Padding(3, 4, 3, 4);
             chkNotificar.Name = "chkNotificar";
-            chkNotificar.Size = new Size(175, 24);
+            chkNotificar.Size = new Size(173, 24);
             chkNotificar.TabIndex = 12;
             chkNotificar.Text = "Activar notificaciones";
             chkNotificar.UseVisualStyleBackColor = true;
@@ -347,7 +366,7 @@
             label6.AutoSize = true;
             label6.Location = new Point(50, 143);
             label6.Name = "label6";
-            label6.Size = new Size(94, 20);
+            label6.Size = new Size(83, 20);
             label6.TabIndex = 10;
             label6.Text = "Stock Máx.:";
             // 
@@ -366,7 +385,7 @@
             label5.AutoSize = true;
             label5.Location = new Point(50, 103);
             label5.Name = "label5";
-            label5.Size = new Size(90, 20);
+            label5.Size = new Size(80, 20);
             label5.TabIndex = 8;
             label5.Text = "Stock Mín.:";
             // 
@@ -385,7 +404,7 @@
             label4.AutoSize = true;
             label4.Location = new Point(50, 63);
             label4.Name = "label4";
-            label4.Size = new Size(67, 20);
+            label4.Size = new Size(64, 20);
             label4.TabIndex = 6;
             label4.Text = "Artículo:";
             // 
@@ -456,21 +475,9 @@
             btnGuardar.UseVisualStyleBackColor = false;
             btnGuardar.Click += btnGuardar_Click;
             // 
-            // btnNuevo
+            // errorIcono
             // 
-            btnNuevo.BackColor = Color.FromArgb(41, 128, 185);
-            btnNuevo.FlatAppearance.BorderSize = 0;
-            btnNuevo.FlatStyle = FlatStyle.Flat;
-            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(150, 220);
-            btnNuevo.Margin = new Padding(3, 4, 3, 4);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(107, 41);
-            btnNuevo.TabIndex = 0;
-            btnNuevo.Text = "&Nuevo";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevo_Click;
+            errorIcono.ContainerControl = this;
             // 
             // FormConfigAlerta
             // 
@@ -501,5 +508,6 @@
             ((System.ComponentModel.ISupportInitialize)errorIcono).EndInit();
             ResumeLayout(false);
         }
+        private Button btnNuevo;
     }
 }

@@ -37,7 +37,7 @@
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = Color.FromArgb(231, 76, 60); // Rojo para alertas
+            panelHeader.BackColor = Color.FromArgb(231, 76, 60);
             panelHeader.Controls.Add(lblTitulo);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
@@ -53,7 +53,7 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(20, 15);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(329, 38);
+            lblTitulo.Size = new Size(343, 38);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Alertas de Stock Bajo 🚨";
             // 
@@ -61,17 +61,20 @@
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
+            dataListado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
             dataListado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataListado.Location = new Point(17, 194);
+            dataListado.Location = new Point(12, 194);
             dataListado.Margin = new Padding(3, 4, 3, 4);
             dataListado.Name = "dataListado";
             dataListado.ReadOnly = true;
             dataListado.RowHeadersWidth = 51;
             dataListado.RowTemplate.Height = 24;
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataListado.Size = new Size(953, 474);
+            dataListado.Size = new Size(963, 491);
             dataListado.TabIndex = 7;
             dataListado.DoubleClick += dataListado_DoubleClick;
             // 
@@ -82,7 +85,7 @@
             lblTotal.ForeColor = Color.FromArgb(52, 73, 94);
             lblTotal.Location = new Point(503, 159);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(68, 20);
+            lblTotal.Size = new Size(76, 20);
             lblTotal.TabIndex = 6;
             lblTotal.Text = "Alertas: 0";
             // 
@@ -141,7 +144,7 @@
             label1.ForeColor = Color.FromArgb(52, 73, 94);
             label1.Location = new Point(26, 112);
             label1.Name = "label1";
-            label1.Size = new Size(55, 20);
+            label1.Size = new Size(57, 20);
             label1.TabIndex = 2;
             label1.Text = "Acción:";
             // 

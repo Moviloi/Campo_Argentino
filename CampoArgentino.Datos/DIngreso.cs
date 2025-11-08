@@ -220,13 +220,16 @@ namespace CampoArgentino.Datos
                 SqlCmd.CommandText = "spCampoArgentino_AnularIngreso";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter ParIdIngreso = new SqlParameter();
-                ParIdIngreso.ParameterName = "@idingreso";
-                ParIdIngreso.SqlDbType = SqlDbType.Int;
-                ParIdIngreso.Value = Ingreso.Idingreso;
-                SqlCmd.Parameters.Add(ParIdIngreso);
+                SqlParameter ParIdingreso = new SqlParameter();
+                ParIdingreso.ParameterName = "@idingreso";
+                ParIdingreso.SqlDbType = SqlDbType.Int;
+                ParIdingreso.Value = Ingreso.Idingreso;
+                SqlCmd.Parameters.Add(ParIdingreso);
 
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Anuló el Registro";
+                //  Usa ExecuteScalar para obtener el resultado
+                object result = SqlCmd.ExecuteScalar();
+                rpta = result != null ? result.ToString() : "No se Anuló el Registro";
+
             }
             catch (Exception ex)
             {
@@ -236,6 +239,7 @@ namespace CampoArgentino.Datos
             {
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
+
             return rpta;
         }
 
@@ -299,6 +303,103 @@ namespace CampoArgentino.Datos
                 DtResultado = null;
             }
             return DtResultado;
+        }
+
+        // Método Insertar Ingreso Completo con Detalle
+        public string InsertarIngresoCompleto(DIngreso Ingreso, DataTable Detalle)
+        {
+            string rpta = "";
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCon.Open();
+
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_InsertarIngresoCompleto";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                // Parámetros del ingreso
+                SqlParameter ParNumeroDocumento = new SqlParameter();
+                ParNumeroDocumento.ParameterName = "@NumeroDocumento";
+                ParNumeroDocumento.SqlDbType = SqlDbType.VarChar;
+                ParNumeroDocumento.Size = 50;
+                ParNumeroDocumento.Value = Ingreso.NumeroDocumento;
+                SqlCmd.Parameters.Add(ParNumeroDocumento);
+
+                SqlParameter ParIdproveedor = new SqlParameter();
+                ParIdproveedor.ParameterName = "@idproveedor";
+                ParIdproveedor.SqlDbType = SqlDbType.Int;
+                ParIdproveedor.Value = Ingreso.Idproveedor;
+                SqlCmd.Parameters.Add(ParIdproveedor);
+
+                SqlParameter ParFechaCompra = new SqlParameter();
+                ParFechaCompra.ParameterName = "@FechaCompra";
+                ParFechaCompra.SqlDbType = SqlDbType.DateTime;
+                ParFechaCompra.Value = Ingreso.FechaCompra;
+                SqlCmd.Parameters.Add(ParFechaCompra);
+
+                SqlParameter ParSubtotal = new SqlParameter();
+                ParSubtotal.ParameterName = "@Subtotal";
+                ParSubtotal.SqlDbType = SqlDbType.Decimal;
+                ParSubtotal.Precision = 18;
+                ParSubtotal.Scale = 2;
+                ParSubtotal.Value = Ingreso.Subtotal;
+                SqlCmd.Parameters.Add(ParSubtotal);
+
+                SqlParameter ParImpuestos = new SqlParameter();
+                ParImpuestos.ParameterName = "@Impuestos";
+                ParImpuestos.SqlDbType = SqlDbType.Decimal;
+                ParImpuestos.Precision = 18;
+                ParImpuestos.Scale = 2;
+                ParImpuestos.Value = Ingreso.Impuestos;
+                SqlCmd.Parameters.Add(ParImpuestos);
+
+                SqlParameter ParTotal = new SqlParameter();
+                ParTotal.ParameterName = "@Total";
+                ParTotal.SqlDbType = SqlDbType.Decimal;
+                ParTotal.Precision = 18;
+                ParTotal.Scale = 2;
+                ParTotal.Value = Ingreso.Total;
+                SqlCmd.Parameters.Add(ParTotal);
+
+                SqlParameter ParObservaciones = new SqlParameter();
+                ParObservaciones.ParameterName = "@Observaciones";
+                ParObservaciones.SqlDbType = SqlDbType.VarChar;
+                ParObservaciones.Size = 500;
+                ParObservaciones.Value = Ingreso.Observaciones;
+                SqlCmd.Parameters.Add(ParObservaciones);
+
+                SqlParameter ParIdusuario = new SqlParameter();
+                ParIdusuario.ParameterName = "@idusuario";
+                ParIdusuario.SqlDbType = SqlDbType.Int;
+                ParIdusuario.Value = Ingreso.Idusuario;
+                SqlCmd.Parameters.Add(ParIdusuario);
+
+                // PARÁMETRO DETALLE TEMPORALMENTE VACÍO
+                SqlParameter ParDetalle = new SqlParameter();
+                ParDetalle.ParameterName = "@Detalle";
+                ParDetalle.SqlDbType = SqlDbType.Structured;
+                ParDetalle.TypeName = "dbo.DetalleIngresoType";
+               
+                SqlCmd.Parameters.Add(ParDetalle);
+
+                object result = SqlCmd.ExecuteScalar();
+                rpta = result != null ? result.ToString() : "No retornó resultado";
+
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+
+            return rpta;
         }
     }
 }

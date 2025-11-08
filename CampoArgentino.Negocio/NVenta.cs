@@ -6,49 +6,78 @@ namespace CampoArgentino.Negocio
 {
     public class NVenta
     {
-        // Método Insertar
-        public static string Insertar(string numeroDocumento, int idcliente, DateTime fechaVenta,
-                                     decimal subtotal, decimal impuestos, decimal total,
-                                     string observaciones, int idusuario)
-        {
-            DVenta Obj = new DVenta();
-            Obj.NumeroDocumento = numeroDocumento;
-            Obj.Idcliente = idcliente;
-            Obj.FechaVenta = fechaVenta;
-            Obj.Subtotal = subtotal;
-            Obj.Impuestos = impuestos;
-            Obj.Total = total;
-            Obj.Observaciones = observaciones;
-            Obj.Idusuario = idusuario;
-            return Obj.Insertar(Obj);
-        }
-
-        // Método Anular
-        public static string Anular(int ventaID)
-        {
-            DVenta Obj = new DVenta();
-            Obj.VentaID = ventaID;
-            return Obj.Anular(Obj);
-        }
-
         // Método Mostrar
         public static DataTable Mostrar()
         {
             return new DVenta().Mostrar();
         }
 
-        // Método Buscar por Fechas
-        public static DataTable BuscarFechas(string fechaInicio, string fechaFin)
+        // Método Insertar
+        public static string Insertar(string NumeroDocumento, int Idcliente, DateTime FechaVenta,
+                                    decimal Subtotal, decimal Impuestos, decimal Total,
+                                    string Observaciones, int Idusuario)
         {
             DVenta Obj = new DVenta();
-            return Obj.BuscarFechas(fechaInicio, fechaFin);
+            Obj.NumeroDocumento = NumeroDocumento;
+            Obj.Idcliente = Idcliente;
+            Obj.FechaVenta = FechaVenta;
+            Obj.Subtotal = Subtotal;
+            Obj.Impuestos = Impuestos;
+            Obj.Total = Total;
+            Obj.Observaciones = Observaciones;
+            Obj.Idusuario = Idusuario;
+
+            return Obj.Insertar(Obj);
+        }
+
+        // Método Anular
+        public static string Anular(int Idventa)
+        {
+            DVenta Obj = new DVenta();
+            Obj.Idventa = Idventa;
+            return Obj.Anular(Obj);
+        }
+
+        // Método Buscar por Fechas
+        public static DataTable BuscarFechas(string FechaInicio, string FechaFin)
+        {
+            DVenta Obj = new DVenta();
+            return Obj.BuscarFechas(FechaInicio, FechaFin);
         }
 
         // Método Mostrar Detalle
-        public static DataTable MostrarDetalle(int ventaID)
+        public static DataTable MostrarDetalle(int Idventa)
         {
             DVenta Obj = new DVenta();
-            return Obj.MostrarDetalle(ventaID);
+            return Obj.MostrarDetalle(Idventa);
+        }
+
+
+        // MÉTODOS PARA VENTA COMPLETA
+
+        public static string InsertarVentaCompleta(string NumeroDocumento, int Idcliente, DateTime FechaVenta,
+                decimal Subtotal, decimal Impuestos, decimal Total, string Observaciones, int Idusuario, DataTable dtDetalle)
+        {
+            DVenta Obj = new DVenta()
+            {
+                NumeroDocumento = NumeroDocumento,
+                Idcliente = Idcliente,
+                FechaVenta = FechaVenta,
+                Subtotal = Subtotal,
+                Impuestos = Impuestos,
+                Total = Total,
+                Observaciones = Observaciones,
+                Idusuario = Idusuario
+            };
+            return Obj.InsertarVentaCompleta(Obj, dtDetalle);
+        }
+
+        public static string ObtenerProximoNumeroDocumento()
+        {
+            return new DVenta().ObtenerProximoNumeroDocumento();
         }
     }
-}
+
+
+    }
+

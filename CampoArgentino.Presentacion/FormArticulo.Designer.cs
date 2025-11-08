@@ -8,7 +8,6 @@
         private TextBox txtBuscar;
         private Button btnBuscar;
         private DataGridView dataListado;
-        private DataGridViewCheckBoxColumn Eliminar;
         private Label lblTotal;
         private CheckBox chkEliminar;
         private Button btnEliminar;
@@ -18,9 +17,7 @@
         private TabPage tabPage2;
         private GroupBox groupBox1;
         private Button btnCancelar;
-        private Button btnEditar;
         private Button btnGuardar;
-        private Button btnNuevo;
         private TextBox txtDescripcion;
         private TextBox txtNombre;
         private TextBox txtIdarticulo;
@@ -65,6 +62,7 @@
             label1 = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnNuevo = new Button();
             btnReporte = new Button();
             btnImprimir = new Button();
             chkEliminar = new CheckBox();
@@ -77,6 +75,7 @@
             lblTotal = new Label();
             tabPage2 = new TabPage();
             groupBox1 = new GroupBox();
+            txtStockMaximo = new TextBox();
             txtPrecioCompra = new TextBox();
             label11 = new Label();
             cbPresentacion = new ComboBox();
@@ -92,7 +91,6 @@
             btnCancelar = new Button();
             btnEditar = new Button();
             btnGuardar = new Button();
-            btnNuevo = new Button();
             txtDescripcion = new TextBox();
             txtNombre = new TextBox();
             txtIdarticulo = new TextBox();
@@ -127,18 +125,20 @@
             // 
             // tabControl1
             // 
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(17, 101);
+            tabControl1.Location = new Point(0, 83);
             tabControl1.Margin = new Padding(3, 4, 3, 4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(953, 574);
+            tabControl1.Size = new Size(1104, 545);
             tabControl1.TabIndex = 13;
             // 
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(btnNuevo);
             tabPage1.Controls.Add(btnReporte);
             tabPage1.Controls.Add(btnImprimir);
             tabPage1.Controls.Add(chkEliminar);
@@ -152,9 +152,25 @@
             tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3, 4, 3, 4);
-            tabPage1.Size = new Size(945, 541);
+            tabPage1.Size = new Size(1096, 512);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Listado";
+            // 
+            // btnNuevo
+            // 
+            btnNuevo.BackColor = Color.FromArgb(0, 0, 64);
+            btnNuevo.FlatAppearance.BorderSize = 0;
+            btnNuevo.FlatStyle = FlatStyle.Flat;
+            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = Color.White;
+            btnNuevo.Location = new Point(541, 8);
+            btnNuevo.Margin = new Padding(3, 4, 3, 4);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(105, 80);
+            btnNuevo.TabIndex = 9;
+            btnNuevo.Text = "&Nuevo Artículo";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += btnNuevo_Click;
             // 
             // btnReporte
             // 
@@ -179,27 +195,21 @@
             btnImprimir.FlatStyle = FlatStyle.Flat;
             btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnImprimir.ForeColor = Color.White;
-            btnImprimir.Location = new Point(664, 44);
+            btnImprimir.Location = new Point(663, 44);
             btnImprimir.Margin = new Padding(3, 4, 3, 4);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(108, 44);
             btnImprimir.TabIndex = 7;
             btnImprimir.Text = "&Imprimir";
             btnImprimir.UseVisualStyleBackColor = false;
+            btnImprimir.Click += btnImprimir_Click;
             // 
             // chkEliminar
             // 
-            chkEliminar.AutoSize = true;
-            chkEliminar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            chkEliminar.ForeColor = Color.FromArgb(52, 73, 94);
-            chkEliminar.Location = new Point(14, 99);
-            chkEliminar.Margin = new Padding(3, 4, 3, 4);
+            chkEliminar.Location = new Point(0, 0);
             chkEliminar.Name = "chkEliminar";
-            chkEliminar.Size = new Size(85, 24);
-            chkEliminar.TabIndex = 6;
-            chkEliminar.Text = "Eliminar";
-            chkEliminar.UseVisualStyleBackColor = true;
-            chkEliminar.CheckedChanged += chkEliminar_CheckedChanged;
+            chkEliminar.Size = new Size(104, 24);
+            chkEliminar.TabIndex = 10;
             // 
             // btnEliminar
             // 
@@ -208,7 +218,7 @@
             btnEliminar.FlatStyle = FlatStyle.Flat;
             btnEliminar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEliminar.ForeColor = Color.White;
-            btnEliminar.Location = new Point(540, 44);
+            btnEliminar.Location = new Point(927, 44);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(105, 44);
@@ -259,6 +269,9 @@
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
+            dataListado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
             dataListado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -270,18 +283,19 @@
             dataListado.RowHeadersWidth = 51;
             dataListado.RowTemplate.Height = 24;
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataListado.Size = new Size(894, 371);
+            dataListado.Size = new Size(1076, 370);
             dataListado.TabIndex = 1;
             dataListado.CellContentClick += dataListado_CellContentClick;
             dataListado.DoubleClick += dataListado_DoubleClick;
             // 
             // Eliminar
             // 
+            Eliminar.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             Eliminar.HeaderText = "Eliminar";
             Eliminar.MinimumWidth = 6;
             Eliminar.Name = "Eliminar";
             Eliminar.ReadOnly = true;
-            Eliminar.Width = 125;
+            Eliminar.Width = 69;
             // 
             // lblTotal
             // 
@@ -302,12 +316,13 @@
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3, 4, 3, 4);
-            tabPage2.Size = new Size(945, 541);
+            tabPage2.Size = new Size(1096, 512);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Mantenimiento";
+            tabPage2.Text = "Gestiòn de Artìculo";
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(txtStockMaximo);
             groupBox1.Controls.Add(txtPrecioCompra);
             groupBox1.Controls.Add(label11);
             groupBox1.Controls.Add(cbPresentacion);
@@ -323,7 +338,6 @@
             groupBox1.Controls.Add(btnCancelar);
             groupBox1.Controls.Add(btnEditar);
             groupBox1.Controls.Add(btnGuardar);
-            groupBox1.Controls.Add(btnNuevo);
             groupBox1.Controls.Add(txtDescripcion);
             groupBox1.Controls.Add(txtNombre);
             groupBox1.Controls.Add(txtIdarticulo);
@@ -342,6 +356,13 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Datos del Artículo";
+            // 
+            // txtStockMaximo
+            // 
+            txtStockMaximo.Location = new Point(0, 0);
+            txtStockMaximo.Name = "txtStockMaximo";
+            txtStockMaximo.Size = new Size(100, 27);
+            txtStockMaximo.TabIndex = 23;
             // 
             // txtPrecioCompra
             // 
@@ -517,22 +538,6 @@
             btnGuardar.UseVisualStyleBackColor = false;
             btnGuardar.Click += btnGuardar_Click;
             // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.FromArgb(41, 128, 185);
-            btnNuevo.FlatAppearance.BorderSize = 0;
-            btnNuevo.FlatStyle = FlatStyle.Flat;
-            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(397, 436);
-            btnNuevo.Margin = new Padding(3, 4, 3, 4);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(107, 41);
-            btnNuevo.TabIndex = 6;
-            btnNuevo.Text = "&Nuevo";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevo_Click;
-            // 
             // txtDescripcion
             // 
             txtDescripcion.BorderStyle = BorderStyle.FixedSingle;
@@ -631,7 +636,7 @@
             panelHeader.Location = new Point(0, 0);
             panelHeader.Margin = new Padding(3, 4, 3, 4);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(987, 75);
+            panelHeader.Size = new Size(1104, 75);
             panelHeader.TabIndex = 15;
             // 
             // lblTitulo
@@ -649,8 +654,9 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.White;
-            ClientSize = new Size(987, 698);
+            ClientSize = new Size(1104, 641);
             Controls.Add(panelHeader);
             Controls.Add(label1);
             Controls.Add(tabControl1);
@@ -671,5 +677,9 @@
             ResumeLayout(false);
             PerformLayout();
         }
+
+        private DataGridViewCheckBoxColumn Eliminar;
+        private Button btnNuevo;
+        private Button btnEditar;
     }
 }

@@ -19,8 +19,9 @@ namespace CampoArgentino.Datos
         private decimal _Iva;
         private bool _Activo;
         private int _Idcategoria;
-        private int _Idpresentacion; // Agregado para manejar la presentación
+        private int _Idpresentacion;
         private string _TextoBuscar;
+        private string _ImagenUrl;
 
         public int Idarticulo { get => _Idarticulo; set => _Idarticulo = value; }
         public string Codigo { get => _Codigo; set => _Codigo = value; }
@@ -35,15 +36,17 @@ namespace CampoArgentino.Datos
         public decimal Iva { get => _Iva; set => _Iva = value; }
         public bool Activo { get => _Activo; set => _Activo = value; }
         public int Idcategoria { get => _Idcategoria; set => _Idcategoria = value; }
-        public string TextoBuscar { get => _TextoBuscar; set => _TextoBuscar = value; }
         public int Idpresentacion { get => _Idpresentacion; set => _Idpresentacion = value; }
+        public string TextoBuscar { get => _TextoBuscar; set => _TextoBuscar = value; }
+        public string ImagenUrl { get => _ImagenUrl; set => _ImagenUrl = value; }
 
         public DArticulo() { }
 
         public DArticulo(int idarticulo, string codigo, string nombre, string descripcion,
                         string unidadbase, decimal factorconversion, decimal stockminimo,
                         decimal stockmaximo, decimal preciocompra, decimal precioventa,
-                        decimal iva, bool activo, int idcategoria, string textobuscar, int idpresentacion)
+                        decimal iva, bool activo, int idcategoria, int idpresentacion,
+                        string textobuscar, string imagenUrl = null)
         {
             this.Idarticulo = idarticulo;
             this.Codigo = codigo;
@@ -58,11 +61,12 @@ namespace CampoArgentino.Datos
             this.Iva = iva;
             this.Activo = activo;
             this.Idcategoria = idcategoria;
-            this.TextoBuscar = textobuscar;
             this.Idpresentacion = idpresentacion;
+            this.TextoBuscar = textobuscar;
+            this.ImagenUrl = imagenUrl;
         }
 
-        // Método Insertar
+        // Método Insertar 
         public string Insertar(DArticulo Articulo)
         {
             string rpta = "";
@@ -71,12 +75,12 @@ namespace CampoArgentino.Datos
             {
                 SqlCon.ConnectionString = DConexion.Cn;
                 SqlCon.Open();
-
                 SqlCommand SqlCmd = new SqlCommand();
                 SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spCampoArgentino_InsertarArticulo";
+                SqlCmd.CommandText = "spCampoArgentino_InsertarArticuloConImagen";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
+                // Parámetros para artículo
                 SqlParameter ParIdcategoria = new SqlParameter();
                 ParIdcategoria.ParameterName = "@idcategoria";
                 ParIdcategoria.SqlDbType = SqlDbType.Int;
@@ -107,7 +111,7 @@ namespace CampoArgentino.Datos
                 ParDescripcion.ParameterName = "@descripcion";
                 ParDescripcion.SqlDbType = SqlDbType.VarChar;
                 ParDescripcion.Size = 255;
-                ParDescripcion.Value = Articulo.Descripcion;
+                ParDescripcion.Value = Articulo.Descripcion ?? (object)DBNull.Value;
                 SqlCmd.Parameters.Add(ParDescripcion);
 
                 SqlParameter ParUnidadBase = new SqlParameter();
@@ -171,7 +175,16 @@ namespace CampoArgentino.Datos
                 ParActivo.Value = Articulo.Activo;
                 SqlCmd.Parameters.Add(ParActivo);
 
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Ingreso el Registro";
+                SqlParameter ParImagenUrl = new SqlParameter();
+                ParImagenUrl.ParameterName = "@imagenurl";
+                ParImagenUrl.SqlDbType = SqlDbType.NVarChar;
+                ParImagenUrl.Size = 500;
+                ParImagenUrl.Value = Articulo.ImagenUrl ?? (object)DBNull.Value;
+                SqlCmd.Parameters.Add(ParImagenUrl);
+
+                // Ejecutar comando
+                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se pudo insertar el artículo";
+
             }
             catch (Exception ex)
             {
@@ -196,7 +209,7 @@ namespace CampoArgentino.Datos
 
                 SqlCommand SqlCmd = new SqlCommand();
                 SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spCampoArgentino_EditarArticulo";
+                SqlCmd.CommandText = "spCampoArgentino_EditarArticuloConImagen";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter ParIdarticulo = new SqlParameter();
@@ -235,7 +248,7 @@ namespace CampoArgentino.Datos
                 ParDescripcion.ParameterName = "@descripcion";
                 ParDescripcion.SqlDbType = SqlDbType.VarChar;
                 ParDescripcion.Size = 255;
-                ParDescripcion.Value = Articulo.Descripcion;
+                ParDescripcion.Value = Articulo.Descripcion ?? (object)DBNull.Value;
                 SqlCmd.Parameters.Add(ParDescripcion);
 
                 SqlParameter ParUnidadBase = new SqlParameter();
@@ -299,7 +312,15 @@ namespace CampoArgentino.Datos
                 ParActivo.Value = Articulo.Activo;
                 SqlCmd.Parameters.Add(ParActivo);
 
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Actualizó el Registro";
+                SqlParameter ParImagenUrl = new SqlParameter();
+                ParImagenUrl.ParameterName = "@imagenurl";
+                ParImagenUrl.SqlDbType = SqlDbType.NVarChar;
+                ParImagenUrl.Size = 500;
+                ParImagenUrl.Value = Articulo.ImagenUrl ?? (object)DBNull.Value;
+                SqlCmd.Parameters.Add(ParImagenUrl);
+
+                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se pudo actualizar el artículo";
+
             }
             catch (Exception ex)
             {
@@ -333,7 +354,8 @@ namespace CampoArgentino.Datos
                 ParIdarticulo.Value = Articulo.Idarticulo;
                 SqlCmd.Parameters.Add(ParIdarticulo);
 
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Eliminó el Registro";
+                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se pudo eliminar el artículo";
+
             }
             catch (Exception ex)
             {
@@ -399,67 +421,8 @@ namespace CampoArgentino.Datos
             return DtResultado;
         }
 
-        // Método para actualizar stock
-        public string ActualizarStock(int idarticulo, decimal cantidad)
-        {
-            string rpta = "";
-            SqlConnection SqlCon = new SqlConnection();
-            try
-            {
-                SqlCon.ConnectionString = DConexion.Cn;
-                SqlCon.Open();
-
-                SqlCommand SqlCmd = new SqlCommand();
-                SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "UPDATE Articulo SET StockActual = StockActual + @cantidad WHERE idarticulo = @idarticulo";
-                SqlCmd.CommandType = CommandType.Text;
-
-                SqlParameter ParIdarticulo = new SqlParameter("@idarticulo", SqlDbType.Int);
-                ParIdarticulo.Value = idarticulo;
-                SqlCmd.Parameters.Add(ParIdarticulo);
-
-                SqlParameter ParCantidad = new SqlParameter("@cantidad", SqlDbType.Decimal);
-                ParCantidad.Value = cantidad;
-                SqlCmd.Parameters.Add(ParCantidad);
-
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se actualizó el stock";
-            }
-            catch (Exception ex)
-            {
-                rpta = ex.Message;
-            }
-            finally
-            {
-                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-            }
-            return rpta;
-        }
-
-        // Método para obtener reporte de conteo
-        public DataTable ReporteConteoInventario()
-        {
-            DataTable DtResultado = new DataTable("conteo");
-            SqlConnection SqlCon = new SqlConnection();
-            try
-            {
-                SqlCon.ConnectionString = DConexion.Cn;
-                SqlCommand SqlCmd = new SqlCommand();
-                SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spCampoArgentino_ReporteConteoInventario";
-                SqlCmd.CommandType = CommandType.StoredProcedure;
-
-                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
-                SqlDat.Fill(DtResultado);
-            }
-            catch (Exception ex)
-            {
-                DtResultado = null;
-            }
-            return DtResultado;
-        }
-
         // Método para actualizar stock individual
-        public string ActualizarStockIndividual(int idarticulo, decimal nuevoStock)
+        public string ActualizarStock(int idarticulo, decimal nuevoStock)
         {
             string rpta = "";
             SqlConnection SqlCon = new SqlConnection();
@@ -473,11 +436,17 @@ namespace CampoArgentino.Datos
                 SqlCmd.CommandText = "spCampoArgentino_ActualizarStock";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter ParIdarticulo = new SqlParameter("@idarticulo", SqlDbType.Int);
+                SqlParameter ParIdarticulo = new SqlParameter();
+                ParIdarticulo.ParameterName = "@idarticulo";
+                ParIdarticulo.SqlDbType = SqlDbType.Int;
                 ParIdarticulo.Value = idarticulo;
                 SqlCmd.Parameters.Add(ParIdarticulo);
 
-                SqlParameter ParNuevoStock = new SqlParameter("@NuevoStock", SqlDbType.Decimal);
+                SqlParameter ParNuevoStock = new SqlParameter();
+                ParNuevoStock.ParameterName = "@NuevoStock";
+                ParNuevoStock.SqlDbType = SqlDbType.Decimal;
+                ParNuevoStock.Precision = 10;
+                ParNuevoStock.Scale = 2;
                 ParNuevoStock.Value = nuevoStock;
                 SqlCmd.Parameters.Add(ParNuevoStock);
 
@@ -494,10 +463,39 @@ namespace CampoArgentino.Datos
             return rpta;
         }
 
-        // Método para iniciar conteo
-        public int IniciarConteoInventario(int idusuario, string observaciones)
+        // Método para obtener artículo con imagen
+        public DataTable ObtenerArticuloConImagen(int idarticulo)
         {
-            int idconteo = 0;
+            DataTable DtResultado = new DataTable("articulo");
+            SqlConnection SqlCon = new SqlConnection();
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_ObtenerArticuloConImagen";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParIdarticulo = new SqlParameter();
+                ParIdarticulo.ParameterName = "@idarticulo";
+                ParIdarticulo.SqlDbType = SqlDbType.Int;
+                ParIdarticulo.Value = idarticulo;
+                SqlCmd.Parameters.Add(ParIdarticulo);
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+            }
+            return DtResultado;
+        }
+
+        // Método para actualizar solo la imagen
+        public string ActualizarImagen(int idarticulo, string imagenUrl)
+        {
+            string rpta = "";
             SqlConnection SqlCon = new SqlConnection();
             try
             {
@@ -506,28 +504,93 @@ namespace CampoArgentino.Datos
 
                 SqlCommand SqlCmd = new SqlCommand();
                 SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spCampoArgentino_IniciarConteoInventario";
+                SqlCmd.CommandText = "spCampoArgentino_ActualizarImagenArticulo";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter ParIdusuario = new SqlParameter("@idusuario", SqlDbType.Int);
-                ParIdusuario.Value = idusuario;
-                SqlCmd.Parameters.Add(ParIdusuario);
+                SqlParameter ParIdarticulo = new SqlParameter();
+                ParIdarticulo.ParameterName = "@idarticulo";
+                ParIdarticulo.SqlDbType = SqlDbType.Int;
+                ParIdarticulo.Value = idarticulo;
+                SqlCmd.Parameters.Add(ParIdarticulo);
 
-                SqlParameter ParObservaciones = new SqlParameter("@Observaciones", SqlDbType.NVarChar, 500);
-                ParObservaciones.Value = observaciones ?? (object)DBNull.Value;
-                SqlCmd.Parameters.Add(ParObservaciones);
+                SqlParameter ParImagenUrl = new SqlParameter();
+                ParImagenUrl.ParameterName = "@ImagenUrl";
+                ParImagenUrl.SqlDbType = SqlDbType.NVarChar;
+                ParImagenUrl.Size = 500;
+                ParImagenUrl.Value = imagenUrl ?? (object)DBNull.Value;
+                SqlCmd.Parameters.Add(ParImagenUrl);
 
-                idconteo = Convert.ToInt32(SqlCmd.ExecuteScalar());
+                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se actualizó la imagen";
             }
             catch (Exception ex)
             {
-                idconteo = 0;
+                rpta = ex.Message;
             }
             finally
             {
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
-            return idconteo;
+            return rpta;
+        }
+
+        //Método para reporte de stock bajo
+        public DataTable ReporteStockBajo()
+        {
+            DataTable DtResultado = new DataTable("stock_bajo");
+            SqlConnection SqlCon = new SqlConnection();
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_ReporteStockBajo";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+            }
+            return DtResultado;
+        }
+
+        // Método para verificar stock
+        public DataTable VerificarStock(int idarticulo, decimal cantidadRequerida)
+        {
+            DataTable DtResultado = new DataTable("verificar_stock");
+            SqlConnection SqlCon = new SqlConnection();
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_VerificarStock";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParIdarticulo = new SqlParameter();
+                ParIdarticulo.ParameterName = "@idarticulo";
+                ParIdarticulo.SqlDbType = SqlDbType.Int;
+                ParIdarticulo.Value = idarticulo;
+                SqlCmd.Parameters.Add(ParIdarticulo);
+
+                SqlParameter ParCantidadRequerida = new SqlParameter();
+                ParCantidadRequerida.ParameterName = "@CantidadRequerida";
+                ParCantidadRequerida.SqlDbType = SqlDbType.Decimal;
+                ParCantidadRequerida.Precision = 10;
+                ParCantidadRequerida.Scale = 2;
+                ParCantidadRequerida.Value = cantidadRequerida;
+                SqlCmd.Parameters.Add(ParCantidadRequerida);
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+            }
+            return DtResultado;
         }
     }
 }

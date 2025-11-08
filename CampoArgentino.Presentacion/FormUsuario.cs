@@ -81,20 +81,90 @@ namespace CampoArgentino.Presentacion
 
         private void OcultarColumnas()
         {
-            this.dataListado.Columns[0].Visible = false;
-            this.dataListado.Columns[2].Visible = false; // Ocultar contraseña
+            // Ocultar columnas sensibles, mantener "Seleccionar" visible
+            if (this.dataListado.Columns.Contains("idusuario"))
+                this.dataListado.Columns["idusuario"].Visible = false;
+
+            if (this.dataListado.Columns.Contains("Contrasena"))
+                this.dataListado.Columns["Contrasena"].Visible = false;
         }
 
         private void Mostrar()
         {
             this.dataListado.DataSource = NUsuario.Mostrar();
+
+            // Configurar columna de selección
+            ConfigurarColumnaSeleccion();
+
             this.OcultarColumnas();
             lblTotal.Text = "Total Registros: " + Convert.ToString(dataListado.Rows.Count);
+        }
+
+        private void ConfigurarColumnaSeleccion()
+        {
+            // Limpiar columnas antiguas primero
+            LimpiarColumnasAntiguas();
+
+            // Verificar si la columna ya existe
+            if (!dataListado.Columns.Contains("Seleccionar"))
+            {
+                // Crear columna de botón para selección
+                DataGridViewButtonColumn btnSeleccionarCol = new DataGridViewButtonColumn();
+                btnSeleccionarCol.Name = "Seleccionar";
+                btnSeleccionarCol.HeaderText = "Seleccionar";
+                btnSeleccionarCol.Text = "⬜"; // Cuadrado vacío (no seleccionado)
+                btnSeleccionarCol.UseColumnTextForButtonValue = true;
+                btnSeleccionarCol.Width = 80;
+                btnSeleccionarCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                btnSeleccionarCol.DefaultCellStyle.Font = new Font("Arial", 12);
+                btnSeleccionarCol.FlatStyle = FlatStyle.Flat;
+
+                // Insertar la columna al principio
+                dataListado.Columns.Insert(0, btnSeleccionarCol);
+            }
+
+            // Asegurarse de que la columna esté visible
+            dataListado.Columns["Seleccionar"].Visible = true;
+
+            // Inicializar el estado de selección de todas las filas
+            foreach (DataGridViewRow row in dataListado.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    // Por defecto, no seleccionado
+                    row.Cells["Seleccionar"].Value = "⬜";
+                    row.Cells["Seleccionar"].Tag = false;
+                    row.DefaultCellStyle.BackColor = Color.White;
+                }
+            }
+        }
+
+        private void LimpiarColumnasAntiguas()
+        {
+            // Eliminar la columna "Eliminar" si existe
+            if (dataListado.Columns.Contains("Eliminar"))
+            {
+                dataListado.Columns.Remove("Eliminar");
+            }
+
+            // También eliminar cualquier columna de checkbox existente
+            foreach (DataGridViewColumn col in dataListado.Columns)
+            {
+                if (col is DataGridViewCheckBoxColumn)
+                {
+                    dataListado.Columns.Remove(col);
+                    break;
+                }
+            }
         }
 
         private void BuscarNombre()
         {
             this.dataListado.DataSource = NUsuario.BuscarNombre(this.txtBuscar.Text);
+
+            // Reconfigurar columna de selección después de buscar
+            ConfigurarColumnaSeleccion();
+
             this.OcultarColumnas();
             lblTotal.Text = "Total Registros: " + Convert.ToString(dataListado.Rows.Count);
         }
@@ -114,78 +184,145 @@ namespace CampoArgentino.Presentacion
         {
             try
             {
-                DialogResult Opcion;
-                Opcion = MessageBox.Show("Realmente desea eliminar los registros",
-                    "Sistema Campo Argentino", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                // Contar cuántos están seleccionados
+                int cantidadSeleccionados = 0;
+                foreach (DataGridViewRow row in dataListado.Rows)
+                {
+                    if (!row.IsNewRow && row.Cells["Seleccionar"].Tag != null && (bool)row.Cells["Seleccionar"].Tag)
+                    {
+                        cantidadSeleccionados++;
+                    }
+                }
+
+                if (cantidadSeleccionados == 0)
+                {
+                    MensajeError("No hay usuarios seleccionados para eliminar");
+                    return;
+                }
+
+                DialogResult Opcion = MessageBox.Show(
+                    $"¿Realmente desea eliminar los {cantidadSeleccionados} usuarios seleccionados?\n\nEsta acción no se puede deshacer.",
+                    "Confirmar Eliminación",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button2);
 
                 if (Opcion == DialogResult.OK)
                 {
-                    string Codigo;
                     string Rpta = "";
+                    int eliminadosExitosos = 0;
+                    int errores = 0;
+                    System.Text.StringBuilder erroresDetallados = new System.Text.StringBuilder();
 
                     foreach (DataGridViewRow row in dataListado.Rows)
                     {
-                        if (Convert.ToBoolean(row.Cells[0].Value))
+                        if (!row.IsNewRow && row.Cells["Seleccionar"].Tag != null && (bool)row.Cells["Seleccionar"].Tag)
                         {
-                            Codigo = Convert.ToString(row.Cells[1].Value);
-                            Rpta = NUsuario.Eliminar(Convert.ToInt32(Codigo));
+                            int idusuario = Convert.ToInt32(row.Cells["idusuario"].Value);
+                            string nombreUsuario = row.Cells["NombreUsuario"].Value?.ToString() ?? "Sin nombre";
+
+                            // No permitir eliminar el usuario actual (poder implementar sesiones)
+                            // if (idusuario == UsuarioLogueado.ID) { ... }
+
+                            Rpta = NUsuario.Eliminar(idusuario);
 
                             if (Rpta.Equals("OK"))
                             {
-                                this.MensajeOk("Se eliminó correctamente el registro");
+                                eliminadosExitosos++;
                             }
                             else
                             {
-                                this.MensajeError(Rpta);
+                                errores++;
+                                if (erroresDetallados.Length < 200)
+                                {
+                                    erroresDetallados.AppendLine($"{nombreUsuario}: {Rpta}");
+                                }
                             }
                         }
                     }
+
+                    // Mostrar resumen
+                    if (errores == 0)
+                    {
+                        MensajeOk($"Se eliminaron correctamente {eliminadosExitosos} usuarios");
+                    }
+                    else
+                    {
+                        string mensajeError = $"Proceso completado: {eliminadosExitosos} eliminados, {errores} errores";
+                        if (erroresDetallados.Length > 0)
+                        {
+                            mensajeError += "\n\nErrores:\n" + erroresDetallados.ToString();
+                        }
+                        MensajeError(mensajeError);
+                    }
+
                     this.Mostrar();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + ex.StackTrace);
-            }
-        }
-
-        private void chkEliminar_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkEliminar.Checked)
-            {
-                this.dataListado.Columns[0].Visible = true;
-            }
-            else
-            {
-                this.dataListado.Columns[0].Visible = false;
+                MensajeError($"Error inesperado al eliminar: {ex.Message}");
             }
         }
 
         private void dataListado_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dataListado.Columns["Eliminar"].Index)
+            // Verificar si se hizo clic en la columna "Seleccionar"
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataListado.Columns["Seleccionar"].Index)
             {
-                DataGridViewCheckBoxCell ChkEliminar = (DataGridViewCheckBoxCell)dataListado.Rows[e.RowIndex].Cells["Eliminar"];
-                ChkEliminar.Value = !Convert.ToBoolean(ChkEliminar.Value);
+                DataGridViewRow row = dataListado.Rows[e.RowIndex];
+                bool estaSeleccionado = false;
+
+                // Obtener el estado actual del Tag
+                if (row.Cells["Seleccionar"].Tag != null)
+                {
+                    estaSeleccionado = (bool)row.Cells["Seleccionar"].Tag;
+                }
+
+                // Cambiar el estado
+                estaSeleccionado = !estaSeleccionado;
+
+                // Actualizar el texto del botón y el Tag
+                if (estaSeleccionado)
+                {
+                    row.Cells["Seleccionar"].Value = "✅"; // Checkbox marcado
+                    row.Cells["Seleccionar"].Tag = true;
+                    row.DefaultCellStyle.BackColor = Color.DarkGreen;
+                    row.DefaultCellStyle.ForeColor = Color.White;
+                }
+                else
+                {
+                    row.Cells["Seleccionar"].Value = "⬜"; // Checkbox vacío
+                    row.Cells["Seleccionar"].Tag = false;
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.ForeColor = Color.Black;
+                }
+
+                // Forzar el repintado de la fila
+                dataListado.InvalidateRow(e.RowIndex);
             }
         }
 
         private void dataListado_DoubleClick(object sender, EventArgs e)
         {
-            this.txtUsuarioID.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["UsuarioID"].Value);
-            this.txtNombreUsuario.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["NombreUsuario"].Value);
-            this.txtNombreCompleto.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["NombreCompleto"].Value);
-            this.chkActivo.Checked = Convert.ToBoolean(this.dataListado.CurrentRow.Cells["Activo"].Value);
+            if (this.dataListado.CurrentRow != null)
+            {
+                this.txtUsuarioID.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["idusuario"].Value);
+                this.txtNombreUsuario.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["NombreUsuario"].Value);
+                this.txtNombreCompleto.Text = Convert.ToString(this.dataListado.CurrentRow.Cells["NombreCompleto"].Value);
+                this.chkActivo.Checked = Convert.ToBoolean(this.dataListado.CurrentRow.Cells["Activo"].Value);
 
-            // Limpiar campos de contraseña por seguridad
-            this.txtContrasena.Text = "";
-            this.txtConfirmarContrasena.Text = "";
+                // Limpiar campos de contraseña por seguridad
+                this.txtContrasena.Text = "";
+                this.txtConfirmarContrasena.Text = "";
 
-            this.tabControl1.SelectedIndex = 1;
+                this.tabControl1.SelectedIndex = 1;
+            }
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            tabControl1.SelectedIndex = 1;
             this.IsNuevo = true;
             this.IsEditar = false;
             this.Botones();
@@ -200,56 +337,59 @@ namespace CampoArgentino.Presentacion
             {
                 string rpta = "";
 
-                if (this.txtNombreUsuario.Text == string.Empty || this.txtContrasena.Text == string.Empty ||
-                    this.txtConfirmarContrasena.Text == string.Empty || this.txtNombreCompleto.Text == string.Empty)
+                if (this.txtNombreUsuario.Text == string.Empty || this.txtNombreCompleto.Text == string.Empty)
                 {
-                    MensajeError("Falta ingresar algunos datos, serán remarcados");
-                    errorIcono.SetError(txtNombreUsuario, "Ingrese un valor");
-                    errorIcono.SetError(txtContrasena, "Ingrese un valor");
-                    errorIcono.SetError(txtConfirmarContrasena, "Ingrese un valor");
-                    errorIcono.SetError(txtNombreCompleto, "Ingrese un valor");
+                    MensajeError("Falta ingresar algunos datos obligatorios");
+                    errorIcono.SetError(txtNombreUsuario, "Ingrese un nombre de usuario");
+                    errorIcono.SetError(txtNombreCompleto, "Ingrese el nombre completo");
+                    return;
                 }
-                else if (this.txtContrasena.Text != this.txtConfirmarContrasena.Text)
+
+                // Validar contraseñas solo si es nuevo o si se cambió la contraseña
+                if (this.IsNuevo && (this.txtContrasena.Text == string.Empty || this.txtConfirmarContrasena.Text == string.Empty))
+                {
+                    MensajeError("Debe ingresar y confirmar la contraseña para nuevo usuario");
+                    errorIcono.SetError(txtContrasena, "Ingrese la contraseña");
+                    errorIcono.SetError(txtConfirmarContrasena, "Confirme la contraseña");
+                    return;
+                }
+
+                if (this.txtContrasena.Text != this.txtConfirmarContrasena.Text)
                 {
                     MensajeError("Las contraseñas no coinciden");
                     errorIcono.SetError(txtConfirmarContrasena, "Las contraseñas no coinciden");
+                    return;
+                }
+
+                if (this.IsNuevo)
+                {
+                    rpta = NUsuario.Insertar(
+                        this.txtNombreUsuario.Text.Trim(),
+                        this.txtContrasena.Text.Trim(),
+                        this.txtNombreCompleto.Text.Trim().ToUpper()
+                    );
                 }
                 else
                 {
-                    if (this.IsNuevo)
-                    {
-                        rpta = NUsuario.Insertar(
-                            this.txtNombreUsuario.Text.Trim(),
-                            this.txtContrasena.Text.Trim(),
-                            this.txtNombreCompleto.Text.Trim().ToUpper()
-                        );
-                    }
-                    else
-                    {
-                        rpta = NUsuario.Editar(
-                            Convert.ToInt32(this.txtUsuarioID.Text),
-                            this.txtNombreUsuario.Text.Trim(),
-                            this.txtContrasena.Text.Trim(),
-                            this.txtNombreCompleto.Text.Trim().ToUpper(),
-                            this.chkActivo.Checked
-                        );
-                    }
+                    // Si no se cambió la contraseña, pasar cadena vacía
+                    string contrasena = string.IsNullOrEmpty(this.txtContrasena.Text) ? "" : this.txtContrasena.Text.Trim();
 
-                    if (rpta.Equals("OK"))
-                    {
-                        if (this.IsNuevo)
-                        {
-                            this.MensajeOk("Se insertó de forma correcta el registro");
-                        }
-                        else
-                        {
-                            this.MensajeOk("Se actualizó de forma correcta el registro");
-                        }
-                    }
-                    else
-                    {
-                        this.MensajeError(rpta);
-                    }
+                    rpta = NUsuario.Editar(
+                        Convert.ToInt32(this.txtUsuarioID.Text),
+                        this.txtNombreUsuario.Text.Trim(),
+                        contrasena,
+                        this.txtNombreCompleto.Text.Trim().ToUpper(),
+                        this.chkActivo.Checked
+                    );
+                }
+
+                if (rpta.Equals("OK"))
+                {
+                    string mensaje = this.IsNuevo ?
+                        "Se insertó de forma correcta el registro" :
+                        "Se actualizó de forma correcta el registro";
+
+                    this.MensajeOk(mensaje);
 
                     this.IsNuevo = false;
                     this.IsEditar = false;
@@ -257,10 +397,14 @@ namespace CampoArgentino.Presentacion
                     this.Limpiar();
                     this.Mostrar();
                 }
+                else
+                {
+                    this.MensajeError(rpta);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + ex.StackTrace);
+                MensajeError($"Error al guardar el usuario: {ex.Message}");
             }
         }
 
@@ -271,6 +415,9 @@ namespace CampoArgentino.Presentacion
                 this.IsEditar = true;
                 this.Botones();
                 this.Habilitar(true);
+
+                // Enfocar en nombre de usuario al editar
+                this.txtNombreUsuario.Focus();
             }
             else
             {
@@ -289,21 +436,17 @@ namespace CampoArgentino.Presentacion
 
         private void txtContrasena_TextChanged(object sender, EventArgs e)
         {
-            // Validar coincidencia de contraseñas en tiempo real
-            if (txtContrasena.Text != txtConfirmarContrasena.Text && txtConfirmarContrasena.Text != "")
-            {
-                errorIcono.SetError(txtConfirmarContrasena, "Las contraseñas no coinciden");
-            }
-            else
-            {
-                errorIcono.SetError(txtConfirmarContrasena, "");
-            }
+            ValidarCoincidenciaContrasenas();
         }
 
         private void txtConfirmarContrasena_TextChanged(object sender, EventArgs e)
         {
-            // Validar coincidencia de contraseñas en tiempo real
-            if (txtContrasena.Text != txtConfirmarContrasena.Text)
+            ValidarCoincidenciaContrasenas();
+        }
+
+        private void ValidarCoincidenciaContrasenas()
+        {
+            if (txtContrasena.Text != txtConfirmarContrasena.Text && !string.IsNullOrEmpty(txtConfirmarContrasena.Text))
             {
                 errorIcono.SetError(txtConfirmarContrasena, "Las contraseñas no coinciden");
             }
@@ -312,5 +455,6 @@ namespace CampoArgentino.Presentacion
                 errorIcono.SetError(txtConfirmarContrasena, "");
             }
         }
+       
     }
 }

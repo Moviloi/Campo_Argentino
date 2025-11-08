@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+
 
 namespace CampoArgentino.Datos
 {
     public class DVenta
     {
-        private int _VentaID;
+        private int _Idventa;
         private string _NumeroDocumento;
         private int _Idcliente;
         private DateTime _FechaVenta;
+        private DateTime _FechaRegistro;
         private decimal _Subtotal;
         private decimal _Impuestos;
         private decimal _Total;
@@ -17,10 +20,11 @@ namespace CampoArgentino.Datos
         private int _Idusuario;
         private string _TextoBuscar;
 
-        public int VentaID { get => _VentaID; set => _VentaID = value; }
+        public int Idventa { get => _Idventa; set => _Idventa = value; }
         public string NumeroDocumento { get => _NumeroDocumento; set => _NumeroDocumento = value; }
         public int Idcliente { get => _Idcliente; set => _Idcliente = value; }
         public DateTime FechaVenta { get => _FechaVenta; set => _FechaVenta = value; }
+        public DateTime FechaRegistro { get => _FechaRegistro; set => _FechaRegistro = value; }
         public decimal Subtotal { get => _Subtotal; set => _Subtotal = value; }
         public decimal Impuestos { get => _Impuestos; set => _Impuestos = value; }
         public decimal Total { get => _Total; set => _Total = value; }
@@ -30,146 +34,10 @@ namespace CampoArgentino.Datos
 
         public DVenta() { }
 
-        public DVenta(int ventaID, string numeroDocumento, int idcliente, DateTime fechaVenta,
-                     decimal subtotal, decimal impuestos, decimal total, string observaciones,
-                     int idusuario, string textobuscar)
-        {
-            this.VentaID = ventaID;
-            this.NumeroDocumento = numeroDocumento;
-            this.Idcliente = idcliente;
-            this.FechaVenta = fechaVenta;
-            this.Subtotal = subtotal;
-            this.Impuestos = impuestos;
-            this.Total = total;
-            this.Observaciones = observaciones;
-            this.Idusuario = idusuario;
-            this.TextoBuscar = textobuscar;
-        }
-
-        // Método Insertar
-        public string Insertar(DVenta Venta)
-        {
-            string rpta = "";
-            SqlConnection SqlCon = new SqlConnection();
-
-            try
-            {
-                SqlCon.ConnectionString = DConexion.Cn;
-                SqlCon.Open();
-
-                SqlCommand SqlCmd = new SqlCommand();
-                SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spCampoArgentino_InsertarVenta";
-                SqlCmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter ParNumeroDocumento = new SqlParameter();
-                ParNumeroDocumento.ParameterName = "@numeroDocumento";
-                ParNumeroDocumento.SqlDbType = SqlDbType.VarChar;
-                ParNumeroDocumento.Size = 50;
-                ParNumeroDocumento.Value = Venta.NumeroDocumento;
-                SqlCmd.Parameters.Add(ParNumeroDocumento);
-
-                SqlParameter ParClienteID = new SqlParameter();
-                ParClienteID.ParameterName = "@idcliente";
-                ParClienteID.SqlDbType = SqlDbType.Int;
-                ParClienteID.Value = Venta.Idcliente;
-                SqlCmd.Parameters.Add(ParClienteID);
-
-                SqlParameter ParFechaVenta = new SqlParameter();
-                ParFechaVenta.ParameterName = "@fechaVenta";
-                ParFechaVenta.SqlDbType = SqlDbType.DateTime;
-                ParFechaVenta.Value = Venta.FechaVenta;
-                SqlCmd.Parameters.Add(ParFechaVenta);
-
-                SqlParameter ParSubtotal = new SqlParameter();
-                ParSubtotal.ParameterName = "@subtotal";
-                ParSubtotal.SqlDbType = SqlDbType.Decimal;
-                ParSubtotal.Precision = 11;
-                ParSubtotal.Scale = 2;
-                ParSubtotal.Value = Venta.Subtotal;
-                SqlCmd.Parameters.Add(ParSubtotal);
-
-                SqlParameter ParImpuestos = new SqlParameter();
-                ParImpuestos.ParameterName = "@impuestos";
-                ParImpuestos.SqlDbType = SqlDbType.Decimal;
-                ParImpuestos.Precision = 11;
-                ParImpuestos.Scale = 2;
-                ParImpuestos.Value = Venta.Impuestos;
-                SqlCmd.Parameters.Add(ParImpuestos);
-
-                SqlParameter ParTotal = new SqlParameter();
-                ParTotal.ParameterName = "@total";
-                ParTotal.SqlDbType = SqlDbType.Decimal;
-                ParTotal.Precision = 11;
-                ParTotal.Scale = 2;
-                ParTotal.Value = Venta.Total;
-                SqlCmd.Parameters.Add(ParTotal);
-
-                SqlParameter ParObservaciones = new SqlParameter();
-                ParObservaciones.ParameterName = "@observaciones";
-                ParObservaciones.SqlDbType = SqlDbType.VarChar;
-                ParObservaciones.Size = 500;
-                ParObservaciones.Value = Venta.Observaciones;
-                SqlCmd.Parameters.Add(ParObservaciones);
-
-                SqlParameter ParUsuarioID = new SqlParameter();
-                ParUsuarioID.ParameterName = "@idusuario";
-                ParUsuarioID.SqlDbType = SqlDbType.Int;
-                ParUsuarioID.Value = Venta.Idusuario;
-                SqlCmd.Parameters.Add(ParUsuarioID);
-
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Ingreso el Registro";
-            }
-            catch (Exception ex)
-            {
-                rpta = ex.Message;
-            }
-            finally
-            {
-                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-            }
-            return rpta;
-        }
-
-        // Método Anular (Eliminar)
-        public string Anular(DVenta Venta)
-        {
-            string rpta = "";
-            SqlConnection SqlCon = new SqlConnection();
-
-            try
-            {
-                SqlCon.ConnectionString = DConexion.Cn;
-                SqlCon.Open();
-
-                SqlCommand SqlCmd = new SqlCommand();
-                SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spCampoArgentino_AnularVenta";
-                SqlCmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter ParVentaID = new SqlParameter();
-                ParVentaID.ParameterName = "@idventa";
-                ParVentaID.SqlDbType = SqlDbType.Int;
-                ParVentaID.Value = Venta.VentaID;
-                SqlCmd.Parameters.Add(ParVentaID);
-
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Anuló el Registro";
-            }
-            catch (Exception ex)
-            {
-                rpta = ex.Message;
-            }
-            finally
-            {
-                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-            }
-            return rpta;
-        }
-
         // Método Mostrar
         public DataTable Mostrar()
         {
-            DataTable DtResultado = new DataTable("venta");
+            DataTable DtResultado = new DataTable("Venta");
             SqlConnection SqlCon = new SqlConnection();
 
             try
@@ -186,12 +54,135 @@ namespace CampoArgentino.Datos
             catch (Exception ex)
             {
                 DtResultado = null;
+                System.Diagnostics.Debug.WriteLine("Error en Mostrar Ventas: " + ex.Message);
             }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+
             return DtResultado;
         }
 
+        // Método Insertar
+        public string Insertar(DVenta Venta)
+        {
+            string rpta = "";
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCon.Open();
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_InsertarVenta";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParNumeroDocumento = new SqlParameter();
+                ParNumeroDocumento.ParameterName = "@NumeroDocumento";
+                ParNumeroDocumento.SqlDbType = SqlDbType.NVarChar;
+                ParNumeroDocumento.Size = 50;
+                ParNumeroDocumento.Value = Venta.NumeroDocumento;
+                SqlCmd.Parameters.Add(ParNumeroDocumento);
+
+                SqlParameter ParIdcliente = new SqlParameter();
+                ParIdcliente.ParameterName = "@idcliente";
+                ParIdcliente.SqlDbType = SqlDbType.Int;
+                ParIdcliente.Value = Venta.Idcliente;
+                SqlCmd.Parameters.Add(ParIdcliente);
+
+                SqlParameter ParFechaVenta = new SqlParameter();
+                ParFechaVenta.ParameterName = "@FechaVenta";
+                ParFechaVenta.SqlDbType = SqlDbType.DateTime;
+                ParFechaVenta.Value = Venta.FechaVenta;
+                SqlCmd.Parameters.Add(ParFechaVenta);
+
+                SqlParameter ParSubtotal = new SqlParameter();
+                ParSubtotal.ParameterName = "@Subtotal";
+                ParSubtotal.SqlDbType = SqlDbType.Decimal;
+                ParSubtotal.Value = Venta.Subtotal;
+                SqlCmd.Parameters.Add(ParSubtotal);
+
+                SqlParameter ParImpuestos = new SqlParameter();
+                ParImpuestos.ParameterName = "@Impuestos";
+                ParImpuestos.SqlDbType = SqlDbType.Decimal;
+                ParImpuestos.Value = Venta.Impuestos;
+                SqlCmd.Parameters.Add(ParImpuestos);
+
+                SqlParameter ParTotal = new SqlParameter();
+                ParTotal.ParameterName = "@Total";
+                ParTotal.SqlDbType = SqlDbType.Decimal;
+                ParTotal.Value = Venta.Total;
+                SqlCmd.Parameters.Add(ParTotal);
+
+                SqlParameter ParObservaciones = new SqlParameter();
+                ParObservaciones.ParameterName = "@Observaciones";
+                ParObservaciones.SqlDbType = SqlDbType.NVarChar;
+                ParObservaciones.Size = 500;
+                ParObservaciones.Value = Venta.Observaciones;
+                SqlCmd.Parameters.Add(ParObservaciones);
+
+                SqlParameter ParIdusuario = new SqlParameter();
+                ParIdusuario.ParameterName = "@idusuario";
+                ParIdusuario.SqlDbType = SqlDbType.Int;
+                ParIdusuario.Value = Venta.Idusuario;
+                SqlCmd.Parameters.Add(ParIdusuario);
+
+                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Ingreso el Registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+
+            return rpta;
+        }
+
+        // Método Anular (Eliminar)
+        public string Anular(DVenta Venta)
+        {
+            string rpta = "";
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCon.Open();
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_AnularVenta";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParIdventa = new SqlParameter();
+                ParIdventa.ParameterName = "@idventa";
+                ParIdventa.SqlDbType = SqlDbType.Int;
+                ParIdventa.Value = Venta.Idventa;
+                SqlCmd.Parameters.Add(ParIdventa);
+
+                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Anuló el Registro";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+
+            return rpta;
+        }
+
         // Método Buscar por Fechas
-        public DataTable BuscarFechas(string fechaInicio, string fechaFin)
+        public DataTable BuscarFechas(string FechaInicio, string FechaFin)
         {
             DataTable DtResultado = new DataTable("venta");
             SqlConnection SqlCon = new SqlConnection();
@@ -205,17 +196,17 @@ namespace CampoArgentino.Datos
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter ParFechaInicio = new SqlParameter();
-                ParFechaInicio.ParameterName = "@fechaInicio";
-                ParFechaInicio.SqlDbType = SqlDbType.VarChar;
+                ParFechaInicio.ParameterName = "@FechaInicio";
+                ParFechaInicio.SqlDbType = SqlDbType.NVarChar;
                 ParFechaInicio.Size = 50;
-                ParFechaInicio.Value = fechaInicio;
+                ParFechaInicio.Value = FechaInicio;
                 SqlCmd.Parameters.Add(ParFechaInicio);
 
                 SqlParameter ParFechaFin = new SqlParameter();
-                ParFechaFin.ParameterName = "@fechaFin";
-                ParFechaFin.SqlDbType = SqlDbType.VarChar;
+                ParFechaFin.ParameterName = "@FechaFin";
+                ParFechaFin.SqlDbType = SqlDbType.NVarChar;
                 ParFechaFin.Size = 50;
-                ParFechaFin.Value = fechaFin;
+                ParFechaFin.Value = FechaFin;
                 SqlCmd.Parameters.Add(ParFechaFin);
 
                 SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
@@ -224,14 +215,21 @@ namespace CampoArgentino.Datos
             catch (Exception ex)
             {
                 DtResultado = null;
+                System.Diagnostics.Debug.WriteLine("Error en BuscarFechas: " + ex.Message);
             }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+
             return DtResultado;
         }
 
         // Método Mostrar Detalle
-        public DataTable MostrarDetalle(int ventaID)
+        public DataTable MostrarDetalle(int Idventa)
         {
-            DataTable DtResultado = new DataTable("detalleVenta");
+            DataTable DtResultado = new DataTable("detalle_venta");
             SqlConnection SqlCon = new SqlConnection();
 
             try
@@ -242,11 +240,11 @@ namespace CampoArgentino.Datos
                 SqlCmd.CommandText = "spCampoArgentino_MostrarDetalleVenta";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter ParVentaID = new SqlParameter();
-                ParVentaID.ParameterName = "@idventa";
-                ParVentaID.SqlDbType = SqlDbType.Int;
-                ParVentaID.Value = ventaID;
-                SqlCmd.Parameters.Add(ParVentaID);
+                SqlParameter ParIdventa = new SqlParameter();
+                ParIdventa.ParameterName = "@idventa";
+                ParIdventa.SqlDbType = SqlDbType.Int;
+                ParIdventa.Value = Idventa;
+                SqlCmd.Parameters.Add(ParIdventa);
 
                 SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
                 SqlDat.Fill(DtResultado);
@@ -254,8 +252,138 @@ namespace CampoArgentino.Datos
             catch (Exception ex)
             {
                 DtResultado = null;
+                System.Diagnostics.Debug.WriteLine("Error en MostrarDetalle: " + ex.Message);
             }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+
             return DtResultado;
+        }
+
+        public string InsertarVentaCompleta(DVenta Venta, DataTable Detalle)
+        {
+            string rpta = "";
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCon.Open();
+
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_InsertarVentaCompleta";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                // Parámetros de la venta
+                SqlParameter ParNumeroDocumento = new SqlParameter();
+                ParNumeroDocumento.ParameterName = "@NumeroDocumento";
+                ParNumeroDocumento.SqlDbType = SqlDbType.VarChar;
+                ParNumeroDocumento.Size = 50;
+                ParNumeroDocumento.Value = Venta.NumeroDocumento;
+                SqlCmd.Parameters.Add(ParNumeroDocumento);
+
+                SqlParameter ParIdcliente = new SqlParameter();
+                ParIdcliente.ParameterName = "@idcliente";
+                ParIdcliente.SqlDbType = SqlDbType.Int;
+                ParIdcliente.Value = Venta.Idcliente;
+                SqlCmd.Parameters.Add(ParIdcliente);
+
+                SqlParameter ParFechaVenta = new SqlParameter();
+                ParFechaVenta.ParameterName = "@FechaVenta";
+                ParFechaVenta.SqlDbType = SqlDbType.DateTime;
+                ParFechaVenta.Value = Venta.FechaVenta;
+                SqlCmd.Parameters.Add(ParFechaVenta);
+
+                SqlParameter ParSubtotal = new SqlParameter();
+                ParSubtotal.ParameterName = "@Subtotal";
+                ParSubtotal.SqlDbType = SqlDbType.Decimal;
+                ParSubtotal.Precision = 18;
+                ParSubtotal.Scale = 2;
+                ParSubtotal.Value = Venta.Subtotal;
+                SqlCmd.Parameters.Add(ParSubtotal);
+
+                SqlParameter ParImpuestos = new SqlParameter();
+                ParImpuestos.ParameterName = "@Impuestos";
+                ParImpuestos.SqlDbType = SqlDbType.Decimal;
+                ParImpuestos.Precision = 18;
+                ParImpuestos.Scale = 2;
+                ParImpuestos.Value = Venta.Impuestos;
+                SqlCmd.Parameters.Add(ParImpuestos);
+
+                SqlParameter ParTotal = new SqlParameter();
+                ParTotal.ParameterName = "@Total";
+                ParTotal.SqlDbType = SqlDbType.Decimal;
+                ParTotal.Precision = 18;
+                ParTotal.Scale = 2;
+                ParTotal.Value = Venta.Total;
+                SqlCmd.Parameters.Add(ParTotal);
+
+                SqlParameter ParObservaciones = new SqlParameter();
+                ParObservaciones.ParameterName = "@Observaciones";
+                ParObservaciones.SqlDbType = SqlDbType.VarChar;
+                ParObservaciones.Size = 500;
+                ParObservaciones.Value = Venta.Observaciones;
+                SqlCmd.Parameters.Add(ParObservaciones);
+
+                SqlParameter ParIdusuario = new SqlParameter();
+                ParIdusuario.ParameterName = "@idusuario";
+                ParIdusuario.SqlDbType = SqlDbType.Int;
+                ParIdusuario.Value = Venta.Idusuario;
+                SqlCmd.Parameters.Add(ParIdusuario);
+
+
+                // PARÁMETRO DETALLE COMO TVP
+                SqlParameter ParDetalle = new SqlParameter();
+                ParDetalle.ParameterName = "@Detalle";
+                ParDetalle.SqlDbType = SqlDbType.Structured;
+                ParDetalle.TypeName = "dbo.DetalleVentaType";
+                ParDetalle.Value = Detalle;
+                SqlCmd.Parameters.Add(ParDetalle);
+
+                rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "No se Ingreso la Venta";
+            }
+            catch (Exception ex)
+            {
+                rpta = ex.Message;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+            return rpta;
+        }
+
+
+        public string ObtenerProximoNumeroDocumento()
+        {
+            string proximoNumero = "000001";
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "SELECT ISNULL(MAX(CAST(NumeroDocumento AS INT)), 0) + 1 FROM Venta";
+                SqlCmd.CommandType = CommandType.Text;
+
+                SqlCon.Open();
+                int ultimoNumero = Convert.ToInt32(SqlCmd.ExecuteScalar());
+                proximoNumero = ultimoNumero.ToString("D6"); // Formato 000001, 000002, etc.
+            }
+            catch (Exception ex)
+            {
+                proximoNumero = "000001";
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+            return proximoNumero;
         }
     }
 }

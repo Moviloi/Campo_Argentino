@@ -10,8 +10,9 @@
 
 namespace CampoArgentino.Presentacion.Properties {
     using System;
-    
-    
+    using System.Globalization;
+    using System.Threading;
+
     /// <summary>
     ///   Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
     /// </summary>

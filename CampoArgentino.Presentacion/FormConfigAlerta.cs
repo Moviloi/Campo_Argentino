@@ -16,6 +16,15 @@ namespace CampoArgentino.Presentacion
             InitializeComponent();
         }
 
+
+        // Evento Load
+        private void FormConfigAlerta_Load(object sender, EventArgs e)
+        {
+            this.Mostrar();
+            this.Habilitar(false);
+            this.Botones();
+        }
+
         // Método para mostrar configuraciones
         private void Mostrar()
         {
@@ -87,14 +96,6 @@ namespace CampoArgentino.Presentacion
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        // Evento Load
-        private void FormConfigAlerta_Load(object sender, EventArgs e)
-        {
-            this.Mostrar();
-            this.Habilitar(false);
-            this.Botones();
-        }
-
         // Configurar botones
         private void Botones()
         {
@@ -132,13 +133,14 @@ namespace CampoArgentino.Presentacion
 
                 chkNotificar.Checked = true; // Por defecto activar notificaciones
 
-                tabControl1.SelectedIndex = 1; // Ir a pestaña de mantenimiento
+                tabControl1.SelectedIndex = 1; // Ir a pestaña de configuración
             }
         }
 
         // Botón Nuevo
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            tabControl1.SelectedIndex = 1; // Ir a pestaña de configuración
             IsNuevo = true;
             IsEditar = false;
             this.Botones();
@@ -173,7 +175,6 @@ namespace CampoArgentino.Presentacion
         }
 
         // Botón Guardar
-        // Botón Guardar - CORREGIDO
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -187,7 +188,6 @@ namespace CampoArgentino.Presentacion
                 }
                 else
                 {
-                    // Validar que stock mínimo sea menor que stock máximo
                     decimal stockMinimo = Convert.ToDecimal(txtStockMinimo.Text);
                     decimal stockMaximo = Convert.ToDecimal(txtStockMaximo.Text);
 
@@ -199,27 +199,33 @@ namespace CampoArgentino.Presentacion
 
                     if (IsEditar)
                     {
-                        // Obtener los datos actuales del artículo para no modificar los demás campos
                         DataTable dtArticulo = NArticulo.BuscarNombre(txtNombre.Text);
                         if (dtArticulo.Rows.Count > 0)
                         {
                             DataRow articulo = dtArticulo.Rows[0];
 
+                            // OBTENER EL idpresentacion ACTUAL DEL ARTÍCULO
+                            int idPresentacion = 0;
+                            if (articulo["idpresentacion"] != DBNull.Value)
+                            {
+                                idPresentacion = Convert.ToInt32(articulo["idpresentacion"]);
+                            }
+
                             rpta = NArticulo.Editar(
                                 Convert.ToInt32(txtIdarticulo.Text),
-                                Convert.ToInt32(articulo["idcategoria"]), // Obtener idcategoria actual
-                                0, // idpresentacion (0 si no tiene, o obtener del artículo si existe)
-                                articulo["codigo"].ToString(), // Mantener código actual
-                                articulo["nombre"].ToString(), // Mantener nombre actual
-                                articulo["descripcion"].ToString(), // Mantener descripción actual
-                                articulo["unidadbase"].ToString(), // Mantener unidad base actual
-                                Convert.ToDecimal(articulo["factorconversion"]), // Mantener factor
-                                stockMinimo, // Nuevo stock mínimo
-                                stockMaximo, // Nuevo stock máximo
-                                Convert.ToDecimal(articulo["preciocompra"]), // Mantener precio compra
-                                Convert.ToDecimal(articulo["precioventa"]), // Mantener precio venta
-                                Convert.ToDecimal(articulo["iva"]), // Mantener IVA
-                                Convert.ToBoolean(articulo["activo"]) // Mantener estado activo
+                                Convert.ToInt32(articulo["idcategoria"]),
+                                idPresentacion, // ← USAR EL VALOR REAL
+                                articulo["codigo"].ToString(),
+                                articulo["nombre"].ToString(),
+                                articulo["descripcion"].ToString(),
+                                articulo["unidadbase"].ToString(),
+                                Convert.ToDecimal(articulo["factorconversion"]),
+                                stockMinimo,
+                                stockMaximo,
+                                Convert.ToDecimal(articulo["preciocompra"]),
+                                Convert.ToDecimal(articulo["precioventa"]),
+                                Convert.ToDecimal(articulo["iva"]),
+                                Convert.ToBoolean(articulo["activo"])
                             );
                         }
                         else
@@ -235,7 +241,6 @@ namespace CampoArgentino.Presentacion
                         {
                             MensajeOk("Configuración actualizada correctamente");
                         }
-
                         IsEditar = false;
                         this.Botones();
                         this.Limpiar();
@@ -268,7 +273,7 @@ namespace CampoArgentino.Presentacion
 
                 if (result == DialogResult.Yes)
                 {
-                    // Aquí iría la lógica para aplicar a todos los artículos
+                    // Aquí la lógica para aplicar a todos los artículos
                     MensajeOk("Configuración global aplicada a todos los artículos");
                 }
             }

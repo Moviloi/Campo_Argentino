@@ -18,7 +18,6 @@
         private ToolStripMenuItem ventasToolStripMenuItem;
         private ToolStripMenuItem consultasToolStripMenuItem;
         private ToolStripMenuItem ventasToolStripMenuItem1;
-        private ToolStripMenuItem comprasToolStripMenuItem1;
         private ToolStripMenuItem clientesToolStripMenuItem1;
         private ToolStripMenuItem proveedoresToolStripMenuItem1;
         private ToolStripMenuItem artículosToolStripMenuItem1;
@@ -28,22 +27,11 @@
         private ToolStripMenuItem acercaDeToolStripMenuItem;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel lblUsuario;
-        private Panel panelContenedor;
-        private ToolStrip toolStrip1;
-        private ToolStripButton btnArticulos;
-        private ToolStripButton btnUsuarios;
-        private ToolStripButton btnClientes;
-        private ToolStripButton btnProveedores;
-        private ToolStripButton btnCategorias;
-        private ToolStripButton btnCompras;
-        private ToolStripButton btnVentas;
-        private ToolStripButton btnConsultas;
-        private ToolStripButton btnInventario;
-        private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton btnCerrarSesion;
-        private ToolStripButton btnSalir;
         private Panel panelHeader;
         private Label lblTituloPrincipal;
+        private PictureBox pictureBox1;
+        private FlowLayoutPanel panelMenuLateral;
+        private Panel panelControlesSuperiores;
 
         protected override void Dispose(bool disposing)
         {
@@ -56,6 +44,8 @@
 
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
             menuStrip1 = new MenuStrip();
             archivoToolStripMenuItem = new ToolStripMenuItem();
             cerrarSesiónToolStripMenuItem = new ToolStripMenuItem();
@@ -71,7 +61,6 @@
             ventasToolStripMenuItem = new ToolStripMenuItem();
             consultasToolStripMenuItem = new ToolStripMenuItem();
             ventasToolStripMenuItem1 = new ToolStripMenuItem();
-            comprasToolStripMenuItem1 = new ToolStripMenuItem();
             clientesToolStripMenuItem1 = new ToolStripMenuItem();
             proveedoresToolStripMenuItem1 = new ToolStripMenuItem();
             artículosToolStripMenuItem1 = new ToolStripMenuItem();
@@ -81,28 +70,26 @@
             acercaDeToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             lblUsuario = new ToolStripStatusLabel();
-            panelContenedor = new Panel();
-            toolStrip1 = new ToolStrip();
-            btnArticulos = new ToolStripButton();
-            btnUsuarios = new ToolStripButton();
-            btnClientes = new ToolStripButton();
-            btnProveedores = new ToolStripButton();
-            btnCategorias = new ToolStripButton();
-            btnCompras = new ToolStripButton();
-            btnVentas = new ToolStripButton();
-            btnConsultas = new ToolStripButton();
-            btnInventario = new ToolStripButton();
-            toolStripSeparator1 = new ToolStripSeparator();
-            btnCerrarSesion = new ToolStripButton();
-            btnSalir = new ToolStripButton();
             panelHeader = new Panel();
             pictureBox1 = new PictureBox();
             lblTituloPrincipal = new Label();
+            panelMenuLateral = new FlowLayoutPanel();
+            btnVentas = new PictureBox();
+            btnArticulos = new PictureBox();
+            btnClientes = new PictureBox();
+            btnProveedores = new PictureBox();
+            panelControlesSuperiores = new Panel();
+            panelContenedor = new Panel();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
-            toolStrip1.SuspendLayout();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelMenuLateral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)btnVentas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnArticulos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnClientes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnProveedores).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -146,8 +133,8 @@
             mantenimientosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { artículosToolStripMenuItem, usuariosToolStripMenuItem, clientesToolStripMenuItem, proveedoresToolStripMenuItem, categoríasToolStripMenuItem });
             mantenimientosToolStripMenuItem.ForeColor = Color.White;
             mantenimientosToolStripMenuItem.Name = "mantenimientosToolStripMenuItem";
-            mantenimientosToolStripMenuItem.Size = new Size(130, 24);
-            mantenimientosToolStripMenuItem.Text = "&Mantenimientos";
+            mantenimientosToolStripMenuItem.Size = new Size(87, 24);
+            mantenimientosToolStripMenuItem.Text = "&Gestiònes";
             // 
             // artículosToolStripMenuItem
             // 
@@ -215,7 +202,7 @@
             // 
             // consultasToolStripMenuItem
             // 
-            consultasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ventasToolStripMenuItem1, comprasToolStripMenuItem1, clientesToolStripMenuItem1, proveedoresToolStripMenuItem1, artículosToolStripMenuItem1, stockToolStripMenuItem });
+            consultasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ventasToolStripMenuItem1, clientesToolStripMenuItem1, proveedoresToolStripMenuItem1, artículosToolStripMenuItem1, stockToolStripMenuItem });
             consultasToolStripMenuItem.ForeColor = Color.White;
             consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
             consultasToolStripMenuItem.Size = new Size(86, 24);
@@ -228,14 +215,6 @@
             ventasToolStripMenuItem1.Size = new Size(231, 26);
             ventasToolStripMenuItem1.Text = "&Ventas";
             ventasToolStripMenuItem1.Click += ventasToolStripMenuItem1_Click;
-            // 
-            // comprasToolStripMenuItem1
-            // 
-            comprasToolStripMenuItem1.Name = "comprasToolStripMenuItem1";
-            comprasToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.F2;
-            comprasToolStripMenuItem1.Size = new Size(231, 26);
-            comprasToolStripMenuItem1.Text = "&Compras";
-            comprasToolStripMenuItem1.Click += comprasToolStripMenuItem1_Click;
             // 
             // clientesToolStripMenuItem1
             // 
@@ -291,7 +270,6 @@
             acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
             acercaDeToolStripMenuItem.Size = new Size(158, 26);
             acercaDeToolStripMenuItem.Text = "&Acerca de";
-            acercaDeToolStripMenuItem.Click += acercaDeToolStripMenuItem_Click;
             // 
             // statusStrip1
             // 
@@ -312,155 +290,6 @@
             lblUsuario.Size = new Size(66, 20);
             lblUsuario.Text = "Usuario: ";
             // 
-            // panelContenedor
-            // 
-            panelContenedor.BackColor = Color.White;
-            panelContenedor.Dock = DockStyle.Fill;
-            panelContenedor.Location = new Point(0, 117);
-            panelContenedor.Margin = new Padding(3, 4, 3, 4);
-            panelContenedor.Name = "panelContenedor";
-            panelContenedor.Size = new Size(1200, 706);
-            panelContenedor.TabIndex = 2;
-            // 
-            // toolStrip1
-            // 
-            toolStrip1.BackColor = Color.White;
-            toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip1.ImageScalingSize = new Size(32, 32);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { btnArticulos, btnUsuarios, btnClientes, btnProveedores, btnCategorias, btnCompras, btnVentas, btnConsultas, btnInventario, toolStripSeparator1, btnCerrarSesion, btnSalir });
-            toolStrip1.Location = new Point(0, 90);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(1200, 27);
-            toolStrip1.TabIndex = 3;
-            toolStrip1.Text = "toolStrip1";
-            // 
-            // btnArticulos
-            // 
-            btnArticulos.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnArticulos.ForeColor = Color.FromArgb(52, 73, 94);
-            btnArticulos.ImageTransparentColor = Color.Magenta;
-            btnArticulos.Margin = new Padding(5, 1, 0, 2);
-            btnArticulos.Name = "btnArticulos";
-            btnArticulos.Size = new Size(71, 24);
-            btnArticulos.Text = "Artículos";
-            btnArticulos.Click += btnArticulos_Click;
-            // 
-            // btnUsuarios
-            // 
-            btnUsuarios.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnUsuarios.ForeColor = Color.FromArgb(52, 73, 94);
-            btnUsuarios.ImageTransparentColor = Color.Magenta;
-            btnUsuarios.Margin = new Padding(10, 1, 0, 2);
-            btnUsuarios.Name = "btnUsuarios";
-            btnUsuarios.Size = new Size(69, 24);
-            btnUsuarios.Text = "Usuarios";
-            btnUsuarios.Click += btnUsuarios_Click;
-            // 
-            // btnClientes
-            // 
-            btnClientes.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnClientes.ForeColor = Color.FromArgb(52, 73, 94);
-            btnClientes.ImageTransparentColor = Color.Magenta;
-            btnClientes.Margin = new Padding(10, 1, 0, 2);
-            btnClientes.Name = "btnClientes";
-            btnClientes.Size = new Size(65, 24);
-            btnClientes.Text = "Clientes";
-            btnClientes.Click += btnClientes_Click;
-            // 
-            // btnProveedores
-            // 
-            btnProveedores.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProveedores.ForeColor = Color.FromArgb(52, 73, 94);
-            btnProveedores.ImageTransparentColor = Color.Magenta;
-            btnProveedores.Margin = new Padding(10, 1, 0, 2);
-            btnProveedores.Name = "btnProveedores";
-            btnProveedores.Size = new Size(95, 24);
-            btnProveedores.Text = "Proveedores";
-            btnProveedores.Click += btnProveedores_Click;
-            // 
-            // btnCategorias
-            // 
-            btnCategorias.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCategorias.ForeColor = Color.FromArgb(52, 73, 94);
-            btnCategorias.ImageTransparentColor = Color.Magenta;
-            btnCategorias.Margin = new Padding(10, 1, 0, 2);
-            btnCategorias.Name = "btnCategorias";
-            btnCategorias.Size = new Size(84, 24);
-            btnCategorias.Text = "Categorías";
-            btnCategorias.Click += btnCategorias_Click;
-            // 
-            // btnCompras
-            // 
-            btnCompras.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCompras.ForeColor = Color.FromArgb(52, 73, 94);
-            btnCompras.ImageTransparentColor = Color.Magenta;
-            btnCompras.Margin = new Padding(10, 1, 0, 2);
-            btnCompras.Name = "btnCompras";
-            btnCompras.Size = new Size(72, 24);
-            btnCompras.Text = "Compras";
-            btnCompras.Click += btnCompras_Click;
-            // 
-            // btnVentas
-            // 
-            btnVentas.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnVentas.ForeColor = Color.FromArgb(52, 73, 94);
-            btnVentas.ImageTransparentColor = Color.Magenta;
-            btnVentas.Margin = new Padding(10, 1, 0, 2);
-            btnVentas.Name = "btnVentas";
-            btnVentas.Size = new Size(56, 24);
-            btnVentas.Text = "Ventas";
-            btnVentas.Click += btnVentas_Click;
-            // 
-            // btnConsultas
-            // 
-            btnConsultas.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnConsultas.ForeColor = Color.FromArgb(52, 73, 94);
-            btnConsultas.ImageTransparentColor = Color.Magenta;
-            btnConsultas.Margin = new Padding(10, 1, 0, 2);
-            btnConsultas.Name = "btnConsultas";
-            btnConsultas.Size = new Size(76, 24);
-            btnConsultas.Text = "Consultas";
-            btnConsultas.Click += btnConsultas_Click;
-            // 
-            // btnInventario
-            // 
-            btnInventario.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnInventario.ForeColor = Color.FromArgb(52, 73, 94);
-            btnInventario.ImageTransparentColor = Color.Magenta;
-            btnInventario.Margin = new Padding(10, 1, 0, 2);
-            btnInventario.Name = "btnInventario";
-            btnInventario.Size = new Size(79, 24);
-            btnInventario.Text = "Inventario";
-            btnInventario.Click += btnInventario_Click_1;
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Margin = new Padding(20, 0, 0, 0);
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 27);
-            // 
-            // btnCerrarSesion
-            // 
-            btnCerrarSesion.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCerrarSesion.ForeColor = Color.FromArgb(52, 73, 94);
-            btnCerrarSesion.ImageTransparentColor = Color.Magenta;
-            btnCerrarSesion.Margin = new Padding(10, 1, 0, 2);
-            btnCerrarSesion.Name = "btnCerrarSesion";
-            btnCerrarSesion.Size = new Size(100, 24);
-            btnCerrarSesion.Text = "Cerrar Sesión";
-            btnCerrarSesion.Click += btnCerrarSesion_Click;
-            // 
-            // btnSalir
-            // 
-            btnSalir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSalir.ForeColor = Color.FromArgb(52, 73, 94);
-            btnSalir.ImageTransparentColor = Color.Magenta;
-            btnSalir.Margin = new Padding(10, 1, 0, 2);
-            btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(42, 24);
-            btnSalir.Text = "Salir";
-            btnSalir.Click += btnSalir_Click;
-            // 
             // panelHeader
             // 
             panelHeader.BackColor = Color.FromArgb(41, 128, 185);
@@ -476,13 +305,14 @@
             // pictureBox1
             // 
             pictureBox1.Dock = DockStyle.Right;
-            pictureBox1.Image = Properties.Resources.Ikesis_wordmark;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(1075, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(125, 62);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // lblTituloPrincipal
             // 
@@ -495,6 +325,101 @@
             lblTituloPrincipal.TabIndex = 0;
             lblTituloPrincipal.Text = "Campo Argentino";
             // 
+            // panelMenuLateral
+            // 
+            panelMenuLateral.BackColor = Color.FromArgb(64, 64, 64);
+            panelMenuLateral.Controls.Add(btnVentas);
+            panelMenuLateral.Controls.Add(btnArticulos);
+            panelMenuLateral.Controls.Add(btnClientes);
+            panelMenuLateral.Controls.Add(btnProveedores);
+            panelMenuLateral.Dock = DockStyle.Left;
+            panelMenuLateral.FlowDirection = FlowDirection.TopDown;
+            panelMenuLateral.Location = new Point(0, 90);
+            panelMenuLateral.Name = "panelMenuLateral";
+            panelMenuLateral.Size = new Size(205, 733);
+            panelMenuLateral.TabIndex = 5;
+            // 
+            // btnVentas
+            // 
+            btnVentas.Cursor = Cursors.SizeAll;
+            btnVentas.Image = (Image)resources.GetObject("btnVentas.Image");
+            btnVentas.Location = new Point(50, 100);
+            btnVentas.Margin = new Padding(50, 100, 50, 20);
+            btnVentas.Name = "btnVentas";
+            btnVentas.Size = new Size(100, 100);
+            btnVentas.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnVentas.TabIndex = 0;
+            btnVentas.TabStop = false;
+            btnVentas.UseWaitCursor = true;
+            btnVentas.Click += btnVentas_Click;
+            // 
+            // btnArticulos
+            // 
+            btnArticulos.Cursor = Cursors.SizeAll;
+            btnArticulos.Image = (Image)resources.GetObject("btnArticulos.Image");
+            btnArticulos.Location = new Point(50, 220);
+            btnArticulos.Margin = new Padding(50, 0, 50, 20);
+            btnArticulos.Name = "btnArticulos";
+            btnArticulos.Size = new Size(100, 100);
+            btnArticulos.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnArticulos.TabIndex = 0;
+            btnArticulos.TabStop = false;
+            btnArticulos.UseWaitCursor = true;
+            btnArticulos.Click += btnArticulos_Click;
+            // 
+            // btnClientes
+            // 
+            btnClientes.Cursor = Cursors.SizeAll;
+            btnClientes.Image = (Image)resources.GetObject("btnClientes.Image");
+            btnClientes.Location = new Point(50, 340);
+            btnClientes.Margin = new Padding(50, 0, 50, 20);
+            btnClientes.Name = "btnClientes";
+            btnClientes.Size = new Size(100, 100);
+            btnClientes.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnClientes.TabIndex = 0;
+            btnClientes.TabStop = false;
+            btnClientes.UseWaitCursor = true;
+            btnClientes.Click += btnClientes_Click;
+            // 
+            // btnProveedores
+            // 
+            btnProveedores.Cursor = Cursors.SizeAll;
+            btnProveedores.Image = (Image)resources.GetObject("btnProveedores.Image");
+            btnProveedores.Location = new Point(50, 460);
+            btnProveedores.Margin = new Padding(50, 0, 50, 20);
+            btnProveedores.Name = "btnProveedores";
+            btnProveedores.Size = new Size(100, 100);
+            btnProveedores.SizeMode = PictureBoxSizeMode.StretchImage;
+            btnProveedores.TabIndex = 0;
+            btnProveedores.TabStop = false;
+            btnProveedores.UseWaitCursor = true;
+            btnProveedores.Click += btnProveedores_Click;
+            // 
+            // panelControlesSuperiores
+            // 
+            panelControlesSuperiores.BackColor = Color.SkyBlue;
+            panelControlesSuperiores.Dock = DockStyle.Top;
+            panelControlesSuperiores.Location = new Point(205, 90);
+            panelControlesSuperiores.Name = "panelControlesSuperiores";
+            panelControlesSuperiores.Size = new Size(995, 60);
+            panelControlesSuperiores.TabIndex = 6;
+            // 
+            // panelContenedor
+            // 
+            panelContenedor.BackColor = Color.White;
+            panelContenedor.Dock = DockStyle.Fill;
+            panelContenedor.Location = new Point(205, 150);
+            panelContenedor.Margin = new Padding(3, 4, 3, 4);
+            panelContenedor.Name = "panelContenedor";
+            panelContenedor.Size = new Size(995, 673);
+            panelContenedor.TabIndex = 2;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -502,7 +427,8 @@
             BackColor = Color.White;
             ClientSize = new Size(1200, 849);
             Controls.Add(panelContenedor);
-            Controls.Add(toolStrip1);
+            Controls.Add(panelControlesSuperiores);
+            Controls.Add(panelMenuLateral);
             Controls.Add(panelHeader);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
@@ -516,14 +442,42 @@
             menuStrip1.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelMenuLateral.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)btnVentas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnArticulos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnClientes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnProveedores).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
-        private PictureBox pictureBox1;
+
+        // Aquí puedes agregar los botones al panelMenuLateral dinámicamente
+        public void AgregarBotonMenu(string texto, Image icono, EventHandler clickHandler)
+        {
+            Button btn = new Button();
+            btn.Text = texto;
+            btn.Image = icono;
+            btn.Size = new Size(180, 45);
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.BackColor = Color.White;
+            btn.ForeColor = Color.FromArgb(52, 73, 94);
+            btn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btn.ImageAlign = ContentAlignment.MiddleLeft;
+            btn.TextAlign = ContentAlignment.MiddleLeft;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Margin = new Padding(10, 5, 10, 5);
+            btn.Click += clickHandler;
+
+            panelMenuLateral.Controls.Add(btn);
+        }
+        private Panel panelContenedor;
+        private PictureBox btnVentas;
+        private PictureBox btnArticulos;
+        private PictureBox btnClientes;
+        private PictureBox btnProveedores;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }

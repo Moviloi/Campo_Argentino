@@ -1,8 +1,9 @@
-﻿using System;
+﻿using CampoArgentino.Negocio;
 using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-using CampoArgentino.Negocio;
+using System.Diagnostics;
+using System.Globalization;
+using iText = iTextSharp.text;
+using iTextPdf = iTextSharp.text.pdf;
 
 namespace CampoArgentino.Presentacion
 {
@@ -19,11 +20,7 @@ namespace CampoArgentino.Presentacion
             this.ttMensaje.SetToolTip(this.txtDescripcion, "Ingrese la descripción del artículo");
         }
 
-        private void btnReporte_Click_1(object sender, EventArgs e)
-        {
-            FormVistaArticulo_Venta frm = new FormVistaArticulo_Venta();
-            frm.ShowDialog();
-        }
+
 
         private void FormArticulo_Load(object sender, EventArgs e)
         {
@@ -32,13 +29,11 @@ namespace CampoArgentino.Presentacion
                 this.Top = 0;
                 this.Left = 0;
 
-                // Inicializar controles críticos si son null
-                InicializarControles();
-
-                // Temporal: Debug para ver qué se carga
-                //DebugCombos();
-
                 this.CargarCombos();
+
+                // Limpia columnas antiguas
+                LimpiarColumnasAntiguas();
+
                 this.Mostrar();
                 this.Habilitar(false);
                 this.Botones();
@@ -50,57 +45,7 @@ namespace CampoArgentino.Presentacion
             }
         }
 
-        private void InicializarControles()
-        {
-            // Verificar e inicializar controles críticos
-            if (txtStockMaximo == null)
-            {
-                // Si el control es null, intenta encontrarlo en los controles del formulario
-                var control = this.Controls.Find("txtStockMaximo", true).FirstOrDefault();
-                if (control != null)
-                {
-                    txtStockMaximo = control as TextBox;
-                }
-                else
-                {
-                    // Si no existe, créalo (solo para emergencia)
-                    txtStockMaximo = new TextBox();
-                    txtStockMaximo.Name = "txtStockMaximo";
-                    txtStockMaximo.Visible = false; // Ocultarlo hasta que se arregle el diseño
-                }
-            }
 
-            // Repetir para otros controles críticos
-            if (txtStockMinimo == null)
-            {
-                var control = this.Controls.Find("txtStockMinimo", true).FirstOrDefault();
-                if (control != null)
-                {
-                    txtStockMinimo = control as TextBox;
-                }
-                else
-                {
-                    txtStockMinimo = new TextBox();
-                    txtStockMinimo.Name = "txtStockMinimo";
-                    txtStockMinimo.Visible = false;
-                }
-            }
-
-            if (txtPrecioCompra == null)
-            {
-                var control = this.Controls.Find("txtPrecioCompra", true).FirstOrDefault();
-                if (control != null)
-                {
-                    txtPrecioCompra = control as TextBox;
-                }
-                else
-                {
-                    txtPrecioCompra = new TextBox();
-                    txtPrecioCompra.Name = "txtPrecioCompra";
-                    txtPrecioCompra.Visible = false;
-                }
-            }
-        }
 
         // Métodos auxiliares
         private void MensajeOk(string mensaje)
@@ -115,31 +60,30 @@ namespace CampoArgentino.Presentacion
 
         private void Limpiar()
         {
-            if (txtIdarticulo != null) this.txtIdarticulo.Text = string.Empty;
-            if (txtCodigo != null) this.txtCodigo.Text = string.Empty;
-            if (txtNombre != null) this.txtNombre.Text = string.Empty;
-            if (txtDescripcion != null) this.txtDescripcion.Text = string.Empty;
-            if (txtPrecioVenta != null) this.txtPrecioVenta.Text = string.Empty;
-            if (txtStock != null) this.txtStock.Text = string.Empty;
-            if (txtPrecioCompra != null) this.txtPrecioCompra.Text = string.Empty;
-            if (txtStockMinimo != null) this.txtStockMinimo.Text = string.Empty;
-            if (txtStockMaximo != null) this.txtStockMaximo.Text = string.Empty;
-            if (cbCategoria != null) this.cbCategoria.SelectedIndex = -1;
-            if (cbPresentacion != null) this.cbPresentacion.SelectedIndex = -1;
+            this.txtIdarticulo.Text = string.Empty;
+            this.txtCodigo.Text = string.Empty;
+            this.txtNombre.Text = string.Empty;
+            this.txtDescripcion.Text = string.Empty;
+            this.txtPrecioVenta.Text = string.Empty;
+            this.txtStock.Text = string.Empty;
+            this.txtPrecioCompra.Text = string.Empty;
+            this.txtStockMinimo.Text = string.Empty;
+            this.txtStockMaximo.Text = string.Empty;
+            this.cbCategoria.SelectedIndex = -1;
+            this.cbPresentacion.SelectedIndex = -1;
         }
 
         private void Habilitar(bool valor)
         {
-            // Verificar que los controles existan antes de usarlos
-            if (txtCodigo != null) txtCodigo.ReadOnly = !valor;
-            if (txtNombre != null) txtNombre.ReadOnly = !valor;
-            if (txtDescripcion != null) txtDescripcion.ReadOnly = !valor;
-            if (txtPrecioVenta != null) txtPrecioVenta.ReadOnly = !valor;
-            if (txtPrecioCompra != null) txtPrecioCompra.ReadOnly = !valor;
-            if (txtStockMinimo != null) txtStockMinimo.ReadOnly = !valor;
-            if (txtStockMaximo != null) txtStockMaximo.ReadOnly = !valor;
-            if (cbCategoria != null) cbCategoria.Enabled = valor;
-            if (cbPresentacion != null) cbPresentacion.Enabled = valor;
+            txtCodigo.ReadOnly = !valor;
+            txtNombre.ReadOnly = !valor;
+            txtDescripcion.ReadOnly = !valor;
+            txtPrecioVenta.ReadOnly = !valor;
+            txtPrecioCompra.ReadOnly = !valor;
+            txtStockMinimo.ReadOnly = !valor;
+            txtStockMaximo.ReadOnly = !valor;
+            cbCategoria.Enabled = valor;
+            cbPresentacion.Enabled = valor;
         }
 
         private void Botones()
@@ -192,9 +136,16 @@ namespace CampoArgentino.Presentacion
             try
             {
                 this.dataListado.DataSource = NArticulo.Mostrar();
+
+                // Limpia columnas antiguas
+                LimpiarColumnasAntiguas();
+
                 this.OcultarColumnas();
 
-                // Calcular stock total de forma segura
+                // Agrega o configura columna de selección múltiple
+                ConfigurarColumnaSeleccion();
+
+                // Calcula stock total
                 decimal stockTotal = 0;
                 if (dataListado != null && dataListado.Rows.Count > 0)
                 {
@@ -209,7 +160,6 @@ namespace CampoArgentino.Presentacion
                     }
                 }
 
-                // Verificar que lblTotal existe antes de usarlo
                 if (lblTotal != null)
                 {
                     lblTotal.Text = "Total Registros: " + dataListado.Rows.Count + " | Stock Total: " + stockTotal.ToString("N2");
@@ -222,18 +172,67 @@ namespace CampoArgentino.Presentacion
             }
         }
 
+        private void LimpiarColumnasAntiguas()
+        {
+            // Eliminar la columna "Eliminar" si existe
+            if (dataListado.Columns.Contains("Eliminar"))
+            {
+                dataListado.Columns.Remove("Eliminar");
+            }
+
+            // También eliminar cualquier columna de checkbox existente
+            foreach (DataGridViewColumn col in dataListado.Columns)
+            {
+                if (col is DataGridViewCheckBoxColumn)
+                {
+                    dataListado.Columns.Remove(col);
+                    break;
+                }
+            }
+        }
+
+        private void ConfigurarColumnaSeleccion()
+        {
+            LimpiarColumnasAntiguas();
+
+            // Verificar si la columna ya existe
+            if (!dataListado.Columns.Contains("Seleccionar"))
+            {
+                // Crear columna de botón para selección
+                DataGridViewButtonColumn btnSeleccionarCol = new DataGridViewButtonColumn();
+                btnSeleccionarCol.Name = "Seleccionar";
+                btnSeleccionarCol.HeaderText = "Seleccionar";
+                btnSeleccionarCol.Text = "⬜"; // Cuadrado vacío (no seleccionado)
+                btnSeleccionarCol.UseColumnTextForButtonValue = true;
+                btnSeleccionarCol.Width = 80;
+                btnSeleccionarCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                btnSeleccionarCol.DefaultCellStyle.Font = new Font("Arial", 12); // Tamaño más grande para mejor visualización
+                btnSeleccionarCol.FlatStyle = FlatStyle.Flat;
+
+                // Inserta la columna al principio
+                dataListado.Columns.Insert(0, btnSeleccionarCol);
+            }
+
+            // Asegura de que la columna esté visible
+            dataListado.Columns["Seleccionar"].Visible = true;
+
+            // Inicializa el estado de selección de todas las filas
+            foreach (DataGridViewRow row in dataListado.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    // Por defecto, no seleccionado
+                    row.Cells["Seleccionar"].Value = "⬜";
+                    row.Cells["Seleccionar"].Tag = false; // Usa Tag para almacenar estado
+                    row.DefaultCellStyle.BackColor = Color.White; // Fondo blanco por defecto
+                }
+            }
+        }
+
         private void CargarCombos()
         {
             try
             {
-                // Verificar que los combos existan
-                if (cbCategoria == null || cbPresentacion == null)
-                {
-                    MessageBox.Show("Error: Los combos no están inicializados correctamente", "Error",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
                 // Cargar categorías
                 DataTable dtCategorias = NCategoria.Mostrar();
                 if (dtCategorias != null && dtCategorias.Rows.Count > 0)
@@ -245,8 +244,11 @@ namespace CampoArgentino.Presentacion
                 }
                 else
                 {
-                    MessageBox.Show("No hay categorías disponibles. Debe crear categorías primero.",
-                                  "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cbCategoria.DataSource = null;
+                    cbCategoria.Items.Clear();
+                    cbCategoria.Items.Add("-- SIN CATEGORÍAS --");
+                    cbCategoria.SelectedIndex = 0;
+                    cbCategoria.Enabled = false;
                 }
 
                 // Cargar presentaciones
@@ -260,53 +262,20 @@ namespace CampoArgentino.Presentacion
                 }
                 else
                 {
-                    MessageBox.Show("No hay presentaciones disponibles. Debe crear presentaciones primero.",
-                                  "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cbPresentacion.DataSource = null;
+                    cbPresentacion.Items.Clear();
+                    cbPresentacion.Items.Add("-- SIN PRESENTACIONES --");
+                    cbPresentacion.SelectedIndex = 0;
+                    cbPresentacion.Enabled = false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar combos: {ex.Message}", "Error",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar combos: {ex.Message}\n\nAsegúrese de que existen categorías y presentaciones en la base de datos.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void DebugCombos()
-        {
-            try
-            {
-                // Debug categorías
-                DataTable dtCat = NCategoria.Mostrar();
-                string debugInfo = "=== DEBUG COMBOS ===\n";
-                debugInfo += $"Categorías: {dtCat?.Rows.Count ?? 0} registros\n";
-
-                if (dtCat != null)
-                {
-                    foreach (DataRow row in dtCat.Rows)
-                    {
-                        debugInfo += $"ID: {row["idcategoria"]}, Nombre: {row["nombre"]}\n";
-                    }
-                }
-
-                // Debug presentaciones
-                DataTable dtPres = NPresentacion.Mostrar();
-                debugInfo += $"\nPresentaciones: {dtPres?.Rows.Count ?? 0} registros\n";
-
-                if (dtPres != null)
-                {
-                    foreach (DataRow row in dtPres.Rows)
-                    {
-                        debugInfo += $"ID: {row["idpresentacion"]}, Nombre: {row["Nombre"]}\n";
-                    }
-                }
-
-                MessageBox.Show(debugInfo, "Debug - Combos");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error en debug: {ex.Message}", "Debug Error");
-            }
-        }
 
         private void BuscarNombre()
         {
@@ -330,59 +299,163 @@ namespace CampoArgentino.Presentacion
         {
             try
             {
-                DialogResult Opcion;
-                Opcion = MessageBox.Show("¿Realmente desea eliminar los registros seleccionados?",
-                    "Sistema Campo Argentino", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                // Contar cuántos están seleccionados
+                int cantidadSeleccionados = 0;
+                foreach (DataGridViewRow row in dataListado.Rows)
+                {
+                    if (!row.IsNewRow && row.Cells["Seleccionar"].Tag != null && (bool)row.Cells["Seleccionar"].Tag)
+                    {
+                        cantidadSeleccionados++;
+                    }
+                }
+
+                if (cantidadSeleccionados == 0)
+                {
+                    MensajeError("No hay artículos seleccionados para eliminar");
+                    return;
+                }
+
+                DialogResult Opcion = MessageBox.Show(
+                    $"¿Realmente desea eliminar los {cantidadSeleccionados} artículos seleccionados?\n\nEsta acción no se puede deshacer.",
+                    "Confirmar Eliminación",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button2); // Por defecto selecciona Cancelar
 
                 if (Opcion == DialogResult.OK)
                 {
                     string Rpta = "";
+                    int eliminadosExitosos = 0;
+                    int errores = 0;
+                    List<string> erroresDetallados = new List<string>();
 
                     foreach (DataGridViewRow row in dataListado.Rows)
                     {
-                        if (Convert.ToBoolean(row.Cells["Eliminar"].Value))
+                        if (!row.IsNewRow && row.Cells["Seleccionar"].Tag != null && (bool)row.Cells["Seleccionar"].Tag)
                         {
                             int idarticulo = Convert.ToInt32(row.Cells["idarticulo"].Value);
+                            string nombreArticulo = row.Cells["nombre"].Value?.ToString() ?? "Sin nombre";
+
                             Rpta = NArticulo.Eliminar(idarticulo);
 
                             if (Rpta.Equals("OK"))
                             {
-                                this.MensajeOk("Se eliminó correctamente el registro");
+                                eliminadosExitosos++;
                             }
                             else
                             {
-                                this.MensajeError(Rpta);
+                                errores++;
+                                erroresDetallados.Add($"{nombreArticulo}: {Rpta}");
                             }
                         }
                     }
+
+                    // Mostrar resumen
+                    if (errores == 0)
+                    {
+                        MensajeOk($"Se eliminaron correctamente {eliminadosExitosos} artículos");
+                    }
+                    else
+                    {
+                        string mensajeError = $"Proceso completado: {eliminadosExitosos} eliminados, {errores} errores";
+                        if (erroresDetallados.Count > 0)
+                        {
+                            mensajeError += "\n\nErrores:\n" + string.Join("\n", erroresDetallados.Take(5)); // Mostrar solo primeros 5 errores
+                            if (erroresDetallados.Count > 5)
+                            {
+                                mensajeError += $"\n... y {erroresDetallados.Count - 5} más";
+                            }
+                        }
+                        MensajeError(mensajeError);
+                    }
+
                     this.Mostrar();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + ex.StackTrace);
+                MensajeError($"Error inesperado al eliminar: {ex.Message}");
             }
         }
 
-        private void chkEliminar_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkEliminar.Checked)
-            {
-                this.dataListado.Columns["Eliminar"].Visible = true;
-            }
-            else
-            {
-                this.dataListado.Columns["Eliminar"].Visible = false;
-            }
-        }
 
         private void dataListado_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dataListado.Columns["Eliminar"].Index)
+            // Verificar si se hizo clic en la columna "Seleccionar"
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataListado.Columns["Seleccionar"].Index)
             {
-                DataGridViewCheckBoxCell ChkEliminar = (DataGridViewCheckBoxCell)dataListado.Rows[e.RowIndex].Cells["Eliminar"];
-                ChkEliminar.Value = !Convert.ToBoolean(ChkEliminar.Value);
+                DataGridViewRow row = dataListado.Rows[e.RowIndex];
+                bool estaSeleccionado = false;
+
+                // Obtener el estado actual del Tag
+                if (row.Cells["Seleccionar"].Tag != null)
+                {
+                    estaSeleccionado = (bool)row.Cells["Seleccionar"].Tag;
+                }
+
+                // Cambiar el estado
+                estaSeleccionado = !estaSeleccionado;
+
+                // Actualizar el texto del botón y el Tag
+                if (estaSeleccionado)
+                {
+                    row.Cells["Seleccionar"].Value = "✅"; // Checkbox marcado
+                    row.Cells["Seleccionar"].Tag = true;
+                    row.DefaultCellStyle.BackColor = Color.DarkGreen; // Verde oscuro
+                    row.DefaultCellStyle.ForeColor = Color.White; // Texto blanco para mejor contraste
+                }
+                else
+                {
+                    row.Cells["Seleccionar"].Value = "⬜"; // Checkbox vacío
+                    row.Cells["Seleccionar"].Tag = false;
+                    row.DefaultCellStyle.BackColor = Color.White; // Quitar resaltado
+                    row.DefaultCellStyle.ForeColor = Color.Black; // Texto negro por defecto
+                }
+
+                // Actualizar contador de seleccionados
+                ActualizarContadorSeleccionados();
+
+                // Forzar el repintado de la fila
+                dataListado.InvalidateRow(e.RowIndex);
             }
+        }
+
+        private void ActualizarContadorSeleccionados()
+        {
+            int contador = 0;
+
+            foreach (DataGridViewRow row in dataListado.Rows)
+            {
+                if (!row.IsNewRow && row.Cells["Seleccionar"].Tag != null)
+                {
+                    if ((bool)row.Cells["Seleccionar"].Tag)
+                    {
+                        contador++;
+                    }
+                }
+            }
+
+            // Mostrar contador
+            if (lblTotal != null)
+            {
+                lblTotal.Text = $"Total Registros: {dataListado.Rows.Count} | Seleccionados: {contador}";
+            }
+        }
+
+        
+        // Botón para deseleccionar todos
+        private void btnDeseleccionarTodos_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataListado.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    row.Cells["Seleccionar"].Value = "⬜";
+                    row.Cells["Seleccionar"].Tag = false;
+                    row.DefaultCellStyle.BackColor = Color.White;
+                }
+            }
+            ActualizarContadorSeleccionados();
         }
 
         private void dataListado_DoubleClick(object sender, EventArgs e)
@@ -409,7 +482,7 @@ namespace CampoArgentino.Presentacion
                     cbCategoria.SelectedValue = idcategoria;
                 }
 
-                // Presentación (Unidad Base)
+                // Presentación
                 if (this.dataListado.CurrentRow.Cells["idpresentacion"] != null &&
                     this.dataListado.CurrentRow.Cells["idpresentacion"].Value != DBNull.Value)
                 {
@@ -421,7 +494,7 @@ namespace CampoArgentino.Presentacion
                     cbPresentacion.SelectedIndex = -1;
                 }
 
-                // Otros campos
+                // Otros campos - usar controles directamente
                 if (this.dataListado.CurrentRow.Cells["preciocompra"] != null &&
                     this.dataListado.CurrentRow.Cells["preciocompra"].Value != DBNull.Value)
                 {
@@ -446,12 +519,19 @@ namespace CampoArgentino.Presentacion
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            tabControl1.SelectedIndex = 1;
             this.IsNuevo = true;
             this.IsEditar = false;
             this.Botones();
             this.Limpiar();
             this.Habilitar(true);
             this.txtNombre.Focus();
+        }
+
+        private void btnReporte_Click_1(object sender, EventArgs e)
+        {
+            FormVistaArticulo_Venta frm = new FormVistaArticulo_Venta();
+            frm.ShowDialog();
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -463,10 +543,16 @@ namespace CampoArgentino.Presentacion
                     return;
                 }
 
+                // AGREGAR VALIDACIÓN DE PRECIOS ANTES DE GUARDAR
+                if (!ValidarPreciosYStock())
+                {
+                    return;
+                }
+
                 string rpta = "";
                 int idcategoria = Convert.ToInt32(cbCategoria.SelectedValue);
                 int idpresentacion = cbPresentacion.SelectedValue != null ? Convert.ToInt32(cbPresentacion.SelectedValue) : 0;
-                string unidadBase = cbPresentacion.Text; // Usar el nombre de la presentación como unidad base
+                string unidadBase = cbPresentacion.Text;
 
                 if (this.IsNuevo)
                 {
@@ -476,14 +562,14 @@ namespace CampoArgentino.Presentacion
                         this.txtCodigo.Text.Trim(),
                         this.txtNombre.Text.Trim().ToUpper(),
                         this.txtDescripcion.Text.Trim(),
-                        unidadBase,                   // unidadbase (nombre de la presentación)
-                        1,                           // factorconversion
+                        unidadBase,
+                        1,
                         ObtenerStockMinimo(),
                         ObtenerStockMaximo(),
                         ObtenerPrecioCompra(),
                         Convert.ToDecimal(this.txtPrecioVenta.Text),
                         ObtenerIVA(),
-                        true                         // activo
+                        true
                     );
                 }
                 else
@@ -495,14 +581,14 @@ namespace CampoArgentino.Presentacion
                         this.txtCodigo.Text.Trim(),
                         this.txtNombre.Text.Trim().ToUpper(),
                         this.txtDescripcion.Text.Trim(),
-                        unidadBase,                   // unidadbase (nombre de la presentación)
-                        1,                           // factorconversion
+                        unidadBase,
+                        1,
                         ObtenerStockMinimo(),
                         ObtenerStockMaximo(),
                         ObtenerPrecioCompra(),
                         Convert.ToDecimal(this.txtPrecioVenta.Text),
                         ObtenerIVA(),
-                        true                         // activo
+                        true
                     );
                 }
 
@@ -576,28 +662,74 @@ namespace CampoArgentino.Presentacion
             return camposValidos;
         }
 
-        private bool ValidarPrecios()
+        private bool ValidarPreciosYStock()
         {
+            errorIcono.Clear();
+            bool esValido = true;
+
+            // Validar Precio de Venta
             if (!decimal.TryParse(txtPrecioVenta.Text, out decimal precioVenta) || precioVenta < 0)
             {
-                MessageBox.Show("El precio de venta debe ser un valor numérico válido y mayor o igual a 0",
-                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtPrecioVenta.Focus();
-                return false;
+                errorIcono.SetError(txtPrecioVenta, "El precio de venta debe ser un número válido y mayor o igual a 0");
+                esValido = false;
             }
 
+            // Validar Precio de Compra (si se ingresó)
             if (!string.IsNullOrEmpty(txtPrecioCompra.Text))
             {
                 if (!decimal.TryParse(txtPrecioCompra.Text, out decimal precioCompra) || precioCompra < 0)
                 {
-                    MessageBox.Show("El precio de compra debe ser un valor numérico válido y mayor o igual a 0",
-                                  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtPrecioCompra.Focus();
-                    return false;
+                    errorIcono.SetError(txtPrecioCompra, "El precio de compra debe ser un número válido y mayor o igual a 0");
+                    esValido = false;
+                }
+
+                // Validar que precio de venta sea mayor o igual al de compra
+                if (esValido && precioVenta < precioCompra)
+                {
+                    errorIcono.SetError(txtPrecioVenta, "El precio de venta no puede ser menor al precio de compra");
+                    esValido = false;
                 }
             }
 
-            return true;
+            // Validar Stock Mínimo
+            if (!string.IsNullOrEmpty(txtStockMinimo.Text))
+            {
+                if (!decimal.TryParse(txtStockMinimo.Text, out decimal stockMinimo) || stockMinimo < 0)
+                {
+                    errorIcono.SetError(txtStockMinimo, "El stock mínimo debe ser un número válido y mayor o igual a 0");
+                    esValido = false;
+                }
+            }
+
+            // Validar Stock Máximo
+            if (!string.IsNullOrEmpty(txtStockMaximo.Text))
+            {
+                if (!decimal.TryParse(txtStockMaximo.Text, out decimal stockMaximo) || stockMaximo < 0)
+                {
+                    errorIcono.SetError(txtStockMaximo, "El stock máximo debe ser un número válido y mayor o igual a 0");
+                    esValido = false;
+                }
+            }
+
+            // Validar que stock máximo sea mayor al mínimo si ambos están completos
+            if (esValido && !string.IsNullOrEmpty(txtStockMinimo.Text) && !string.IsNullOrEmpty(txtStockMaximo.Text))
+            {
+                decimal stockMin = decimal.Parse(txtStockMinimo.Text);
+                decimal stockMax = decimal.Parse(txtStockMaximo.Text);
+
+                if (stockMax <= stockMin && stockMax > 0)
+                {
+                    errorIcono.SetError(txtStockMaximo, "El stock máximo debe ser mayor al stock mínimo");
+                    esValido = false;
+                }
+            }
+
+            if (!esValido)
+            {
+                MensajeError("Revise los datos ingresados en precios y stock");
+            }
+
+            return esValido;
         }
 
         private decimal ObtenerStockMinimo()
@@ -649,6 +781,283 @@ namespace CampoArgentino.Presentacion
             this.Habilitar(false);
         }
 
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
 
+
+            // CultureInfo para Argentina
+            CultureInfo culturaArgentina = new CultureInfo("es-AR");
+
+
+            Thread.CurrentThread.CurrentCulture = culturaArgentina;
+            Thread.CurrentThread.CurrentUICulture = culturaArgentina;
+
+            try
+            {
+                if (dataListado.Rows.Count == 0)
+                {
+                    MessageBox.Show("No hay datos para generar el reporte", "Sistema Campo Argentino",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Archivo PDF (*.pdf)|*.pdf";
+                saveFileDialog.FileName = $"Reporte_Articulos_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    GenerarPDFArticulos(saveFileDialog.FileName);
+
+                    // Preguntar si desea abrir para imprimir
+                    DialogResult imprimir = MessageBox.Show(
+                        "¿Desea abrir el PDF para imprimir?",
+                        "Sistema Campo Argentino",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (imprimir == DialogResult.Yes)
+                    {
+                        Process.Start(new ProcessStartInfo(saveFileDialog.FileName)
+                        {
+                            UseShellExecute = true
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar PDF: " + ex.Message, "Sistema Campo Argentino",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void GenerarPDFArticulos(string filePath)
+        {
+            // Configurar documento para impresión (A4 vertical)
+            iText.Document document = new iText.Document(iText.PageSize.A4, 20, 20, 30, 30);
+
+            try
+            {
+                iTextPdf.PdfWriter writer = iTextPdf.PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
+                document.Open();
+
+                // ===== ENCABEZADO DEL REPORTE =====
+                iText.Font fontTitulo = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 16, iText.BaseColor.BLACK);
+                iText.Font fontSubtitulo = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 10, iText.BaseColor.DARK_GRAY);
+                iText.Font fontNormal = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 9, iText.BaseColor.BLACK);
+                iText.Font fontHeader = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 8, iText.BaseColor.WHITE);
+                iText.Font fontData = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 8, iText.BaseColor.BLACK);
+
+                // Título del reporte
+                iText.Paragraph titulo = new iText.Paragraph("CAMPO ARGENTINO", fontTitulo);
+                titulo.Alignment = iText.Element.ALIGN_CENTER;
+                titulo.SpacingAfter = 5f;
+                document.Add(titulo);
+
+                iText.Paragraph subtitulo = new iText.Paragraph("REPORTE DE ARTÍCULOS", fontSubtitulo);
+                subtitulo.Alignment = iText.Element.ALIGN_CENTER;
+                subtitulo.SpacingAfter = 15f;
+                document.Add(subtitulo);
+
+                // ===== INFORMACIÓN DEL REPORTE =====
+                iTextPdf.PdfPTable tablaInfo = new iTextPdf.PdfPTable(2);
+                tablaInfo.WidthPercentage = 100;
+                tablaInfo.SpacingAfter = 10f;
+
+                // Calcular estadísticas
+                decimal totalStock = 0;
+                decimal totalValorInventario = 0;
+                int articulosActivos = 0;
+                int articulosInactivos = 0;
+
+                foreach (DataGridViewRow row in dataListado.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        // Verificar si el artículo está activo
+                        bool activo = true;
+                        if (row.Cells["Activo"].Value != null)
+                        {
+                            if (row.Cells["Activo"].Value is bool activoValue)
+                                activo = activoValue;
+                            else if (row.Cells["Activo"].Value.ToString() == "False")
+                                activo = false;
+                        }
+
+                        if (activo) articulosActivos++;
+                        else articulosInactivos++;
+
+                        // Calcular stock y valor
+                        if (row.Cells["StockActual"].Value != null && row.Cells["StockActual"].Value != DBNull.Value)
+                        {
+                            decimal stock = Convert.ToDecimal(row.Cells["StockActual"].Value);
+                            totalStock += stock;
+
+                            // Calcular valor del inventario (stock * precio de compra)
+                            if (row.Cells["PrecioCompra"].Value != null && row.Cells["PrecioCompra"].Value != DBNull.Value)
+                            {
+                                decimal precioCompra = Convert.ToDecimal(row.Cells["PrecioCompra"].Value);
+                                totalValorInventario += stock * precioCompra;
+                            }
+                        }
+                    }
+                }
+
+                AgregarCeldaTabla(tablaInfo, "Fecha de generación:", DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Total de artículos:", dataListado.Rows.Count.ToString(), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Artículos activos:", articulosActivos.ToString(), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Artículos inactivos:", articulosInactivos.ToString(), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Stock total:", totalStock.ToString("N2"), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Valor total inventario:", totalValorInventario.ToString("C2"), fontNormal);
+
+                document.Add(tablaInfo);
+
+                // ===== TABLA PRINCIPAL DE ARTÍCULOS =====
+                if (dataListado.Rows.Count > 0)
+                {
+                    // Columnas para mostrar en el reporte
+                    string[] columnasImpresion = { "Codigo", "Nombre", "Categoria", "PrecioVenta", "StockActual", "Activo" };
+                    List<string> columnasDisponibles = new List<string>();
+
+                    // Verificar qué columnas están disponibles
+                    foreach (string columna in columnasImpresion)
+                    {
+                        if (dataListado.Columns.Contains(columna))
+                            columnasDisponibles.Add(columna);
+                    }
+
+                    iTextPdf.PdfPTable tablaDatos = new iTextPdf.PdfPTable(columnasDisponibles.Count);
+                    tablaDatos.WidthPercentage = 100;
+                    tablaDatos.SpacingBefore = 10f;
+                    tablaDatos.SpacingAfter = 20f;
+
+                    // Configurar anchos de columnas
+                    float[] anchos = new float[columnasDisponibles.Count];
+                    for (int i = 0; i < columnasDisponibles.Count; i++)
+                    {
+                        if (columnasDisponibles[i] == "Codigo") anchos[i] = 12f;
+                        else if (columnasDisponibles[i] == "PrecioVenta") anchos[i] = 15f;
+                        else if (columnasDisponibles[i] == "StockActual") anchos[i] = 12f;
+                        else if (columnasDisponibles[i] == "Activo") anchos[i] = 10f;
+                        else anchos[i] = 51f; // Para Nombre y Categoría
+                    }
+                    tablaDatos.SetWidths(anchos);
+
+                    // Encabezados de columnas
+                    foreach (string columna in columnasDisponibles)
+                    {
+                        string headerText = ObtenerHeaderLegibleArticulos(columna);
+                        iTextPdf.PdfPCell celdaHeader = new iTextPdf.PdfPCell(new iText.Phrase(headerText, fontHeader));
+                        celdaHeader.BackgroundColor = new iText.BaseColor(51, 51, 51); // Gris oscuro
+                        celdaHeader.HorizontalAlignment = iText.Element.ALIGN_CENTER;
+                        celdaHeader.VerticalAlignment = iText.Element.ALIGN_MIDDLE;
+                        celdaHeader.Padding = 5;
+                        celdaHeader.PaddingTop = 6;
+                        tablaDatos.AddCell(celdaHeader);
+                    }
+
+                    // Datos de las filas
+                    foreach (DataGridViewRow fila in dataListado.Rows)
+                    {
+                        if (!fila.IsNewRow)
+                        {
+                            foreach (string columna in columnasDisponibles)
+                            {
+                                string valor = fila.Cells[columna].Value?.ToString() ?? "";
+
+                                // Formatear valores específicos
+                                if (columna == "PrecioVenta" && decimal.TryParse(valor, out decimal precio))
+                                {
+                                    valor = precio.ToString("C2");
+                                }
+                                else if (columna == "Activo")
+                                {
+                                    valor = (valor == "True" || valor == "1") ? "ACTIVO" : "INACTIVO";
+                                }
+
+                                iText.Phrase frase = new iText.Phrase(valor, fontData);
+                                iTextPdf.PdfPCell celdaData = new iTextPdf.PdfPCell(frase);
+
+                                // Alineación según el tipo de dato
+                                if (columna == "Codigo" || columna == "StockActual" || columna == "Activo")
+                                {
+                                    celdaData.HorizontalAlignment = iText.Element.ALIGN_CENTER;
+                                }
+                                else if (columna == "PrecioVenta")
+                                {
+                                    celdaData.HorizontalAlignment = iText.Element.ALIGN_RIGHT;
+                                }
+                                else
+                                {
+                                    celdaData.HorizontalAlignment = iText.Element.ALIGN_LEFT;
+                                }
+
+                                celdaData.VerticalAlignment = iText.Element.ALIGN_MIDDLE;
+                                celdaData.Padding = 4;
+                                celdaData.PaddingTop = 5;
+
+                                // Resaltar artículos inactivos
+                                if (columna == "Activo" && valor == "INACTIVO")
+                                {
+                                    celdaData.BackgroundColor = new iText.BaseColor(255, 200, 200);
+                                }
+
+                                tablaDatos.AddCell(celdaData);
+                            }
+                        }
+                    }
+
+                    document.Add(tablaDatos);
+                }
+
+                // ===== PIE DE PÁGINA =====
+                iText.Paragraph piePagina = new iText.Paragraph(
+                    $"Página 1 | Generado por Sistema Campo Argentino | {DateTime.Now:dd/MM/yyyy HH:mm}",
+                    iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_OBLIQUE, 7, iText.BaseColor.GRAY));
+                piePagina.Alignment = iText.Element.ALIGN_CENTER;
+                document.Add(piePagina);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al generar PDF: " + ex.Message);
+            }
+            finally
+            {
+                document.Close();
+            }
+        }
+
+        // Métodos auxiliares para FormArticulo
+        private void AgregarCeldaTabla(iTextPdf.PdfPTable tabla, string etiqueta, string valor, iText.Font font)
+        {
+            iTextPdf.PdfPCell celdaEtiqueta = new iTextPdf.PdfPCell(new iText.Phrase(etiqueta, font));
+            celdaEtiqueta.Border = iTextPdf.PdfPCell.NO_BORDER;
+            celdaEtiqueta.Padding = 2;
+            tabla.AddCell(celdaEtiqueta);
+
+            iTextPdf.PdfPCell celdaValor = new iTextPdf.PdfPCell(new iText.Phrase(valor, font));
+            celdaValor.Border = iTextPdf.PdfPCell.NO_BORDER;
+            celdaValor.Padding = 2;
+            tabla.AddCell(celdaValor);
+        }
+
+        private string ObtenerHeaderLegibleArticulos(string headerOriginal)
+        {
+            switch (headerOriginal)
+            {
+                case "Codigo": return "CÓDIGO";
+                case "Nombre": return "NOMBRE DEL ARTÍCULO";
+                case "Categoria": return "CATEGORÍA";
+                case "PrecioVenta": return "PRECIO VENTA";
+                case "StockActual": return "STOCK ACTUAL";
+                case "Activo": return "ESTADO";
+                default: return headerOriginal.ToUpper();
+            }
+        }
+
+       
     }
+
 }

@@ -1,8 +1,19 @@
-﻿using System;
+﻿using CampoArgentino.Negocio;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using OfficeOpenXml;
+using System;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.IO;
+using System.Reflection.Metadata;
 using System.Windows.Forms;
-using CampoArgentino.Negocio;
+using System.Windows.Forms;
+using System.Windows.Forms;
+using iText = iTextSharp.text;
+using iTextPdf = iTextSharp.text.pdf;
 
 namespace CampoArgentino.Presentacion
 {
@@ -18,11 +29,10 @@ namespace CampoArgentino.Presentacion
         {
             try
             {
-                // Aquí necesitaríamos un método específico para alertas de stock
-                // Por ahora usamos el método general de artículos
+                // Usa el método general de artículos
                 DataTable dtArticulos = NArticulo.Mostrar();
 
-                // Filtrar artículos con stock bajo (simulado)
+                // Filtra artículos con stock bajo
                 DataView dv = new DataView(dtArticulos);
                 dv.RowFilter = "Convert(stockminimo, 'System.Decimal') > 0"; // Ejemplo
 
@@ -30,7 +40,7 @@ namespace CampoArgentino.Presentacion
                 OcultarColumnas();
                 lblTotal.Text = "Alertas Activas: " + dataListado.Rows.Count;
 
-                // Cambiar color del label si hay alertas
+                // Cambia color del label si hay alertas
                 if (dataListado.Rows.Count > 0)
                 {
                     lblTotal.ForeColor = Color.Red;
@@ -102,20 +112,14 @@ namespace CampoArgentino.Presentacion
                 if (dataListado.Rows.Count > 0)
                 {
                     DialogResult result = MessageBox.Show(
-                        "¿Desea generar un reporte de las alertas de stock?",
+                        "¿Desea generar un reporte PDF de las alertas de stock?",
                         "Sistema Campo Argentino",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
 
                     if (result == DialogResult.Yes)
                     {
-                        MessageBox.Show(
-                            "Reporte de alertas generado exitosamente.\n\n" +
-                            "Total de alertas: " + dataListado.Rows.Count + "\n" +
-                            "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
-                            "Sistema Campo Argentino",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                        GenerarReportePDF();
                     }
                 }
                 else
@@ -132,6 +136,117 @@ namespace CampoArgentino.Presentacion
                     "Sistema Campo Argentino",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        private void GenerarReportePDF()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivo PDF (*.pdf)|*.pdf";
+            saveFileDialog.FileName = $"Reporte_Alertas_Stock_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                iText.Document document = new iText.Document(iText.PageSize.A4.Rotate(), 10, 10, 15, 15);
+
+                try
+                {
+                    iTextPdf.PdfWriter writer = iTextPdf.PdfWriter.GetInstance(document, new FileStream(saveFileDialog.FileName, FileMode.Create));
+                    document.Open();
+
+                    // Título
+                    iText.Font tituloFont = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 14, iText.BaseColor.DARK_GRAY);
+                    iText.Paragraph titulo = new iText.Paragraph("REPORTE DE ALERTAS DE STOCK - CAMPO ARGENTINO", tituloFont);
+                    titulo.Alignment = iText.Element.ALIGN_CENTER;
+                    titulo.SpacingAfter = 10f;
+                    document.Add(titulo);
+
+                    // Información
+                    iText.Font infoFont = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 8);
+                    iText.Paragraph info = new iText.Paragraph();
+                    info.Add(new iText.Chunk($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm} | ", infoFont));
+                    info.Add(new iText.Chunk($"Total alertas: {dataListado.Rows.Count} | ", infoFont));
+                    info.Add(new iText.Chunk("Sistema Campo Argentino", infoFont));
+                    info.SpacingAfter = 8f;
+                    document.Add(info);
+
+                    // Tabla
+                    iTextPdf.PdfPTable tabla = new iTextPdf.PdfPTable(dataListado.Columns.Count);
+                    tabla.WidthPercentage = 98;
+                    tabla.SpacingBefore = 5f;
+                    tabla.SpacingAfter = 5f;
+
+                    // Encabezados
+                    iText.Font headerFont = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 7, iText.BaseColor.WHITE);
+                    foreach (DataGridViewColumn columna in dataListado.Columns)
+                    {
+                        iTextPdf.PdfPCell celdaHeader = new iTextPdf.PdfPCell(new iText.Phrase(columna.HeaderText, headerFont));
+                        celdaHeader.BackgroundColor = new iText.BaseColor(70, 130, 180);
+                        celdaHeader.HorizontalAlignment = iText.Element.ALIGN_CENTER;
+                        celdaHeader.VerticalAlignment = iText.Element.ALIGN_MIDDLE;
+                        celdaHeader.Padding = 3;
+                        celdaHeader.FixedHeight = 18;
+                        tabla.AddCell(celdaHeader);
+                    }
+
+                    // Datos
+                    iText.Font dataFont = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 7);
+                    foreach (DataGridViewRow fila in dataListado.Rows)
+                    {
+                        if (!fila.IsNewRow)
+                        {
+                            foreach (DataGridViewCell celda in fila.Cells)
+                            {
+                                string valor = celda.Value?.ToString() ?? "";
+                                iTextPdf.PdfPCell celdaData = new iTextPdf.PdfPCell(new iText.Phrase(valor, dataFont));
+                                celdaData.Padding = 2;
+                                celdaData.FixedHeight = 16;
+                                tabla.AddCell(celdaData);
+                            }
+                        }
+                    }
+
+                    document.Add(tabla);
+
+                    // Pie de página
+                    document.Add(new iText.Paragraph(" "));
+                    iText.Font pieFont = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_OBLIQUE, 6, iText.BaseColor.GRAY);
+                    iText.Paragraph pie = new iText.Paragraph("Reporte generado automáticamente - Campo Argentino", pieFont);
+                    pie.Alignment = iText.Element.ALIGN_CENTER;
+                    document.Add(pie);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al crear PDF: {ex.Message}", "Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                finally
+                {
+                    document.Close();
+                }
+
+                // Abre el PDF
+                try
+                {
+                    Process.Start(new ProcessStartInfo(saveFileDialog.FileName)
+                    {
+                        UseShellExecute = true
+                    });
+
+                    MessageBox.Show("Reporte PDF generado exitosamente!\n\nEl archivo se ha abierto automáticamente.",
+                        "Sistema Campo Argentino",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Reporte generado exitosamente en:\n{saveFileDialog.FileName}\n\nError al abrir: {ex.Message}",
+                        "Sistema Campo Argentino",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
             }
         }
 

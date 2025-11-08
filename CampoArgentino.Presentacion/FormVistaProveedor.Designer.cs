@@ -53,7 +53,7 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(20, 15);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(299, 38);
+            lblTitulo.Size = new Size(308, 38);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Seleccionar Proveedor";
             // 
@@ -61,6 +61,8 @@
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
             dataListado.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;

@@ -189,6 +189,9 @@
             // 
             dataListadoReporte.AllowUserToAddRows = false;
             dataListadoReporte.AllowUserToDeleteRows = false;
+            dataListadoReporte.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dataListadoReporte.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataListadoReporte.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListadoReporte.BackgroundColor = Color.White;
             dataListadoReporte.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataListadoReporte.Location = new Point(23, 93);

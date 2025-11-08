@@ -170,6 +170,7 @@ namespace CampoArgentino.Datos
         }
 
         // Método Eliminar
+       
         public string Eliminar(DProveedor Proveedor)
         {
             string rpta = "";
@@ -191,7 +192,8 @@ namespace CampoArgentino.Datos
                 ParProveedorID.Value = Proveedor.Idproveedor;
                 SqlCmd.Parameters.Add(ParProveedorID);
 
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Eliminó el Registro";
+                SqlCmd.ExecuteNonQuery();
+                rpta = "OK";
             }
             catch (Exception ex)
             {
