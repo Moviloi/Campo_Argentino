@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 
+// prueba git
+
 namespace CampoArgentino.Datos
 {
     public class DArticulo
