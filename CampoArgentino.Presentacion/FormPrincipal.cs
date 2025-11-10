@@ -99,7 +99,7 @@ namespace CampoArgentino.Presentacion
 
         private void clientesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FormVistaCliente frm = new FormVistaCliente();
+            FormVistaCliente_Venta frm = new FormVistaCliente_Venta();
             AbrirFormulario(frm);
         }
 

@@ -96,7 +96,7 @@
             btnReporte.FlatStyle = FlatStyle.Flat;
             btnReporte.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReporte.ForeColor = Color.White;
-            btnReporte.Location = new Point(667, 104);
+            btnReporte.Location = new Point(311, 104);
             btnReporte.Margin = new Padding(3, 4, 3, 4);
             btnReporte.Name = "btnReporte";
             btnReporte.Size = new Size(108, 44);
@@ -112,7 +112,7 @@
             btnConfigurar.FlatStyle = FlatStyle.Flat;
             btnConfigurar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnConfigurar.ForeColor = Color.White;
-            btnConfigurar.Location = new Point(419, 104);
+            btnConfigurar.Location = new Point(200, 104);
             btnConfigurar.Margin = new Padding(3, 4, 3, 4);
             btnConfigurar.Name = "btnConfigurar";
             btnConfigurar.Size = new Size(105, 44);

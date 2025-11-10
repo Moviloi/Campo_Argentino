@@ -210,17 +210,17 @@ namespace CampoArgentino.Presentacion
             // 
             // btnNuevo
             // 
-            btnNuevo.BackColor = Color.FromArgb(0, 0, 64);
+            btnNuevo.BackColor = Color.OrangeRed;
             btnNuevo.FlatAppearance.BorderSize = 0;
             btnNuevo.FlatStyle = FlatStyle.Flat;
             btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(781, 8);
+            btnNuevo.Location = new Point(501, 8);
             btnNuevo.Margin = new Padding(3, 4, 3, 4);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(105, 81);
             btnNuevo.TabIndex = 11;
-            btnNuevo.Text = "&Nuevo Compra";
+            btnNuevo.Text = "&Nueva Compra";
             btnNuevo.UseVisualStyleBackColor = false;
             btnNuevo.Click += btnNuevo_Click;
             // 
@@ -231,7 +231,7 @@ namespace CampoArgentino.Presentacion
             btnImprimir.FlatStyle = FlatStyle.Flat;
             btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnImprimir.ForeColor = Color.White;
-            btnImprimir.Location = new Point(650, 44);
+            btnImprimir.Location = new Point(612, 44);
             btnImprimir.Margin = new Padding(3, 4, 3, 4);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(105, 44);
@@ -284,12 +284,12 @@ namespace CampoArgentino.Presentacion
             // 
             // btnAnular
             // 
-            btnAnular.BackColor = Color.FromArgb(231, 76, 60);
+            btnAnular.BackColor = Color.DimGray;
             btnAnular.FlatAppearance.BorderSize = 0;
             btnAnular.FlatStyle = FlatStyle.Flat;
             btnAnular.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAnular.ForeColor = Color.White;
-            btnAnular.Location = new Point(520, 44);
+            btnAnular.Location = new Point(723, 43);
             btnAnular.Margin = new Padding(3, 4, 3, 4);
             btnAnular.Name = "btnAnular";
             btnAnular.Size = new Size(105, 44);

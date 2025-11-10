@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 
 namespace CampoArgentino.Datos
@@ -336,7 +337,7 @@ namespace CampoArgentino.Datos
                 SqlCmd.Parameters.Add(ParIdusuario);
 
 
-                // PARÁMETRO DETALLE COMO TVP
+                
                 SqlParameter ParDetalle = new SqlParameter();
                 ParDetalle.ParameterName = "@Detalle";
                 ParDetalle.SqlDbType = SqlDbType.Structured;
@@ -384,6 +385,158 @@ namespace CampoArgentino.Datos
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
             return proximoNumero;
+        }
+
+        public DataTable VentasPorArticulo()
+        {
+            DataTable DtResultado = new DataTable("VentasPorArticulo");
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_VentasPorArticulo"; 
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                // devuelve un DataTable vacío
+                DtResultado = new DataTable();
+                // O puedes loguear el error
+                Debug.WriteLine("Error en VentasPorArticulo: " + ex.Message);
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+            return DtResultado;
+        }
+
+        public DataTable VentasArticuloPorCliente(int idArticulo)
+        {
+            DataTable DtResultado = new DataTable("VentasArticuloCliente");
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCon.Open();
+
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_VentasArticuloPorCliente";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParIdArticulo = new SqlParameter();
+                ParIdArticulo.ParameterName = "@idarticulo";
+                ParIdArticulo.SqlDbType = SqlDbType.Int;
+                ParIdArticulo.Value = idArticulo;
+                SqlCmd.Parameters.Add(ParIdArticulo);
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+
+                // DEBUG: Verificar si se llenó la tabla
+                Debug.WriteLine($"Filas obtenidas: {DtResultado.Rows.Count}");
+            }
+            catch (SqlException sqlEx)
+            {
+                // Error específico de SQL
+                DtResultado = null;
+                Debug.WriteLine($"Error SQL: {sqlEx.Message}");
+                throw new Exception($"Error de base de datos: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Error general
+                DtResultado = null;
+                Debug.WriteLine($"Error general: {ex.Message}");
+                throw new Exception($"Error al obtener ventas por cliente: {ex.Message}");
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+            return DtResultado;
+        }
+
+        public DataTable ComprasClientePorArticulo(int idCliente)
+        {
+            DataTable DtResultado = new DataTable("ComprasClienteArticulo");
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCon.Open();
+
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_ComprasClientePorArticulo";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParIdCliente = new SqlParameter();
+                ParIdCliente.ParameterName = "@idcliente";
+                ParIdCliente.SqlDbType = SqlDbType.Int;
+                ParIdCliente.Value = idCliente;
+                SqlCmd.Parameters.Add(ParIdCliente);
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+                Debug.WriteLine($"Error en ComprasClientePorArticulo: {ex.Message}");
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+            return DtResultado;
+        }
+
+        public DataTable TotalComprasCliente(int idCliente)
+        {
+            DataTable DtResultado = new DataTable("TotalComprasCliente");
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCon.Open();
+
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_TotalComprasCliente";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParIdCliente = new SqlParameter();
+                ParIdCliente.ParameterName = "@idcliente";
+                ParIdCliente.SqlDbType = SqlDbType.Int;
+                ParIdCliente.Value = idCliente;
+                SqlCmd.Parameters.Add(ParIdCliente);
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+                Debug.WriteLine($"Error en TotalComprasCliente: {ex.Message}");
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+            return DtResultado;
         }
     }
 }

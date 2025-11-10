@@ -140,12 +140,12 @@
             // 
             // btnNuevo
             // 
-            btnNuevo.BackColor = Color.FromArgb(0, 0, 64);
+            btnNuevo.BackColor = Color.OrangeRed;
             btnNuevo.FlatAppearance.BorderSize = 0;
             btnNuevo.FlatStyle = FlatStyle.Flat;
             btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(665, 5);
+            btnNuevo.Location = new Point(526, 9);
             btnNuevo.Margin = new Padding(3, 4, 3, 4);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(107, 87);
@@ -177,6 +177,13 @@
             dataListado.CellContentClick += dataListado_CellContentClick;
             dataListado.DoubleClick += dataListado_DoubleClick;
             // 
+            // Eliminar
+            // 
+            Eliminar.MinimumWidth = 6;
+            Eliminar.Name = "Eliminar";
+            Eliminar.ReadOnly = true;
+            Eliminar.Width = 69;
+            // 
             // lblTotal
             // 
             lblTotal.AutoSize = true;
@@ -190,12 +197,12 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.BackColor = Color.FromArgb(231, 76, 60);
+            btnEliminar.BackColor = Color.DimGray;
             btnEliminar.FlatAppearance.BorderSize = 0;
             btnEliminar.FlatStyle = FlatStyle.Flat;
             btnEliminar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEliminar.ForeColor = Color.White;
-            btnEliminar.Location = new Point(539, 49);
+            btnEliminar.Location = new Point(639, 52);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(105, 44);

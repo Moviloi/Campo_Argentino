@@ -76,6 +76,28 @@ namespace CampoArgentino.Negocio
         {
             return new DVenta().ObtenerProximoNumeroDocumento();
         }
+
+        public static DataTable VentasPorArticulo()
+        {
+            return new DVenta().VentasPorArticulo(); 
+        }
+
+        public static DataTable VentasArticuloPorCliente(int idArticulo)
+        {
+            return new DVenta().VentasArticuloPorCliente(idArticulo);
+        }
+
+        public static DataTable ComprasClientePorArticulo(int idCliente)
+        {
+            return new DVenta().ComprasClientePorArticulo(idCliente);
+        }
+
+        public static DataTable TotalComprasCliente(int idCliente)
+        {
+            return new DVenta().TotalComprasCliente(idCliente);
+        }
+
+
     }
 
 

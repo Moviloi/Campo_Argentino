@@ -138,12 +138,12 @@ namespace CampoArgentino.Negocio
             return Obj.ReporteConteoInventario();
         }
 
-        //// Método para iniciar conteo
-        //public static int IniciarConteoInventario(int idusuario, string observaciones)
-        //{
-            
-        //    return 0; // temporal 
-        //}
+        // Método para iniciar conteo
+        public static int IniciarConteoInventario(int idusuario, string observaciones)
+        {
+
+            return 0; // temporal 
+        }
 
         // Método para obtener artículo con imagen
         public static DataTable ObtenerArticuloConImagen(int idarticulo)

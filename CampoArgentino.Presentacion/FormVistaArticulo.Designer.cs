@@ -51,9 +51,9 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(20, 15);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(279, 38);
+            lblTitulo.Size = new Size(243, 38);
             lblTitulo.TabIndex = 0;
-            lblTitulo.Text = "Seleccionar Artículo";
+            lblTitulo.Text = "Lista de Artículos";
             // 
             // dataListado
             // 

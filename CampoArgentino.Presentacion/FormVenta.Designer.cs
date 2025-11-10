@@ -84,6 +84,7 @@
             lblTitulo = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnNuevo = new Button();
             btnFactura = new Button();
             btnImprimir = new Button();
             dataListado = new DataGridView();
@@ -120,7 +121,6 @@
             btnGuardar = new Button();
             errorIcono = new ErrorProvider(components);
             ttMensaje = new ToolTip(components);
-            btnNuevo = new Button();
             panelAgregarArticulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataListadoArticulos).BeginInit();
             panelHeader.SuspendLayout();
@@ -340,14 +340,30 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Listado";
             // 
+            // btnNuevo
+            // 
+            btnNuevo.BackColor = Color.OrangeRed;
+            btnNuevo.FlatAppearance.BorderSize = 0;
+            btnNuevo.FlatStyle = FlatStyle.Flat;
+            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = Color.White;
+            btnNuevo.Location = new Point(501, 8);
+            btnNuevo.Margin = new Padding(3, 4, 3, 4);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(105, 80);
+            btnNuevo.TabIndex = 12;
+            btnNuevo.Text = "&Nueva Venta";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += btnNuevo_Click;
+            // 
             // btnFactura
             // 
-            btnFactura.BackColor = Color.FromArgb(155, 89, 182);
+            btnFactura.BackColor = Color.FromArgb(41, 128, 185);
             btnFactura.FlatAppearance.BorderSize = 0;
             btnFactura.FlatStyle = FlatStyle.Flat;
             btnFactura.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnFactura.ForeColor = Color.White;
-            btnFactura.Location = new Point(770, 44);
+            btnFactura.Location = new Point(723, 44);
             btnFactura.Margin = new Padding(3, 4, 3, 4);
             btnFactura.Name = "btnFactura";
             btnFactura.Size = new Size(105, 44);
@@ -358,12 +374,12 @@
             // 
             // btnImprimir
             // 
-            btnImprimir.BackColor = Color.FromArgb(52, 152, 219);
+            btnImprimir.BackColor = Color.FromArgb(41, 128, 185);
             btnImprimir.FlatAppearance.BorderSize = 0;
             btnImprimir.FlatStyle = FlatStyle.Flat;
             btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnImprimir.ForeColor = Color.White;
-            btnImprimir.Location = new Point(650, 44);
+            btnImprimir.Location = new Point(612, 44);
             btnImprimir.Margin = new Padding(3, 4, 3, 4);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(105, 44);
@@ -431,12 +447,12 @@
             // 
             // btnAnular
             // 
-            btnAnular.BackColor = Color.FromArgb(231, 76, 60);
+            btnAnular.BackColor = Color.DimGray;
             btnAnular.FlatAppearance.BorderSize = 0;
             btnAnular.FlatStyle = FlatStyle.Flat;
             btnAnular.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAnular.ForeColor = Color.White;
-            btnAnular.Location = new Point(520, 44);
+            btnAnular.Location = new Point(834, 43);
             btnAnular.Margin = new Padding(3, 4, 3, 4);
             btnAnular.Name = "btnAnular";
             btnAnular.Size = new Size(105, 44);
@@ -514,7 +530,7 @@
             tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3, 4, 3, 4);
-            tabPage2.Size = new Size(992, 492);
+            tabPage2.Size = new Size(1041, 492);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Gestión de Venta";
             // 
@@ -785,22 +801,6 @@
             // ttMensaje
             // 
             ttMensaje.IsBalloon = true;
-            // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.FromArgb(0, 0, 64);
-            btnNuevo.FlatAppearance.BorderSize = 0;
-            btnNuevo.FlatStyle = FlatStyle.Flat;
-            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(898, 8);
-            btnNuevo.Margin = new Padding(3, 4, 3, 4);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(105, 80);
-            btnNuevo.TabIndex = 12;
-            btnNuevo.Text = "&Nueva Venta";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevo_Click;
             // 
             // FormVenta
             // 

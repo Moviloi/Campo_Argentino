@@ -51,6 +51,7 @@
             lblTitulo = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            btnNuevo = new Button();
             dataListado = new DataGridView();
             Eliminar = new DataGridViewCheckBoxColumn();
             lblTotal = new Label();
@@ -78,7 +79,6 @@
             btnGuardar = new Button();
             errorIcono = new ErrorProvider(components);
             ttMensaje = new ToolTip(components);
-            btnNuevo = new Button();
             panelHeader.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -141,6 +141,22 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Listado";
             // 
+            // btnNuevo
+            // 
+            btnNuevo.BackColor = Color.OrangeRed;
+            btnNuevo.FlatAppearance.BorderSize = 0;
+            btnNuevo.FlatStyle = FlatStyle.Flat;
+            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNuevo.ForeColor = Color.White;
+            btnNuevo.Location = new Point(431, 5);
+            btnNuevo.Margin = new Padding(3, 4, 3, 4);
+            btnNuevo.Name = "btnNuevo";
+            btnNuevo.Size = new Size(105, 83);
+            btnNuevo.TabIndex = 8;
+            btnNuevo.Text = "&Nuevo";
+            btnNuevo.UseVisualStyleBackColor = false;
+            btnNuevo.Click += btnNuevo_Click;
+            // 
             // dataListado
             // 
             dataListado.AllowUserToAddRows = false;
@@ -198,12 +214,12 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.BackColor = Color.FromArgb(231, 76, 60);
+            btnEliminar.BackColor = Color.DimGray;
             btnEliminar.FlatAppearance.BorderSize = 0;
             btnEliminar.FlatStyle = FlatStyle.Flat;
             btnEliminar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEliminar.ForeColor = Color.White;
-            btnEliminar.Location = new Point(450, 44);
+            btnEliminar.Location = new Point(542, 44);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(105, 44);
@@ -475,22 +491,6 @@
             // ttMensaje
             // 
             ttMensaje.IsBalloon = true;
-            // 
-            // btnNuevo
-            // 
-            btnNuevo.BackColor = Color.FromArgb(0, 0, 64);
-            btnNuevo.FlatAppearance.BorderSize = 0;
-            btnNuevo.FlatStyle = FlatStyle.Flat;
-            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(583, 8);
-            btnNuevo.Margin = new Padding(3, 4, 3, 4);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(105, 83);
-            btnNuevo.TabIndex = 8;
-            btnNuevo.Text = "&Nuevo";
-            btnNuevo.UseVisualStyleBackColor = false;
-            btnNuevo.Click += btnNuevo_Click;
             // 
             // FormUsuario
             // 

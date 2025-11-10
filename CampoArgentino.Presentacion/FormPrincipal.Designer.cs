@@ -327,7 +327,7 @@
             // 
             // panelMenuLateral
             // 
-            panelMenuLateral.BackColor = Color.FromArgb(64, 64, 64);
+            panelMenuLateral.BackColor = Color.DimGray;
             panelMenuLateral.Controls.Add(btnVentas);
             panelMenuLateral.Controls.Add(btnArticulos);
             panelMenuLateral.Controls.Add(btnClientes);
@@ -341,7 +341,6 @@
             // 
             // btnVentas
             // 
-            btnVentas.Cursor = Cursors.SizeAll;
             btnVentas.Image = (Image)resources.GetObject("btnVentas.Image");
             btnVentas.Location = new Point(50, 100);
             btnVentas.Margin = new Padding(50, 100, 50, 20);
@@ -355,7 +354,6 @@
             // 
             // btnArticulos
             // 
-            btnArticulos.Cursor = Cursors.SizeAll;
             btnArticulos.Image = (Image)resources.GetObject("btnArticulos.Image");
             btnArticulos.Location = new Point(50, 220);
             btnArticulos.Margin = new Padding(50, 0, 50, 20);
@@ -369,7 +367,6 @@
             // 
             // btnClientes
             // 
-            btnClientes.Cursor = Cursors.SizeAll;
             btnClientes.Image = (Image)resources.GetObject("btnClientes.Image");
             btnClientes.Location = new Point(50, 340);
             btnClientes.Margin = new Padding(50, 0, 50, 20);
@@ -383,7 +380,6 @@
             // 
             // btnProveedores
             // 
-            btnProveedores.Cursor = Cursors.SizeAll;
             btnProveedores.Image = (Image)resources.GetObject("btnProveedores.Image");
             btnProveedores.Location = new Point(50, 460);
             btnProveedores.Margin = new Padding(50, 0, 50, 20);

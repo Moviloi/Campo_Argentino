@@ -37,13 +37,15 @@ namespace CampoArgentino.Presentacion
         {
             try
             {
-                this.dataListado.DataSource = NArticulo.Mostrar();
+
+                this.dataListado.DataSource = NVenta.VentasPorArticulo();
+
                 this.OcultarColumnas();
                 lblTotal.Text = "Total Registros: " + Convert.ToString(dataListado.Rows.Count);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar artículos: " + ex.Message,
+                MessageBox.Show("Error al cargar ventas por artículo: " + ex.Message,
                     "Sistema Campo Argentino",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -73,30 +75,49 @@ namespace CampoArgentino.Presentacion
         {
             try
             {
-                // Ocultar columnas que no son relevantes para el reporte de ventas
+                // Ocultar columnas ID
                 if (dataListado.Columns.Contains("idarticulo"))
                     dataListado.Columns["idarticulo"].Visible = false;
 
-                if (dataListado.Columns.Contains("idcategoria"))
-                    dataListado.Columns["idcategoria"].Visible = false;
+                // Mostrar solo las columnas relevantes para ventas
+                string[] columnasMostrar = {
+            "Codigo", "Nombre", "Categoria", "CantidadVendida",
+            "TotalVentas", "PrecioPromedio", "FechaUltimaVenta",
+            "StockActual", "PrecioActual"
+        };
 
-                if (dataListado.Columns.Contains("descripcion"))
-                    dataListado.Columns["descripcion"].Visible = false;
+                foreach (DataGridViewColumn columna in dataListado.Columns)
+                {
+                    columna.Visible = columnasMostrar.Contains(columna.Name);
+                }
 
-                if (dataListado.Columns.Contains("preciocompra"))
-                    dataListado.Columns["preciocompra"].Visible = false;
+                // Configurar headers y formatos
+                if (dataListado.Columns.Contains("CantidadVendida"))
+                {
+                    dataListado.Columns["CantidadVendida"].HeaderText = "CANT. VENDIDA";
+                    dataListado.Columns["CantidadVendida"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
 
-                if (dataListado.Columns.Contains("activo"))
-                    dataListado.Columns["activo"].Visible = false;
+                if (dataListado.Columns.Contains("TotalVentas"))
+                {
+                    dataListado.Columns["TotalVentas"].HeaderText = "TOTAL VENTAS";
+                    dataListado.Columns["TotalVentas"].DefaultCellStyle.Format = "C2";
+                    dataListado.Columns["TotalVentas"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
 
-                if (dataListado.Columns.Contains("idpresentacion"))
-                    dataListado.Columns["idpresentacion"].Visible = false;
+                if (dataListado.Columns.Contains("PrecioPromedio"))
+                {
+                    dataListado.Columns["PrecioPromedio"].HeaderText = "PRECIO PROMEDIO";
+                    dataListado.Columns["PrecioPromedio"].DefaultCellStyle.Format = "C2";
+                    dataListado.Columns["PrecioPromedio"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
 
-                if (dataListado.Columns.Contains("factorconversion"))
-                    dataListado.Columns["factorconversion"].Visible = false;
-
-                if (dataListado.Columns.Contains("iva"))
-                    dataListado.Columns["iva"].Visible = false;
+                if (dataListado.Columns.Contains("FechaUltimaVenta"))
+                {
+                    dataListado.Columns["FechaUltimaVenta"].HeaderText = "ÚLTIMA VENTA";
+                    dataListado.Columns["FechaUltimaVenta"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                    dataListado.Columns["FechaUltimaVenta"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
             }
             catch (Exception ex)
             {
@@ -126,6 +147,7 @@ namespace CampoArgentino.Presentacion
             this.BuscarNombre();
         }
 
+      
         // Evento imprimir reporte
         private void btnImprimir_Click(object sender, EventArgs e)
         {
@@ -142,7 +164,7 @@ namespace CampoArgentino.Presentacion
 
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "Archivo PDF (*.pdf)|*.pdf";
-                saveFileDialog.FileName = $"Catalogo_Articulos_Venta_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                saveFileDialog.FileName = $"Reporte_Ventas_Articulo_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -195,6 +217,7 @@ namespace CampoArgentino.Presentacion
                 iText.Font fontHeader = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 8, iText.BaseColor.WHITE);
                 iText.Font fontData = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA, 8, iText.BaseColor.BLACK);
                 iText.Font fontMonto = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 8, iText.BaseColor.BLACK);
+                iText.Font fontDestacado = iText.FontFactory.GetFont(iText.FontFactory.HELVETICA_BOLD, 9, iText.BaseColor.DARK_GRAY);
 
                 // Título del reporte
                 iText.Paragraph titulo = new iText.Paragraph("CAMPO ARGENTINO", fontTitulo);
@@ -202,7 +225,7 @@ namespace CampoArgentino.Presentacion
                 titulo.SpacingAfter = 5f;
                 document.Add(titulo);
 
-                iText.Paragraph subtitulo = new iText.Paragraph("CATÁLOGO DE ARTÍCULOS PARA VENTA", fontSubtitulo);
+                iText.Paragraph subtitulo = new iText.Paragraph("REPORTE DE VENTAS POR ARTÍCULO", fontSubtitulo);
                 subtitulo.Alignment = iText.Element.ALIGN_CENTER;
                 subtitulo.SpacingAfter = 15f;
                 document.Add(subtitulo);
@@ -212,65 +235,83 @@ namespace CampoArgentino.Presentacion
                 tablaInfo.WidthPercentage = 100;
                 tablaInfo.SpacingAfter = 10f;
 
-                // Calcular estadísticas
-                decimal valorTotalInventario = 0;
-                int articulosActivos = 0;
-                int articulosConStock = 0;
-                decimal stockTotal = 0;
+                // Calcular estadísticas de ventas
+                decimal totalVentas = 0;
+                decimal cantidadTotalVendida = 0;
+                int articulosConVentas = 0;
+                int articulosSinVentas = 0;
+                DateTime? fechaPrimeraVenta = null;
+                DateTime? fechaUltimaVenta = null;
 
                 foreach (DataGridViewRow row in dataListado.Rows)
                 {
                     if (!row.IsNewRow)
                     {
-                        // Verificar si el artículo está activo
-                        bool activo = true;
-                        if (row.Cells["activo"].Value != null)
+                        // Cantidad vendida
+                        if (row.Cells["CantidadVendida"].Value != null && row.Cells["CantidadVendida"].Value != DBNull.Value)
                         {
-                            if (row.Cells["activo"].Value is bool activoValue)
-                                activo = activoValue;
-                            else if (row.Cells["activo"].Value.ToString() == "False")
-                                activo = false;
+                            decimal cantidad = Convert.ToDecimal(row.Cells["CantidadVendida"].Value);
+                            cantidadTotalVendida += cantidad;
+
+                            if (cantidad > 0)
+                                articulosConVentas++;
+                            else
+                                articulosSinVentas++;
                         }
 
-                        if (activo) articulosActivos++;
-
-                        // Calcular stock y valor
-                        if (row.Cells["StockActual"].Value != null && row.Cells["StockActual"].Value != DBNull.Value)
+                        // Total ventas
+                        if (row.Cells["TotalVentas"].Value != null && row.Cells["TotalVentas"].Value != DBNull.Value)
                         {
-                            decimal stock = Convert.ToDecimal(row.Cells["StockActual"].Value);
-                            stockTotal += stock;
-                            if (stock > 0) articulosConStock++;
+                            totalVentas += Convert.ToDecimal(row.Cells["TotalVentas"].Value);
+                        }
 
-                            // Calcular valor del inventario (stock * precio de venta)
-                            if (row.Cells["precioventa"].Value != null && row.Cells["precioventa"].Value != DBNull.Value)
-                            {
-                                decimal precioVenta = Convert.ToDecimal(row.Cells["precioventa"].Value);
-                                valorTotalInventario += stock * precioVenta;
-                            }
+                        // Fechas de venta
+                        if (row.Cells["FechaUltimaVenta"].Value != null && row.Cells["FechaUltimaVenta"].Value != DBNull.Value)
+                        {
+                            DateTime fechaVenta = Convert.ToDateTime(row.Cells["FechaUltimaVenta"].Value);
+
+                            if (fechaUltimaVenta == null || fechaVenta > fechaUltimaVenta)
+                                fechaUltimaVenta = fechaVenta;
+
+                            if (fechaPrimeraVenta == null || fechaVenta < fechaPrimeraVenta)
+                                fechaPrimeraVenta = fechaVenta;
                         }
                     }
                 }
 
                 // Formatear montos con formato argentino
-                string valorInventarioFormateado = valorTotalInventario.ToString("C2", culturaArgentina);
+                string totalVentasFormateado = totalVentas.ToString("C2", culturaArgentina);
 
                 AgregarCeldaTabla(tablaInfo, "Fecha de generación:", DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fontNormal);
                 AgregarCeldaTabla(tablaInfo, "Total de artículos:", dataListado.Rows.Count.ToString(), fontNormal);
-                AgregarCeldaTabla(tablaInfo, "Artículos activos:", articulosActivos.ToString(), fontNormal);
-                AgregarCeldaTabla(tablaInfo, "Artículos con stock:", articulosConStock.ToString(), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Artículos con ventas:", articulosConVentas.ToString(), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Artículos sin ventas:", articulosSinVentas.ToString(), fontNormal);
 
-                AgregarCeldaTabla(tablaInfo, "Stock total:", stockTotal.ToString("N2"), fontNormal);
-                AgregarCeldaTabla(tablaInfo, "Valor total inventario:", valorInventarioFormateado, fontMonto);
-                AgregarCeldaTabla(tablaInfo, "Tipo de reporte:", "CATÁLOGO VENTAS", fontNormal);
+                AgregarCeldaTabla(tablaInfo, "Cantidad total vendida:", cantidadTotalVendida.ToString("N2"), fontNormal);
+                AgregarCeldaTabla(tablaInfo, "TOTAL VENTAS:", totalVentasFormateado, fontMonto);
+                AgregarCeldaTabla(tablaInfo, "Período analizado:",
+                    fechaPrimeraVenta.HasValue ?
+                    $"{fechaPrimeraVenta.Value:dd/MM/yyyy} al {fechaUltimaVenta.Value:dd/MM/yyyy}" :
+                    "Sin datos", fontNormal);
                 AgregarCeldaTabla(tablaInfo, "", "", fontNormal);
 
                 document.Add(tablaInfo);
 
-                // ===== TABLA PRINCIPAL DE ARTÍCULOS =====
+                // ===== TABLA PRINCIPAL DE VENTAS POR ARTÍCULO =====
                 if (dataListado.Rows.Count > 0)
                 {
                     // Columnas para mostrar en el reporte de ventas
-                    string[] columnasImpresion = { "Codigo", "Nombre", "Categoria", "precioventa", "StockActual" };
+                    string[] columnasImpresion = {
+                "Codigo",
+                "Nombre",
+                "Categoria",
+                "CantidadVendida",
+                "PrecioPromedio",
+                "TotalVentas",
+                "FechaUltimaVenta",
+                "StockActual"
+            };
+
                     List<string> columnasDisponibles = new List<string>();
 
                     // Verificar qué columnas están disponibles
@@ -289,18 +330,22 @@ namespace CampoArgentino.Presentacion
                     float[] anchos = new float[columnasDisponibles.Count];
                     for (int i = 0; i < columnasDisponibles.Count; i++)
                     {
-                        if (columnasDisponibles[i] == "Codigo") anchos[i] = 12f;
-                        else if (columnasDisponibles[i] == "precioventa") anchos[i] = 15f;
-                        else if (columnasDisponibles[i] == "StockActual") anchos[i] = 12f;
-                        else if (columnasDisponibles[i] == "Categoria") anchos[i] = 20f;
-                        else anchos[i] = 41f; // Para Nombre
+                        string columna = columnasDisponibles[i];
+                        if (columna == "Codigo") anchos[i] = 8f;
+                        else if (columna == "CantidadVendida") anchos[i] = 10f;
+                        else if (columna == "PrecioPromedio") anchos[i] = 10f;
+                        else if (columna == "TotalVentas") anchos[i] = 12f;
+                        else if (columna == "FechaUltimaVenta") anchos[i] = 10f;
+                        else if (columna == "StockActual") anchos[i] = 8f;
+                        else if (columna == "Categoria") anchos[i] = 15f;
+                        else anchos[i] = 27f; // Para Nombre
                     }
                     tablaDatos.SetWidths(anchos);
 
                     // Encabezados de columnas
                     foreach (string columna in columnasDisponibles)
                     {
-                        string headerText = ObtenerHeaderLegibleArticulos(columna);
+                        string headerText = ObtenerHeaderLegibleVentas(columna);
                         iTextPdf.PdfPCell celdaHeader = new iTextPdf.PdfPCell(new iText.Phrase(headerText, fontHeader));
                         celdaHeader.BackgroundColor = new iText.BaseColor(70, 130, 180); // Azul corporativo
                         celdaHeader.HorizontalAlignment = iText.Element.ALIGN_CENTER;
@@ -319,42 +364,54 @@ namespace CampoArgentino.Presentacion
                             {
                                 string valor = fila.Cells[columna].Value?.ToString() ?? "";
                                 iText.Phrase frase;
+                                iTextPdf.PdfPCell celdaData;
 
                                 // Formatear valores específicos
-                                if (columna == "precioventa" && decimal.TryParse(valor, out decimal precio))
+                                if ((columna == "PrecioPromedio" || columna == "TotalVentas") && decimal.TryParse(valor, out decimal monto))
                                 {
-                                    valor = precio.ToString("C2", culturaArgentina);
+                                    valor = monto.ToString("C2", culturaArgentina);
                                     frase = new iText.Phrase(valor, fontMonto);
+                                    celdaData = new iTextPdf.PdfPCell(frase);
+                                    celdaData.HorizontalAlignment = iText.Element.ALIGN_RIGHT;
                                 }
-                                else if (columna == "StockActual")
+                                else if (columna == "CantidadVendida" || columna == "StockActual")
                                 {
-                                    if (decimal.TryParse(valor, out decimal stock))
+                                    if (decimal.TryParse(valor, out decimal cantidad))
                                     {
-                                        frase = new iText.Phrase(stock.ToString("N2"), fontData);
+                                        frase = new iText.Phrase(cantidad.ToString("N2"), fontData);
+                                        celdaData = new iTextPdf.PdfPCell(frase);
+                                        celdaData.HorizontalAlignment = iText.Element.ALIGN_RIGHT;
+
+                                        // Resaltar artículos sin ventas
+                                        if (columna == "CantidadVendida" && cantidad == 0)
+                                        {
+                                            celdaData.BackgroundColor = new iText.BaseColor(255, 240, 240);
+                                        }
                                     }
                                     else
                                     {
                                         frase = new iText.Phrase(valor, fontData);
+                                        celdaData = new iTextPdf.PdfPCell(frase);
+                                        celdaData.HorizontalAlignment = iText.Element.ALIGN_CENTER;
                                     }
+                                }
+                                else if (columna == "FechaUltimaVenta")
+                                {
+                                    if (DateTime.TryParse(valor, out DateTime fecha))
+                                    {
+                                        frase = new iText.Phrase(fecha.ToString("dd/MM/yyyy"), fontData);
+                                    }
+                                    else
+                                    {
+                                        frase = new iText.Phrase("Sin ventas", fontData);
+                                    }
+                                    celdaData = new iTextPdf.PdfPCell(frase);
+                                    celdaData.HorizontalAlignment = iText.Element.ALIGN_CENTER;
                                 }
                                 else
                                 {
                                     frase = new iText.Phrase(valor, fontData);
-                                }
-
-                                iTextPdf.PdfPCell celdaData = new iTextPdf.PdfPCell(frase);
-
-                                // Alineación según el tipo de dato
-                                if (columna == "Codigo" || columna == "StockActual")
-                                {
-                                    celdaData.HorizontalAlignment = iText.Element.ALIGN_CENTER;
-                                }
-                                else if (columna == "precioventa")
-                                {
-                                    celdaData.HorizontalAlignment = iText.Element.ALIGN_RIGHT;
-                                }
-                                else
-                                {
+                                    celdaData = new iTextPdf.PdfPCell(frase);
                                     celdaData.HorizontalAlignment = iText.Element.ALIGN_LEFT;
                                 }
 
@@ -362,10 +419,20 @@ namespace CampoArgentino.Presentacion
                                 celdaData.Padding = 4;
                                 celdaData.PaddingTop = 5;
 
-                                // Resaltar artículos sin stock
-                                if (columna == "StockActual" && decimal.TryParse(valor, out decimal stockActual) && stockActual == 0)
+                                // Resaltar los artículos más vendidos (top 3 por total de ventas)
+                                if (columna == "TotalVentas" && decimal.TryParse(fila.Cells["TotalVentas"].Value?.ToString(), out decimal totalVenta) && totalVenta > 0)
                                 {
-                                    celdaData.BackgroundColor = new iText.BaseColor(255, 200, 200);
+                                    // Ordenar las filas por TotalVentas para encontrar los top 3
+                                    var filasOrdenadas = dataListado.Rows.Cast<DataGridViewRow>()
+                                        .Where(r => !r.IsNewRow && r.Cells["TotalVentas"].Value != null)
+                                        .OrderByDescending(r => Convert.ToDecimal(r.Cells["TotalVentas"].Value))
+                                        .Take(3)
+                                        .ToList();
+
+                                    if (filasOrdenadas.Contains(fila))
+                                    {
+                                        celdaData.BackgroundColor = new iText.BaseColor(220, 255, 220); // Verde claro para top ventas
+                                    }
                                 }
 
                                 tablaDatos.AddCell(celdaData);
@@ -383,9 +450,9 @@ namespace CampoArgentino.Presentacion
                 tablaResumen.SpacingBefore = 10f;
 
                 AgregarCeldaTablaResumen(tablaResumen, "Total artículos:", dataListado.Rows.Count.ToString(), fontNormal, fontMonto);
-                AgregarCeldaTablaResumen(tablaResumen, "Artículos activos:", articulosActivos.ToString(), fontNormal, fontMonto);
-                AgregarCeldaTablaResumen(tablaResumen, "Stock total:", stockTotal.ToString("N2"), fontNormal, fontMonto);
-                AgregarCeldaTablaResumen(tablaResumen, "VALOR INVENTARIO:", valorInventarioFormateado, fontNormal, fontMonto);
+                AgregarCeldaTablaResumen(tablaResumen, "Artículos con ventas:", articulosConVentas.ToString(), fontNormal, fontMonto);
+                AgregarCeldaTablaResumen(tablaResumen, "Cantidad total vendida:", cantidadTotalVendida.ToString("N2"), fontNormal, fontMonto);
+                AgregarCeldaTablaResumen(tablaResumen, "TOTAL VENTAS:", totalVentasFormateado, fontDestacado, fontMonto);
 
                 document.Add(tablaResumen);
 
@@ -404,6 +471,23 @@ namespace CampoArgentino.Presentacion
             finally
             {
                 document.Close();
+            }
+        }
+
+        // Método auxiliar actualizado para headers de ventas
+        private string ObtenerHeaderLegibleVentas(string headerOriginal)
+        {
+            switch (headerOriginal)
+            {
+                case "Codigo": return "CÓDIGO";
+                case "Nombre": return "NOMBRE DEL ARTÍCULO";
+                case "Categoria": return "CATEGORÍA";
+                case "CantidadVendida": return "CANT. VENDIDA";
+                case "PrecioPromedio": return "PRECIO PROMEDIO";
+                case "TotalVentas": return "TOTAL VENTAS";
+                case "FechaUltimaVenta": return "ÚLTIMA VENTA";
+                case "StockActual": return "STOCK ACTUAL";
+                default: return headerOriginal.ToUpper();
             }
         }
 
@@ -435,34 +519,34 @@ namespace CampoArgentino.Presentacion
             tabla.AddCell(celdaValor);
         }
 
-        private string ObtenerHeaderLegibleArticulos(string headerOriginal)
-        {
-            switch (headerOriginal)
-            {
-                case "Codigo": return "CÓDIGO";
-                case "Nombre": return "NOMBRE DEL ARTÍCULO";
-                case "Categoria": return "CATEGORÍA";
-                case "precioventa": return "PRECIO VENTA";
-                case "StockActual": return "STOCK ACTUAL";
-                default: return headerOriginal.ToUpper();
-            }
-        }
 
-        // Evento doble click para seleccionar artículo
+       
+        // Evento doble click para abrir ventas por cliente
         private void dataListado_DoubleClick(object sender, EventArgs e)
         {
             if (dataListado.CurrentRow != null)
             {
-                // Aquí puedes agregar lógica para cuando se selecciona un artículo
-                // Por ejemplo, pasar el artículo seleccionado al formulario de venta
+                // Obtener datos del artículo seleccionado
+                int idArticulo = Convert.ToInt32(dataListado.CurrentRow.Cells["idarticulo"].Value);
                 string codigo = dataListado.CurrentRow.Cells["Codigo"].Value?.ToString() ?? "";
                 string nombre = dataListado.CurrentRow.Cells["Nombre"].Value?.ToString() ?? "";
 
-                MessageBox.Show($"Artículo seleccionado:\nCódigo: {codigo}\nNombre: {nombre}",
-                    "Artículo Seleccionado",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                // Abrir directamente el formulario de ventas por cliente
+                try
+                {
+                    FormVistaArticuloCliente_Venta formVentaCliente = new FormVistaArticuloCliente_Venta(idArticulo, codigo, nombre);
+                    formVentaCliente.MdiParent = this.MdiParent;
+                    formVentaCliente.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al abrir ventas por cliente: {ex.Message}",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
         }
     }
+
 }

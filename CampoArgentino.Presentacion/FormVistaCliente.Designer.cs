@@ -96,7 +96,7 @@
             btnImprimir.FlatStyle = FlatStyle.Flat;
             btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnImprimir.ForeColor = Color.White;
-            btnImprimir.Location = new Point(667, 104);
+            btnImprimir.Location = new Point(530, 104);
             btnImprimir.Margin = new Padding(3, 4, 3, 4);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(108, 44);

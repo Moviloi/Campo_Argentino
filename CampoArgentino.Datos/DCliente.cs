@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace CampoArgentino.Datos
 {
@@ -257,6 +258,37 @@ namespace CampoArgentino.Datos
             {
                 DtResultado = null;
             }
+            return DtResultado;
+        }
+
+        // En DCliente.cs - agregar este método
+        public DataTable MostrarClientesConVentas()
+        {
+            DataTable DtResultado = new DataTable("ClientesConVentas");
+            SqlConnection SqlCon = new SqlConnection();
+
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_ClientesConVentas";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+                Debug.WriteLine("Error en MostrarClientesConVentas: " + ex.Message);
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                    SqlCon.Close();
+            }
+
             return DtResultado;
         }
     }

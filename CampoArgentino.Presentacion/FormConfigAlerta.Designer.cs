@@ -144,17 +144,17 @@
             // 
             // btnNuevo
             // 
-            btnNuevo.BackColor = Color.FromArgb(255, 128, 0);
+            btnNuevo.BackColor = Color.OrangeRed;
             btnNuevo.FlatAppearance.BorderSize = 0;
             btnNuevo.FlatStyle = FlatStyle.Flat;
-            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(573, 47);
+            btnNuevo.Location = new Point(527, 8);
             btnNuevo.Margin = new Padding(3, 4, 3, 4);
             btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(107, 41);
+            btnNuevo.Size = new Size(105, 80);
             btnNuevo.TabIndex = 8;
-            btnNuevo.Text = "&Nuevo";
+            btnNuevo.Text = "&Nuevo Artículo";
             btnNuevo.UseVisualStyleBackColor = false;
             btnNuevo.Click += btnNuevo_Click;
             // 

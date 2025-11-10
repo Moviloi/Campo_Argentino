@@ -158,12 +158,12 @@
             // 
             // btnNuevo
             // 
-            btnNuevo.BackColor = Color.FromArgb(0, 0, 64);
+            btnNuevo.BackColor = Color.OrangeRed;
             btnNuevo.FlatAppearance.BorderSize = 0;
             btnNuevo.FlatStyle = FlatStyle.Flat;
             btnNuevo.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNuevo.ForeColor = Color.White;
-            btnNuevo.Location = new Point(541, 8);
+            btnNuevo.Location = new Point(527, 8);
             btnNuevo.Margin = new Padding(3, 4, 3, 4);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(105, 80);
@@ -174,12 +174,12 @@
             // 
             // btnReporte
             // 
-            btnReporte.BackColor = Color.FromArgb(52, 152, 219);
+            btnReporte.BackColor = Color.FromArgb(41, 128, 185);
             btnReporte.FlatAppearance.BorderSize = 0;
             btnReporte.FlatStyle = FlatStyle.Flat;
             btnReporte.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReporte.ForeColor = Color.White;
-            btnReporte.Location = new Point(791, 44);
+            btnReporte.Location = new Point(752, 44);
             btnReporte.Margin = new Padding(3, 4, 3, 4);
             btnReporte.Name = "btnReporte";
             btnReporte.Size = new Size(117, 44);
@@ -190,12 +190,12 @@
             // 
             // btnImprimir
             // 
-            btnImprimir.BackColor = Color.FromArgb(46, 204, 113);
+            btnImprimir.BackColor = Color.FromArgb(41, 128, 185);
             btnImprimir.FlatAppearance.BorderSize = 0;
             btnImprimir.FlatStyle = FlatStyle.Flat;
             btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnImprimir.ForeColor = Color.White;
-            btnImprimir.Location = new Point(663, 44);
+            btnImprimir.Location = new Point(638, 44);
             btnImprimir.Margin = new Padding(3, 4, 3, 4);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(108, 44);
@@ -213,12 +213,12 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.BackColor = Color.FromArgb(231, 76, 60);
+            btnEliminar.BackColor = Color.DimGray;
             btnEliminar.FlatAppearance.BorderSize = 0;
             btnEliminar.FlatStyle = FlatStyle.Flat;
             btnEliminar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnEliminar.ForeColor = Color.White;
-            btnEliminar.Location = new Point(927, 44);
+            btnEliminar.Location = new Point(875, 44);
             btnEliminar.Margin = new Padding(3, 4, 3, 4);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(105, 44);

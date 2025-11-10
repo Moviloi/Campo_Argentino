@@ -53,9 +53,9 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(20, 15);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(296, 38);
+            lblTitulo.Size = new Size(271, 38);
             lblTitulo.TabIndex = 0;
-            lblTitulo.Text = "Artículos para Ventas";
+            lblTitulo.Text = "Ventas por Artículo";
             // 
             // dataListado
             // 
@@ -76,6 +76,7 @@
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataListado.Size = new Size(953, 474);
             dataListado.TabIndex = 7;
+            dataListado.DoubleClick += dataListado_DoubleClick;
             // 
             // lblTotal
             // 
@@ -95,12 +96,12 @@
             btnImprimir.FlatStyle = FlatStyle.Flat;
             btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnImprimir.ForeColor = Color.White;
-            btnImprimir.Location = new Point(667, 104);
+            btnImprimir.Location = new Point(530, 104);
             btnImprimir.Margin = new Padding(3, 4, 3, 4);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(108, 44);
             btnImprimir.TabIndex = 5;
-            btnImprimir.Text = "&Imprimir";
+            btnImprimir.Text = "Imprimir";
             btnImprimir.UseVisualStyleBackColor = false;
             btnImprimir.Click += btnImprimir_Click;
             // 
