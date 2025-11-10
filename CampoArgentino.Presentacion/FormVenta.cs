@@ -1,16 +1,17 @@
-﻿using CampoArgentino.Negocio;
+﻿using CampoArgentino.Datos;
+using CampoArgentino.Negocio;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Windows.Forms;
-using iTextSharp = iTextSharp.text;
-using iTextPdf = iTextSharp.text.pdf;
-using System.IO;
-using iText = iTextSharp.text;
-using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Threading;
+using System.Windows.Forms;
+using iText = iTextSharp.text;
+using iTextPdf = iTextSharp.text.pdf;
+using iTextSharp = iTextSharp.text;
 
 namespace CampoArgentino.Presentacion
 {
@@ -84,7 +85,7 @@ namespace CampoArgentino.Presentacion
         private void Limpiar()
         {
             this.txtVentaID.Text = string.Empty;
-            this.txtNumeroDocumento.Text = string.Empty;
+            this.txtNumeroDocumento.Text = string.Empty; // Se llenará automáticamente al crear nueva
             this.cbCliente.SelectedIndex = -1;
             this.dtpFechaVenta.Value = DateTime.Now;
             this.txtSubtotal.Text = "0.00";
@@ -99,7 +100,9 @@ namespace CampoArgentino.Presentacion
 
         private void Habilitar(bool valor)
         {
-            this.txtNumeroDocumento.ReadOnly = !valor;
+            // El número de documento es editable solo en nuevo registro
+            this.txtNumeroDocumento.ReadOnly = !valor || !this.IsNuevo;
+
             this.cbCliente.Enabled = valor;
             this.dtpFechaVenta.Enabled = valor;
             this.txtObservaciones.ReadOnly = !valor;
@@ -567,21 +570,106 @@ namespace CampoArgentino.Presentacion
 
             MostrarDetalle(Convert.ToInt32(this.txtVentaID.Text));
 
+            // Cuando se edita una venta existente, no permitir cambiar el número de documento
+            this.txtNumeroDocumento.ReadOnly = true;
+
             this.tabControl1.SelectedIndex = 1;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
+            this.tabControl1.SelectedIndex = 1;
             this.IsNuevo = true;
             this.IsEditar = false;
             this.Botones();
             this.Limpiar();
             this.Habilitar(true);
 
-            // Número temporal - el usuario puede cambiarlo
-            this.txtNumeroDocumento.Text = DateTime.Now.ToString("yyyyMMddHHmmss");
+            // Obtener el siguiente número de documento automáticamente
+            GenerarSiguienteNumeroDocumento();
 
             this.txtNumeroDocumento.Focus();
+        }
+
+        private void ConfigurarColumnaSeleccion()
+        {
+            LimpiarColumnasAntiguas();
+
+
+
+            // Crear columna de botón para selección
+            DataGridViewButtonColumn btnSeleccionarCol = new DataGridViewButtonColumn();
+            btnSeleccionarCol.Name = "Seleccionar";
+            btnSeleccionarCol.HeaderText = "Sel.";
+            btnSeleccionarCol.Text = "⬜"; // Cuadrado vacío (no seleccionado)
+            btnSeleccionarCol.UseColumnTextForButtonValue = true;
+            btnSeleccionarCol.Width = 80;
+            btnSeleccionarCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            btnSeleccionarCol.DefaultCellStyle.Font = new Font("Arial", 12);
+            btnSeleccionarCol.FlatStyle = FlatStyle.Flat;
+
+
+            // Inserta la columna al principio
+
+            dataListado.Columns.Insert(0, btnSeleccionarCol);
+
+
+            // Asegura de que la columna esté visible
+            dataListado.Columns["Seleccionar"].Visible = true;
+
+            // Inicializa el estado de selección de todas las filas
+            foreach (DataGridViewRow row in dataListado.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    // Por defecto, no seleccionado
+                    row.Cells["Seleccionar"].Value = "⬜";
+                    row.Cells["Seleccionar"].Tag = false; // Usa Tag para almacenar estado
+                    row.DefaultCellStyle.BackColor = Color.White; // Fondo blanco por defecto
+                }
+            }
+        }
+
+        private void LimpiarColumnasAntiguas()
+        {
+            // Eliminar la columna "Eliminar" si existe
+            if (dataListado.Columns.Contains("Eliminar"))
+            {
+                dataListado.Columns.Remove("Eliminar");
+            }
+
+            // También eliminar cualquier columna de checkbox existente
+            foreach (DataGridViewColumn col in dataListado.Columns)
+            {
+                if (col is DataGridViewCheckBoxColumn)
+                {
+                    dataListado.Columns.Remove(col);
+                    break;
+                }
+            }
+        }
+
+
+
+        private void GenerarSiguienteNumeroDocumento()
+        {
+            try
+            {
+                string proximoNumero = NVenta.ObtenerProximoNumeroDocumento();
+                this.txtNumeroDocumento.Text = proximoNumero;
+
+                // Seleccionar solo la parte numérica para facilitar edición
+                if (proximoNumero.StartsWith("VTA-") && proximoNumero.Length > 4)
+                {
+                    this.txtNumeroDocumento.Select(4, proximoNumero.Length - 4);
+                }
+            }
+            catch (Exception ex)
+            {
+                // En caso de error, usar un número secuencial simple
+                MensajeError("Error al generar número de documento: " + ex.Message);
+                this.txtNumeroDocumento.Text = $"VTA-{DateTime.Now:MMddHHmm}";
+            }
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -590,11 +678,29 @@ namespace CampoArgentino.Presentacion
             {
                 string rpta = "";
 
-                if (this.txtNumeroDocumento.Text == string.Empty || cbCliente.SelectedIndex == -1)
+                // Validaciones
+                if (string.IsNullOrEmpty(this.txtNumeroDocumento.Text) || cbCliente.SelectedIndex == -1)
                 {
                     MensajeError("Falta ingresar algunos datos, serán remarcados");
                     errorIcono.SetError(txtNumeroDocumento, "Ingrese un valor");
                     errorIcono.SetError(cbCliente, "Seleccione un cliente");
+                    return;
+                }
+
+                // Validar formato del número de documento
+                if (!this.txtNumeroDocumento.Text.StartsWith("VTA-"))
+                {
+                    MensajeError("El número de documento debe tener el formato VTA-XXXX");
+                    errorIcono.SetError(txtNumeroDocumento, "Formato inválido. Use VTA-XXXX");
+                    return;
+                }
+
+                // Validar que el número tenga formato correcto
+                string numeroParte = this.txtNumeroDocumento.Text.Substring(4);
+                if (!int.TryParse(numeroParte, out int numero) || numero <= 0)
+                {
+                    MensajeError("El número de documento debe tener un formato válido (VTA-0001, VTA-0002, etc.)");
+                    errorIcono.SetError(txtNumeroDocumento, "Número inválido. Use formato VTA-0001");
                     return;
                 }
 
@@ -621,21 +727,21 @@ namespace CampoArgentino.Presentacion
                     if (rpta == "OK")
                     {
                         this.MensajeOk("Venta registrada correctamente");
+                        this.IsNuevo = false;
+                        this.Botones();
+                        this.Limpiar();
+                        this.Mostrar();
                     }
                     else
                     {
                         this.MensajeError(rpta);
                     }
                 }
-
-                this.IsNuevo = false;
-                this.Botones();
-                this.Limpiar();
-                this.Mostrar();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + ex.StackTrace);
+                MessageBox.Show($"Error inesperado: {ex.Message}\nDetalle: {ex.StackTrace}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

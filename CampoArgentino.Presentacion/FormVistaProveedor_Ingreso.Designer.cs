@@ -75,7 +75,6 @@
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataListado.Size = new Size(953, 474);
             dataListado.TabIndex = 7;
-            dataListado.DoubleClick += dataListado_DoubleClick;
             // 
             // lblTotal
             // 

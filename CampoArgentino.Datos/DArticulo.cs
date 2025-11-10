@@ -67,7 +67,7 @@ namespace CampoArgentino.Datos
         }
 
         // Método Insertar 
-        public string Insertar(DArticulo Articulo)
+        public string Insertar()
         {
             string rpta = "";
             SqlConnection SqlCon = new SqlConnection();
@@ -80,45 +80,45 @@ namespace CampoArgentino.Datos
                 SqlCmd.CommandText = "spCampoArgentino_InsertarArticuloConImagen";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                // Parámetros para artículo
+                // Parámetros para artículo - USAR LAS PROPIEDADES DEL OBJETO ACTUAL (this)
                 SqlParameter ParIdcategoria = new SqlParameter();
                 ParIdcategoria.ParameterName = "@idcategoria";
                 ParIdcategoria.SqlDbType = SqlDbType.Int;
-                ParIdcategoria.Value = Articulo.Idcategoria;
+                ParIdcategoria.Value = this.Idcategoria;
                 SqlCmd.Parameters.Add(ParIdcategoria);
 
                 SqlParameter ParIdpresentacion = new SqlParameter();
                 ParIdpresentacion.ParameterName = "@idpresentacion";
                 ParIdpresentacion.SqlDbType = SqlDbType.Int;
-                ParIdpresentacion.Value = Articulo.Idpresentacion;
+                ParIdpresentacion.Value = this.Idpresentacion;
                 SqlCmd.Parameters.Add(ParIdpresentacion);
 
                 SqlParameter ParCodigo = new SqlParameter();
                 ParCodigo.ParameterName = "@codigo";
                 ParCodigo.SqlDbType = SqlDbType.VarChar;
                 ParCodigo.Size = 50;
-                ParCodigo.Value = Articulo.Codigo;
+                ParCodigo.Value = this.Codigo;
                 SqlCmd.Parameters.Add(ParCodigo);
 
                 SqlParameter ParNombre = new SqlParameter();
                 ParNombre.ParameterName = "@nombre";
                 ParNombre.SqlDbType = SqlDbType.VarChar;
                 ParNombre.Size = 100;
-                ParNombre.Value = Articulo.Nombre;
+                ParNombre.Value = this.Nombre;
                 SqlCmd.Parameters.Add(ParNombre);
 
                 SqlParameter ParDescripcion = new SqlParameter();
                 ParDescripcion.ParameterName = "@descripcion";
                 ParDescripcion.SqlDbType = SqlDbType.VarChar;
                 ParDescripcion.Size = 255;
-                ParDescripcion.Value = Articulo.Descripcion ?? (object)DBNull.Value;
+                ParDescripcion.Value = this.Descripcion ?? (object)DBNull.Value;
                 SqlCmd.Parameters.Add(ParDescripcion);
 
                 SqlParameter ParUnidadBase = new SqlParameter();
                 ParUnidadBase.ParameterName = "@unidadbase";
                 ParUnidadBase.SqlDbType = SqlDbType.VarChar;
                 ParUnidadBase.Size = 50;
-                ParUnidadBase.Value = Articulo.UnidadBase;
+                ParUnidadBase.Value = this.UnidadBase;
                 SqlCmd.Parameters.Add(ParUnidadBase);
 
                 SqlParameter ParFactorConversion = new SqlParameter();
@@ -126,7 +126,7 @@ namespace CampoArgentino.Datos
                 ParFactorConversion.SqlDbType = SqlDbType.Decimal;
                 ParFactorConversion.Precision = 11;
                 ParFactorConversion.Scale = 2;
-                ParFactorConversion.Value = Articulo.FactorConversion;
+                ParFactorConversion.Value = this.FactorConversion;
                 SqlCmd.Parameters.Add(ParFactorConversion);
 
                 SqlParameter ParStockMinimo = new SqlParameter();
@@ -134,7 +134,7 @@ namespace CampoArgentino.Datos
                 ParStockMinimo.SqlDbType = SqlDbType.Decimal;
                 ParStockMinimo.Precision = 11;
                 ParStockMinimo.Scale = 2;
-                ParStockMinimo.Value = Articulo.StockMinimo;
+                ParStockMinimo.Value = this.StockMinimo;
                 SqlCmd.Parameters.Add(ParStockMinimo);
 
                 SqlParameter ParStockMaximo = new SqlParameter();
@@ -142,7 +142,7 @@ namespace CampoArgentino.Datos
                 ParStockMaximo.SqlDbType = SqlDbType.Decimal;
                 ParStockMaximo.Precision = 11;
                 ParStockMaximo.Scale = 2;
-                ParStockMaximo.Value = Articulo.StockMaximo;
+                ParStockMaximo.Value = this.StockMaximo;
                 SqlCmd.Parameters.Add(ParStockMaximo);
 
                 SqlParameter ParPrecioCompra = new SqlParameter();
@@ -150,7 +150,7 @@ namespace CampoArgentino.Datos
                 ParPrecioCompra.SqlDbType = SqlDbType.Decimal;
                 ParPrecioCompra.Precision = 11;
                 ParPrecioCompra.Scale = 2;
-                ParPrecioCompra.Value = Articulo.PrecioCompra;
+                ParPrecioCompra.Value = this.PrecioCompra;
                 SqlCmd.Parameters.Add(ParPrecioCompra);
 
                 SqlParameter ParPrecioVenta = new SqlParameter();
@@ -158,7 +158,7 @@ namespace CampoArgentino.Datos
                 ParPrecioVenta.SqlDbType = SqlDbType.Decimal;
                 ParPrecioVenta.Precision = 11;
                 ParPrecioVenta.Scale = 2;
-                ParPrecioVenta.Value = Articulo.PrecioVenta;
+                ParPrecioVenta.Value = this.PrecioVenta;
                 SqlCmd.Parameters.Add(ParPrecioVenta);
 
                 SqlParameter ParIva = new SqlParameter();
@@ -166,39 +166,56 @@ namespace CampoArgentino.Datos
                 ParIva.SqlDbType = SqlDbType.Decimal;
                 ParIva.Precision = 4;
                 ParIva.Scale = 2;
-                ParIva.Value = Articulo.Iva;
+                ParIva.Value = this.Iva;
                 SqlCmd.Parameters.Add(ParIva);
 
                 SqlParameter ParActivo = new SqlParameter();
                 ParActivo.ParameterName = "@activo";
                 ParActivo.SqlDbType = SqlDbType.Bit;
-                ParActivo.Value = Articulo.Activo;
+                ParActivo.Value = this.Activo;
                 SqlCmd.Parameters.Add(ParActivo);
 
                 SqlParameter ParImagenUrl = new SqlParameter();
                 ParImagenUrl.ParameterName = "@imagenurl";
                 ParImagenUrl.SqlDbType = SqlDbType.NVarChar;
                 ParImagenUrl.Size = 500;
-                ParImagenUrl.Value = Articulo.ImagenUrl ?? (object)DBNull.Value;
+                ParImagenUrl.Value = this.ImagenUrl ?? (object)DBNull.Value;
                 SqlCmd.Parameters.Add(ParImagenUrl);
 
-                // Ejecutar comando
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se pudo insertar el artículo";
+                //  Usar ExecuteScalar para obtener la respuesta del SP
+                object result = SqlCmd.ExecuteScalar();
 
+                if (result != null)
+                {
+                    rpta = result.ToString();
+                    // Si el SP retorna 'OK', dejamos 'OK', sino retornamos el mensaje
+                    if (rpta == "OK")
+                    {
+                        return "OK";
+                    }
+                    else
+                    {
+                        return "Error en base de datos: " + rpta;
+                    }
+                }
+                else
+                {
+                    return "No se recibió respuesta del servidor";
+                }
             }
             catch (Exception ex)
             {
-                rpta = ex.Message;
+                rpta = "Error al insertar artículo: " + ex.Message;
+                return rpta;
             }
             finally
             {
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
-            return rpta;
         }
 
-        // Método Editar
-        public string Editar(DArticulo Articulo)
+        // Método Editar 
+        public string Editar()
         {
             string rpta = "";
             SqlConnection SqlCon = new SqlConnection();
@@ -215,47 +232,47 @@ namespace CampoArgentino.Datos
                 SqlParameter ParIdarticulo = new SqlParameter();
                 ParIdarticulo.ParameterName = "@idarticulo";
                 ParIdarticulo.SqlDbType = SqlDbType.Int;
-                ParIdarticulo.Value = Articulo.Idarticulo;
+                ParIdarticulo.Value = this.Idarticulo;
                 SqlCmd.Parameters.Add(ParIdarticulo);
 
                 SqlParameter ParIdcategoria = new SqlParameter();
                 ParIdcategoria.ParameterName = "@idcategoria";
                 ParIdcategoria.SqlDbType = SqlDbType.Int;
-                ParIdcategoria.Value = Articulo.Idcategoria;
+                ParIdcategoria.Value = this.Idcategoria;
                 SqlCmd.Parameters.Add(ParIdcategoria);
 
                 SqlParameter ParIdpresentacion = new SqlParameter();
                 ParIdpresentacion.ParameterName = "@idpresentacion";
                 ParIdpresentacion.SqlDbType = SqlDbType.Int;
-                ParIdpresentacion.Value = Articulo.Idpresentacion;
+                ParIdpresentacion.Value = this.Idpresentacion;
                 SqlCmd.Parameters.Add(ParIdpresentacion);
 
                 SqlParameter ParCodigo = new SqlParameter();
                 ParCodigo.ParameterName = "@codigo";
                 ParCodigo.SqlDbType = SqlDbType.VarChar;
                 ParCodigo.Size = 50;
-                ParCodigo.Value = Articulo.Codigo;
+                ParCodigo.Value = this.Codigo;
                 SqlCmd.Parameters.Add(ParCodigo);
 
                 SqlParameter ParNombre = new SqlParameter();
                 ParNombre.ParameterName = "@nombre";
                 ParNombre.SqlDbType = SqlDbType.VarChar;
                 ParNombre.Size = 100;
-                ParNombre.Value = Articulo.Nombre;
+                ParNombre.Value = this.Nombre;
                 SqlCmd.Parameters.Add(ParNombre);
 
                 SqlParameter ParDescripcion = new SqlParameter();
                 ParDescripcion.ParameterName = "@descripcion";
                 ParDescripcion.SqlDbType = SqlDbType.VarChar;
                 ParDescripcion.Size = 255;
-                ParDescripcion.Value = Articulo.Descripcion ?? (object)DBNull.Value;
+                ParDescripcion.Value = this.Descripcion ?? (object)DBNull.Value;
                 SqlCmd.Parameters.Add(ParDescripcion);
 
                 SqlParameter ParUnidadBase = new SqlParameter();
                 ParUnidadBase.ParameterName = "@unidadbase";
                 ParUnidadBase.SqlDbType = SqlDbType.VarChar;
                 ParUnidadBase.Size = 50;
-                ParUnidadBase.Value = Articulo.UnidadBase;
+                ParUnidadBase.Value = this.UnidadBase;
                 SqlCmd.Parameters.Add(ParUnidadBase);
 
                 SqlParameter ParFactorConversion = new SqlParameter();
@@ -263,7 +280,7 @@ namespace CampoArgentino.Datos
                 ParFactorConversion.SqlDbType = SqlDbType.Decimal;
                 ParFactorConversion.Precision = 11;
                 ParFactorConversion.Scale = 2;
-                ParFactorConversion.Value = Articulo.FactorConversion;
+                ParFactorConversion.Value = this.FactorConversion;
                 SqlCmd.Parameters.Add(ParFactorConversion);
 
                 SqlParameter ParStockMinimo = new SqlParameter();
@@ -271,7 +288,7 @@ namespace CampoArgentino.Datos
                 ParStockMinimo.SqlDbType = SqlDbType.Decimal;
                 ParStockMinimo.Precision = 11;
                 ParStockMinimo.Scale = 2;
-                ParStockMinimo.Value = Articulo.StockMinimo;
+                ParStockMinimo.Value = this.StockMinimo;
                 SqlCmd.Parameters.Add(ParStockMinimo);
 
                 SqlParameter ParStockMaximo = new SqlParameter();
@@ -279,7 +296,7 @@ namespace CampoArgentino.Datos
                 ParStockMaximo.SqlDbType = SqlDbType.Decimal;
                 ParStockMaximo.Precision = 11;
                 ParStockMaximo.Scale = 2;
-                ParStockMaximo.Value = Articulo.StockMaximo;
+                ParStockMaximo.Value = this.StockMaximo;
                 SqlCmd.Parameters.Add(ParStockMaximo);
 
                 SqlParameter ParPrecioCompra = new SqlParameter();
@@ -287,7 +304,7 @@ namespace CampoArgentino.Datos
                 ParPrecioCompra.SqlDbType = SqlDbType.Decimal;
                 ParPrecioCompra.Precision = 11;
                 ParPrecioCompra.Scale = 2;
-                ParPrecioCompra.Value = Articulo.PrecioCompra;
+                ParPrecioCompra.Value = this.PrecioCompra;
                 SqlCmd.Parameters.Add(ParPrecioCompra);
 
                 SqlParameter ParPrecioVenta = new SqlParameter();
@@ -295,7 +312,7 @@ namespace CampoArgentino.Datos
                 ParPrecioVenta.SqlDbType = SqlDbType.Decimal;
                 ParPrecioVenta.Precision = 11;
                 ParPrecioVenta.Scale = 2;
-                ParPrecioVenta.Value = Articulo.PrecioVenta;
+                ParPrecioVenta.Value = this.PrecioVenta;
                 SqlCmd.Parameters.Add(ParPrecioVenta);
 
                 SqlParameter ParIva = new SqlParameter();
@@ -303,38 +320,56 @@ namespace CampoArgentino.Datos
                 ParIva.SqlDbType = SqlDbType.Decimal;
                 ParIva.Precision = 4;
                 ParIva.Scale = 2;
-                ParIva.Value = Articulo.Iva;
+                ParIva.Value = this.Iva;
                 SqlCmd.Parameters.Add(ParIva);
 
                 SqlParameter ParActivo = new SqlParameter();
                 ParActivo.ParameterName = "@activo";
                 ParActivo.SqlDbType = SqlDbType.Bit;
-                ParActivo.Value = Articulo.Activo;
+                ParActivo.Value = this.Activo;
                 SqlCmd.Parameters.Add(ParActivo);
 
                 SqlParameter ParImagenUrl = new SqlParameter();
                 ParImagenUrl.ParameterName = "@imagenurl";
                 ParImagenUrl.SqlDbType = SqlDbType.NVarChar;
                 ParImagenUrl.Size = 500;
-                ParImagenUrl.Value = Articulo.ImagenUrl ?? (object)DBNull.Value;
+                ParImagenUrl.Value = this.ImagenUrl ?? (object)DBNull.Value;
                 SqlCmd.Parameters.Add(ParImagenUrl);
 
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se pudo actualizar el artículo";
+                // : Usar ExecuteScalar para obtener la respuesta del SP
+                object result = SqlCmd.ExecuteScalar();
 
+                if (result != null)
+                {
+                    rpta = result.ToString();
+                    // Si el SP retorna 'OK', dejamos 'OK', sino retornamos el mensaje
+                    if (rpta == "OK")
+                    {
+                        return "OK";
+                    }
+                    else
+                    {
+                        return "Error en base de datos: " + rpta;
+                    }
+                }
+                else
+                {
+                    return "No se recibió respuesta del servidor";
+                }
             }
             catch (Exception ex)
             {
-                rpta = ex.Message;
+                rpta = "Error al editar artículo: " + ex.Message;
+                return rpta;
             }
             finally
             {
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
-            return rpta;
         }
 
-        // Método Eliminar
-        public string Eliminar(DArticulo Articulo)
+        // Método Eliminar 
+        public string Eliminar()
         {
             string rpta = "";
             SqlConnection SqlCon = new SqlConnection();
@@ -351,11 +386,10 @@ namespace CampoArgentino.Datos
                 SqlParameter ParIdarticulo = new SqlParameter();
                 ParIdarticulo.ParameterName = "@idarticulo";
                 ParIdarticulo.SqlDbType = SqlDbType.Int;
-                ParIdarticulo.Value = Articulo.Idarticulo;
+                ParIdarticulo.Value = this.Idarticulo;
                 SqlCmd.Parameters.Add(ParIdarticulo);
 
                 rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se pudo eliminar el artículo";
-
             }
             catch (Exception ex)
             {
@@ -367,6 +401,38 @@ namespace CampoArgentino.Datos
             }
             return rpta;
         }
+
+        // Método BuscarNombre 
+        public DataTable BuscarNombre()
+        {
+            DataTable DtResultado = new DataTable("articulo");
+            SqlConnection SqlCon = new SqlConnection();
+            try
+            {
+                SqlCon.ConnectionString = DConexion.Cn;
+                SqlCommand SqlCmd = new SqlCommand();
+                SqlCmd.Connection = SqlCon;
+                SqlCmd.CommandText = "spCampoArgentino_BuscarArticuloNombre";
+                SqlCmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter ParTextoBuscar = new SqlParameter();
+                ParTextoBuscar.ParameterName = "@textobuscar";
+                ParTextoBuscar.SqlDbType = SqlDbType.VarChar;
+                ParTextoBuscar.Size = 100;
+                ParTextoBuscar.Value = this.TextoBuscar;
+                SqlCmd.Parameters.Add(ParTextoBuscar);
+
+                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
+                SqlDat.Fill(DtResultado);
+            }
+            catch (Exception ex)
+            {
+                DtResultado = null;
+            }
+            return DtResultado;
+        }
+
+
 
         // Método Mostrar
         public DataTable Mostrar()
@@ -391,35 +457,7 @@ namespace CampoArgentino.Datos
             return DtResultado;
         }
 
-        // Método BuscarNombre
-        public DataTable BuscarNombre(DArticulo Articulo)
-        {
-            DataTable DtResultado = new DataTable("articulo");
-            SqlConnection SqlCon = new SqlConnection();
-            try
-            {
-                SqlCon.ConnectionString = DConexion.Cn;
-                SqlCommand SqlCmd = new SqlCommand();
-                SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "spCampoArgentino_BuscarArticuloNombre";
-                SqlCmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter ParTextoBuscar = new SqlParameter();
-                ParTextoBuscar.ParameterName = "@textobuscar";
-                ParTextoBuscar.SqlDbType = SqlDbType.VarChar;
-                ParTextoBuscar.Size = 100;
-                ParTextoBuscar.Value = Articulo.TextoBuscar;
-                SqlCmd.Parameters.Add(ParTextoBuscar);
-
-                SqlDataAdapter SqlDat = new SqlDataAdapter(SqlCmd);
-                SqlDat.Fill(DtResultado);
-            }
-            catch (Exception ex)
-            {
-                DtResultado = null;
-            }
-            return DtResultado;
-        }
+       
 
         // Método para actualizar stock individual
         public string ActualizarStock(int idarticulo, decimal nuevoStock)

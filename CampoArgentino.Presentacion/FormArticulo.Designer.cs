@@ -45,7 +45,9 @@
         private TextBox txtStockMaximo;
         private Label labelStockMinimo;
         private Label labelStockMaximo;
-        // ... otros controles
+        private CheckBox chkControlaVencimiento;
+        private Label label13;
+       
 
         protected override void Dispose(bool disposing)
         {
@@ -75,6 +77,7 @@
             lblTotal = new Label();
             tabPage2 = new TabPage();
             groupBox1 = new GroupBox();
+            label12 = new Label();
             txtStockMaximo = new TextBox();
             txtPrecioCompra = new TextBox();
             label11 = new Label();
@@ -322,6 +325,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label12);
             groupBox1.Controls.Add(txtStockMaximo);
             groupBox1.Controls.Add(txtPrecioCompra);
             groupBox1.Controls.Add(label11);
@@ -356,12 +360,50 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Datos del Artículo";
+        
+            groupBox1.Controls.Add(label13);
+            groupBox1.Controls.Add(chkControlaVencimiento);
+            // 
+            // chkControlaVencimiento
+            // 
+            chkControlaVencimiento = new CheckBox();
+            chkControlaVencimiento.AutoSize = true;
+            chkControlaVencimiento.Location = new Point(650, 195);
+            chkControlaVencimiento.Name = "chkControlaVencimiento";
+            chkControlaVencimiento.Size = new Size(170, 24);
+            chkControlaVencimiento.TabIndex = 25;
+            chkControlaVencimiento.Text = "Controla Vencimiento";
+            chkControlaVencimiento.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            label13 = new Label();
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label13.Location = new Point(650, 170);
+            label13.Name = "label13";
+            label13.Size = new Size(150, 20);
+            label13.TabIndex = 26;
+            label13.Text = "Control de Caducidad:";
+
+            
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.Location = new Point(283, 195);
+            label12.Name = "label12";
+            label12.Size = new Size(106, 20);
+            label12.TabIndex = 24;
+            label12.Text = "Stock Maximo:";
             // 
             // txtStockMaximo
             // 
-            txtStockMaximo.Location = new Point(0, 0);
+            txtStockMaximo.BorderStyle = BorderStyle.FixedSingle;
+            txtStockMaximo.Location = new Point(399, 188);
             txtStockMaximo.Name = "txtStockMaximo";
-            txtStockMaximo.Size = new Size(100, 27);
+            txtStockMaximo.Size = new Size(117, 27);
             txtStockMaximo.TabIndex = 23;
             // 
             // txtPrecioCompra
@@ -391,7 +433,7 @@
             cbPresentacion.FlatStyle = FlatStyle.Flat;
             cbPresentacion.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbPresentacion.FormattingEnabled = true;
-            cbPresentacion.Location = new Point(391, 234);
+            cbPresentacion.Location = new Point(399, 260);
             cbPresentacion.Margin = new Padding(3, 4, 3, 4);
             cbPresentacion.Name = "cbPresentacion";
             cbPresentacion.Size = new Size(200, 28);
@@ -401,7 +443,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label10.Location = new Point(290, 237);
+            label10.Location = new Point(298, 263);
             label10.Name = "label10";
             label10.Size = new Size(96, 20);
             label10.TabIndex = 18;
@@ -414,7 +456,7 @@
             cbCategoria.FlatStyle = FlatStyle.Flat;
             cbCategoria.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbCategoria.FormattingEnabled = true;
-            cbCategoria.Location = new Point(391, 196);
+            cbCategoria.Location = new Point(399, 222);
             cbCategoria.Margin = new Padding(3, 4, 3, 4);
             cbCategoria.Name = "cbCategoria";
             cbCategoria.Size = new Size(200, 28);
@@ -424,7 +466,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(290, 200);
+            label9.Location = new Point(298, 226);
             label9.Name = "label9";
             label9.Size = new Size(77, 20);
             label9.TabIndex = 16;
@@ -681,5 +723,6 @@
         private DataGridViewCheckBoxColumn Eliminar;
         private Button btnNuevo;
         private Button btnEditar;
+        private Label label12;
     }
 }

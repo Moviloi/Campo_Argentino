@@ -149,13 +149,11 @@ namespace CampoArgentino.Presentacion
             // Limpiar columnas antiguas primero
             LimpiarColumnasAntiguas();
 
-            // Verificar si la columna ya existe
-            if (!dataListado.Columns.Contains("Seleccionar"))
-            {
+            
                 // Crear columna de botón para selección
                 DataGridViewButtonColumn btnSeleccionarCol = new DataGridViewButtonColumn();
                 btnSeleccionarCol.Name = "Seleccionar";
-                btnSeleccionarCol.HeaderText = "Seleccionar";
+                btnSeleccionarCol.HeaderText = "Sel.";
                 btnSeleccionarCol.Text = "⬜"; // Cuadrado vacío (no seleccionado)
                 btnSeleccionarCol.UseColumnTextForButtonValue = true;
                 btnSeleccionarCol.Width = 80;
@@ -165,8 +163,7 @@ namespace CampoArgentino.Presentacion
 
                 // Insertar la columna al principio
                 dataListado.Columns.Insert(0, btnSeleccionarCol);
-            }
-
+      
             // Asegurarse de que la columna esté visible
             dataListado.Columns["Seleccionar"].Visible = true;
 
@@ -360,7 +357,7 @@ namespace CampoArgentino.Presentacion
                 {
                     row.Cells["Seleccionar"].Value = "✅"; // Checkbox marcado
                     row.Cells["Seleccionar"].Tag = true;
-                    row.DefaultCellStyle.BackColor = Color.DarkGreen;
+                    row.DefaultCellStyle.BackColor = Color.DimGray;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
                 else

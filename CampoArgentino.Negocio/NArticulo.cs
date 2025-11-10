@@ -6,7 +6,8 @@ namespace CampoArgentino.Negocio
 {
     public class NArticulo
     {
-        // Método Insertar
+
+        // Método Insertar 
         public static string Insertar(int idcategoria, int idpresentacion, string codigo, string nombre,
                              string descripcion, string unidadbase, decimal factorconversion,
                              decimal stockminimo, decimal stockmaximo, decimal preciocompra,
@@ -26,10 +27,10 @@ namespace CampoArgentino.Negocio
             Obj.PrecioVenta = precioventa;
             Obj.Iva = iva;
             Obj.Activo = activo;
-            return Obj.Insertar(Obj);
+            return Obj.Insertar(); 
         }
 
-        // Método Insertar con imagen
+        // Método Insertar con imagen 
         public static string InsertarConImagen(int idcategoria, int idpresentacion, string codigo, string nombre,
                                       string descripcion, string unidadbase, decimal factorconversion,
                                       decimal stockminimo, decimal stockmaximo, decimal preciocompra,
@@ -50,10 +51,10 @@ namespace CampoArgentino.Negocio
             Obj.Iva = iva;
             Obj.Activo = activo;
             Obj.ImagenUrl = imagenUrl;
-            return Obj.Insertar(Obj);
+            return Obj.Insertar(); 
         }
 
-        // Método Editar
+        // Método Editar 
         public static string Editar(int idarticulo, int idcategoria, int idpresentacion, string codigo,
                            string nombre, string descripcion, string unidadbase,
                            decimal factorconversion, decimal stockminimo, decimal stockmaximo,
@@ -74,10 +75,10 @@ namespace CampoArgentino.Negocio
             Obj.PrecioVenta = precioventa;
             Obj.Iva = iva;
             Obj.Activo = activo;
-            return Obj.Editar(Obj);
+            return Obj.Editar(); 
         }
 
-        // Método Editar con imagen
+        // Método Editar con imagen 
         public static string EditarConImagen(int idarticulo, int idcategoria, int idpresentacion, string codigo,
                                     string nombre, string descripcion, string unidadbase,
                                     decimal factorconversion, decimal stockminimo, decimal stockmaximo,
@@ -99,7 +100,7 @@ namespace CampoArgentino.Negocio
             Obj.Iva = iva;
             Obj.Activo = activo;
             Obj.ImagenUrl = imagenUrl;
-            return Obj.Editar(Obj);
+            return Obj.Editar();
         }
 
         // Método Eliminar 
@@ -107,7 +108,15 @@ namespace CampoArgentino.Negocio
         {
             DArticulo Obj = new DArticulo();
             Obj.Idarticulo = idarticulo;
-            return Obj.Eliminar(Obj);
+            return Obj.Eliminar(); 
+        }
+
+        // Método BuscarNombre 
+        public static DataTable BuscarNombre(string textobuscar)
+        {
+            DArticulo Obj = new DArticulo();
+            Obj.TextoBuscar = textobuscar;
+            return Obj.BuscarNombre(); 
         }
 
         // Método Mostrar 
@@ -116,13 +125,6 @@ namespace CampoArgentino.Negocio
             return new DArticulo().Mostrar();
         }
 
-        // Método BuscarNombre 
-        public static DataTable BuscarNombre(string textobuscar)
-        {
-            DArticulo Obj = new DArticulo();
-            Obj.TextoBuscar = textobuscar;
-            return Obj.BuscarNombre(Obj);
-        }
 
         // Método para actualizar stock individual 
         public static string ActualizarStockIndividual(int idarticulo, decimal nuevoStock)

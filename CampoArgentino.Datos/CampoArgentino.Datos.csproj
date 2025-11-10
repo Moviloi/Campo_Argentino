@@ -57,6 +57,7 @@
     <Compile Include="DIngreso.cs" />
     <Compile Include="DInventario.cs" />
     <Compile Include="DPresentacion.cs" />
+    <Compile Include="DVencimiento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DProveedor.cs" />
     <Compile Include="DUsuario.cs" />

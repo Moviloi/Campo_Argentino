@@ -672,9 +672,6 @@ namespace CampoArgentino.Presentacion
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        // Los métodos GenerarPDFClientesConVentas y GenerarPDFDetalleCompras 
-        // se mantienen igual que en la versión anterior...
-
         // Métodos para generar PDF (se mantienen igual)
         private void AgregarCeldaTabla(PdfPTable tabla, string etiqueta, string valor, Font font)
         {

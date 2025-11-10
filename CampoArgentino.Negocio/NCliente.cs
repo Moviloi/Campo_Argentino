@@ -53,7 +53,6 @@ namespace CampoArgentino.Negocio
             return Obj.BuscarNombre(Obj);
         }
 
-        // En NCliente.cs - agregar este método
         public static DataTable MostrarClientesConVentas()
         {
             return new DCliente().MostrarClientesConVentas();

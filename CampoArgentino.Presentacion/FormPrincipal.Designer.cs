@@ -312,7 +312,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // lblTituloPrincipal
             // 
@@ -327,7 +326,7 @@
             // 
             // panelMenuLateral
             // 
-            panelMenuLateral.BackColor = Color.DimGray;
+            panelMenuLateral.BackColor = Color.FromArgb(52, 73, 94);
             panelMenuLateral.Controls.Add(btnVentas);
             panelMenuLateral.Controls.Add(btnArticulos);
             panelMenuLateral.Controls.Add(btnClientes);

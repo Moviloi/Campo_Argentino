@@ -45,12 +45,12 @@ namespace CampoArgentino.Presentacion
         }
 
         // Evento doble click para seleccionar artículo
-        private void dataListado_DoubleClick(object sender, EventArgs e)
-        {
-            // Aquí se enviará el artículo seleccionado al formulario padre
-            DialogResult = DialogResult.OK;
-            this.Close();
-        }
+        //private void dataListado_DoubleClick(object sender, EventArgs e)
+        //{
+        //    // Aquí se enviará el artículo seleccionado al formulario padre
+        //    DialogResult = DialogResult.OK;
+        //    this.Close();
+        //}
 
         // Evento buscar al hacer click
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -93,14 +93,10 @@ namespace CampoArgentino.Presentacion
         {
             get
             {
-                // Nota: En tu estructura actual no hay campo Stock, se calcularía
+                //  no hay campo Stock, se calcularía
                 return "0"; // Por ahora retornamos 0
             }
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

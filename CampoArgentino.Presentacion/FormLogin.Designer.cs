@@ -160,7 +160,6 @@
             lblCliente.TabIndex = 2;
             lblCliente.Text = "Cliente: Campo Argentino | Desarrollado por: IKESIS - Innovativa en Sistemas";
             lblCliente.TextAlign = ContentAlignment.MiddleCenter;
-            lblCliente.Click += lblCliente_Click;
             // 
             // lblSubtitulo
             // 

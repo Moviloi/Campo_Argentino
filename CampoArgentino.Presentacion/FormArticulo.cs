@@ -18,6 +18,7 @@ namespace CampoArgentino.Presentacion
             this.ttMensaje.SetToolTip(this.txtNombre, "Ingrese el nombre del artículo");
             this.ttMensaje.SetToolTip(this.txtCodigo, "Ingrese el código del artículo");
             this.ttMensaje.SetToolTip(this.txtDescripcion, "Ingrese la descripción del artículo");
+
         }
 
 
@@ -195,23 +196,24 @@ namespace CampoArgentino.Presentacion
         {
             LimpiarColumnasAntiguas();
 
-            // Verificar si la columna ya existe
-            if (!dataListado.Columns.Contains("Seleccionar"))
-            {
-                // Crear columna de botón para selección
-                DataGridViewButtonColumn btnSeleccionarCol = new DataGridViewButtonColumn();
-                btnSeleccionarCol.Name = "Seleccionar";
-                btnSeleccionarCol.HeaderText = "Seleccionar";
-                btnSeleccionarCol.Text = "⬜"; // Cuadrado vacío (no seleccionado)
-                btnSeleccionarCol.UseColumnTextForButtonValue = true;
-                btnSeleccionarCol.Width = 80;
-                btnSeleccionarCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                btnSeleccionarCol.DefaultCellStyle.Font = new Font("Arial", 12); // Tamaño más grande para mejor visualización
-                btnSeleccionarCol.FlatStyle = FlatStyle.Flat;
+            
+                
+            // Crear columna de botón para selección
+            DataGridViewButtonColumn btnSeleccionarCol = new DataGridViewButtonColumn();
+            btnSeleccionarCol.Name = "Seleccionar";
+            btnSeleccionarCol.HeaderText = "Sel.";
+            btnSeleccionarCol.Text = "⬜"; // Cuadrado vacío (no seleccionado)
+            btnSeleccionarCol.UseColumnTextForButtonValue = true;
+            btnSeleccionarCol.Width = 80;
+            btnSeleccionarCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            btnSeleccionarCol.DefaultCellStyle.Font = new Font("Arial", 12);
+            btnSeleccionarCol.FlatStyle = FlatStyle.Flat;
 
-                // Inserta la columna al principio
-                dataListado.Columns.Insert(0, btnSeleccionarCol);
-            }
+               
+            // Inserta la columna al principio
+            
+            dataListado.Columns.Insert(0, btnSeleccionarCol);
+         
 
             // Asegura de que la columna esté visible
             dataListado.Columns["Seleccionar"].Visible = true;
@@ -401,7 +403,7 @@ namespace CampoArgentino.Presentacion
                 {
                     row.Cells["Seleccionar"].Value = "✅"; // Checkbox marcado
                     row.Cells["Seleccionar"].Tag = true;
-                    row.DefaultCellStyle.BackColor = Color.DarkGreen; // Verde oscuro
+                    row.DefaultCellStyle.BackColor = Color.DimGray; // Verde oscuro
                     row.DefaultCellStyle.ForeColor = Color.White; // Texto blanco para mejor contraste
                 }
                 else

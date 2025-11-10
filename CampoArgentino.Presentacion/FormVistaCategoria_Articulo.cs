@@ -88,8 +88,8 @@ namespace CampoArgentino.Presentacion
                 if (cbCategoria.SelectedValue != null && cbCategoria.SelectedIndex > 0)
                 {
                     int idCategoria = Convert.ToInt32(cbCategoria.SelectedValue);
-                    // Aquí necesitarías un método en NArticulo para filtrar por categoría
-                    // Por ahora usamos el método general y filtramos localmente
+                    // Aquí necesitaría un método en NArticulo para filtrar por categoría
+                    // Por ahora usa el método general y filtramos localmente
                     DataTable dt = NArticulo.Mostrar();
                     DataView dv = new DataView(dt);
                     dv.RowFilter = $"idcategoria = {idCategoria}";

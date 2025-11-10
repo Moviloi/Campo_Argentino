@@ -56,7 +56,7 @@ namespace CampoArgentino.Negocio
         // MÉTODOS PARA VENTA COMPLETA
 
         public static string InsertarVentaCompleta(string NumeroDocumento, int Idcliente, DateTime FechaVenta,
-                decimal Subtotal, decimal Impuestos, decimal Total, string Observaciones, int Idusuario, DataTable dtDetalle)
+            decimal Subtotal, decimal Impuestos, decimal Total, string Observaciones, int Idusuario, DataTable dtDetalle)
         {
             DVenta Obj = new DVenta()
             {
@@ -69,7 +69,8 @@ namespace CampoArgentino.Negocio
                 Observaciones = Observaciones,
                 Idusuario = Idusuario
             };
-            return Obj.InsertarVentaCompleta(Obj, dtDetalle);
+
+            return Obj.InsertarVentaCompleta(dtDetalle);
         }
 
         public static string ObtenerProximoNumeroDocumento()
@@ -97,9 +98,7 @@ namespace CampoArgentino.Negocio
             return new DVenta().TotalComprasCliente(idCliente);
         }
 
-
     }
 
-
-    }
+}
 

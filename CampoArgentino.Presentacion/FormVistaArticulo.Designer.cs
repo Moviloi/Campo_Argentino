@@ -74,7 +74,6 @@
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataListado.Size = new Size(760, 365);
             dataListado.TabIndex = 7;
-            dataListado.DoubleClick += dataListado_DoubleClick;
             // 
             // lblTotal
             // 
@@ -124,7 +123,6 @@
             label2.Size = new Size(55, 20);
             label2.TabIndex = 3;
             label2.Text = "Buscar:";
-            label2.Click += label2_Click;
             // 
             // FormVistaArticulo
             // 

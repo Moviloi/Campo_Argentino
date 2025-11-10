@@ -282,7 +282,7 @@ namespace CampoArgentino.Presentacion
                 {
                     row.Cells["Seleccionar"].Value = "✅"; // Checkbox marcado
                     row.Cells["Seleccionar"].Tag = true;
-                    row.DefaultCellStyle.BackColor = Color.DarkGreen;
+                    row.DefaultCellStyle.BackColor = Color.DimGray;
                     row.DefaultCellStyle.ForeColor = Color.White;
                 }
                 else

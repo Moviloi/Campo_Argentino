@@ -114,16 +114,16 @@ namespace CampoArgentino.Presentacion
         }
 
         // Evento doble click para seleccionar proveedor
-        private void dataListado_DoubleClick(object sender, EventArgs e)
-        {
-            if (dataListado.CurrentRow != null)
-            {
-                DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            //FormVistaProveedor_Ingreso frm = new FormVistaProveedor_Ingreso();
-            //frm.ShowDialog();
-        }
+        //private void dataListado_DoubleClick(object sender, EventArgs e)
+        //{
+        //    if (dataListado.CurrentRow != null)
+        //    {
+        //        DialogResult = DialogResult.OK;
+        //        this.Close();
+        //    }
+        //    FormVistaProveedor_Ingreso frm = new FormVistaProveedor_Ingreso();
+        //    frm.ShowDialog();
+        //}
 
         // Evento buscar al hacer click
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -138,31 +138,31 @@ namespace CampoArgentino.Presentacion
         }
 
         // Evento imprimir reporte
-        private void btnImprimir_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                DialogResult result = MessageBox.Show("¿Desea imprimir el reporte de proveedores?",
-                    "Sistema Campo Argentino",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+        //private void btnImprimir_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        DialogResult result = MessageBox.Show("¿Desea imprimir el reporte de proveedores?",
+        //            "Sistema Campo Argentino",
+        //            MessageBoxButtons.YesNo,
+        //            MessageBoxIcon.Question);
 
-                if (result == DialogResult.Yes)
-                {
-                    MessageBox.Show("Reporte de proveedores generado exitosamente.\n\n" +
-                                  "Total de proveedores: " + dataListado.Rows.Count,
-                        "Sistema Campo Argentino",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al generar reporte: " + ex.Message,
-                    "Sistema Campo Argentino",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
+        //        if (result == DialogResult.Yes)
+        //        {
+        //            MessageBox.Show("Reporte de proveedores generado exitosamente.\n\n" +
+        //                          "Total de proveedores: " + dataListado.Rows.Count,
+        //                "Sistema Campo Argentino",
+        //                MessageBoxButtons.OK,
+        //                MessageBoxIcon.Information);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error al generar reporte: " + ex.Message,
+        //            "Sistema Campo Argentino",
+        //            MessageBoxButtons.OK,
+        //            MessageBoxIcon.Error);
+        //    }
+        //}
     }
 }

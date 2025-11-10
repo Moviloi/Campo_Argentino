@@ -158,18 +158,12 @@ namespace CampoArgentino.Presentacion
             AbrirFormularioEnPanel(new FormInventario());
         }
 
-        // Método para el botón Inventario en el ToolStrip
-        private void btnInventario_Click(object sender, EventArgs e)
-        {
-            AbrirFormularioEnPanel(new FormInventario());
-        }
-
         // Método auxiliar para abrir formularios en el panel contenedor
         private void AbrirFormularioEnPanel(Form formHijo)
         {
             try
             {
-                // ✅ MEJOR - Cierra el form actual antes de abrir uno nuevo
+                
                 if (panelContenedor.Controls.Count > 0)
                 {
                     Form formActual = panelContenedor.Controls[0] as Form;
@@ -191,7 +185,7 @@ namespace CampoArgentino.Presentacion
             }
             catch (Exception ex)
             {
-                // ✅ MEJOR - Manejo de errores robusto
+                
                 MessageBox.Show($"Error al abrir el formulario: {ex.Message}", "Error",
                               MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -254,29 +248,6 @@ namespace CampoArgentino.Presentacion
                 "Acerca de", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void toolStripButton1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+     
     }
 }

@@ -226,7 +226,7 @@ namespace CampoArgentino.Presentacion
             // 
             // btnImprimir
             // 
-            btnImprimir.BackColor = Color.FromArgb(52, 152, 219);
+            btnImprimir.BackColor = Color.FromArgb(41, 128, 185);
             btnImprimir.FlatAppearance.BorderSize = 0;
             btnImprimir.FlatStyle = FlatStyle.Flat;
             btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);

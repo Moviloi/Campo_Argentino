@@ -167,7 +167,7 @@ namespace CampoArgentino.Datos
                 ParIdventa.Value = Venta.Idventa;
                 SqlCmd.Parameters.Add(ParIdventa);
 
-                rpta = SqlCmd.ExecuteNonQuery() == 1 ? "OK" : "No se Anuló el Registro";
+                rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "No se Anuló el Registro";
             }
             catch (Exception ex)
             {
@@ -264,7 +264,7 @@ namespace CampoArgentino.Datos
             return DtResultado;
         }
 
-        public string InsertarVentaCompleta(DVenta Venta, DataTable Detalle)
+        public string InsertarVentaCompleta(DataTable Detalle)
         {
             string rpta = "";
             SqlConnection SqlCon = new SqlConnection();
@@ -279,24 +279,24 @@ namespace CampoArgentino.Datos
                 SqlCmd.CommandText = "spCampoArgentino_InsertarVentaCompleta";
                 SqlCmd.CommandType = CommandType.StoredProcedure;
 
-                // Parámetros de la venta
+                // Parámetros de la venta 
                 SqlParameter ParNumeroDocumento = new SqlParameter();
                 ParNumeroDocumento.ParameterName = "@NumeroDocumento";
                 ParNumeroDocumento.SqlDbType = SqlDbType.VarChar;
                 ParNumeroDocumento.Size = 50;
-                ParNumeroDocumento.Value = Venta.NumeroDocumento;
+                ParNumeroDocumento.Value = this.NumeroDocumento;
                 SqlCmd.Parameters.Add(ParNumeroDocumento);
 
                 SqlParameter ParIdcliente = new SqlParameter();
                 ParIdcliente.ParameterName = "@idcliente";
                 ParIdcliente.SqlDbType = SqlDbType.Int;
-                ParIdcliente.Value = Venta.Idcliente;
+                ParIdcliente.Value = this.Idcliente;
                 SqlCmd.Parameters.Add(ParIdcliente);
 
                 SqlParameter ParFechaVenta = new SqlParameter();
                 ParFechaVenta.ParameterName = "@FechaVenta";
                 ParFechaVenta.SqlDbType = SqlDbType.DateTime;
-                ParFechaVenta.Value = Venta.FechaVenta;
+                ParFechaVenta.Value = this.FechaVenta;
                 SqlCmd.Parameters.Add(ParFechaVenta);
 
                 SqlParameter ParSubtotal = new SqlParameter();
@@ -304,7 +304,7 @@ namespace CampoArgentino.Datos
                 ParSubtotal.SqlDbType = SqlDbType.Decimal;
                 ParSubtotal.Precision = 18;
                 ParSubtotal.Scale = 2;
-                ParSubtotal.Value = Venta.Subtotal;
+                ParSubtotal.Value = this.Subtotal;
                 SqlCmd.Parameters.Add(ParSubtotal);
 
                 SqlParameter ParImpuestos = new SqlParameter();
@@ -312,7 +312,7 @@ namespace CampoArgentino.Datos
                 ParImpuestos.SqlDbType = SqlDbType.Decimal;
                 ParImpuestos.Precision = 18;
                 ParImpuestos.Scale = 2;
-                ParImpuestos.Value = Venta.Impuestos;
+                ParImpuestos.Value = this.Impuestos;
                 SqlCmd.Parameters.Add(ParImpuestos);
 
                 SqlParameter ParTotal = new SqlParameter();
@@ -320,24 +320,22 @@ namespace CampoArgentino.Datos
                 ParTotal.SqlDbType = SqlDbType.Decimal;
                 ParTotal.Precision = 18;
                 ParTotal.Scale = 2;
-                ParTotal.Value = Venta.Total;
+                ParTotal.Value = this.Total;
                 SqlCmd.Parameters.Add(ParTotal);
 
                 SqlParameter ParObservaciones = new SqlParameter();
                 ParObservaciones.ParameterName = "@Observaciones";
                 ParObservaciones.SqlDbType = SqlDbType.VarChar;
                 ParObservaciones.Size = 500;
-                ParObservaciones.Value = Venta.Observaciones;
+                ParObservaciones.Value = this.Observaciones ?? (object)DBNull.Value;
                 SqlCmd.Parameters.Add(ParObservaciones);
 
                 SqlParameter ParIdusuario = new SqlParameter();
                 ParIdusuario.ParameterName = "@idusuario";
                 ParIdusuario.SqlDbType = SqlDbType.Int;
-                ParIdusuario.Value = Venta.Idusuario;
+                ParIdusuario.Value = this.Idusuario;
                 SqlCmd.Parameters.Add(ParIdusuario);
 
-
-                
                 SqlParameter ParDetalle = new SqlParameter();
                 ParDetalle.ParameterName = "@Detalle";
                 ParDetalle.SqlDbType = SqlDbType.Structured;
@@ -345,23 +343,35 @@ namespace CampoArgentino.Datos
                 ParDetalle.Value = Detalle;
                 SqlCmd.Parameters.Add(ParDetalle);
 
-                rpta = SqlCmd.ExecuteNonQuery() >= 1 ? "OK" : "No se Ingreso la Venta";
+                // Usar ExecuteScalar para obtener respuesta consistente
+                object result = SqlCmd.ExecuteScalar();
+                rpta = result != null ? result.ToString() : "No se recibió respuesta del servidor";
+
+                // Lógica consistente: Solo retornar 'OK' si realmente fue exitoso
+                if (rpta == "OK")
+                {
+                    return "OK";
+                }
+                else
+                {
+                    return "Error en base de datos: " + rpta;
+                }
             }
             catch (Exception ex)
             {
-                rpta = ex.Message;
+                rpta = "Error al insertar venta: " + ex.Message;
+                return rpta;
             }
             finally
             {
                 if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             }
-            return rpta;
         }
 
 
         public string ObtenerProximoNumeroDocumento()
         {
-            string proximoNumero = "000001";
+            string proximoNumero = "VTA-0001";
             SqlConnection SqlCon = new SqlConnection();
 
             try
@@ -369,16 +379,25 @@ namespace CampoArgentino.Datos
                 SqlCon.ConnectionString = DConexion.Cn;
                 SqlCommand SqlCmd = new SqlCommand();
                 SqlCmd.Connection = SqlCon;
-                SqlCmd.CommandText = "SELECT ISNULL(MAX(CAST(NumeroDocumento AS INT)), 0) + 1 FROM Venta";
+
+                // Consulta para obtener el último número con formato VTA-XXXX
+                SqlCmd.CommandText = @"
+            SELECT ISNULL(MAX(CAST(SUBSTRING(NumeroDocumento, 5, LEN(NumeroDocumento)) AS INT)), 0) + 1 
+            FROM Venta 
+            WHERE NumeroDocumento LIKE 'VTA-%' 
+            AND ISNUMERIC(SUBSTRING(NumeroDocumento, 5, LEN(NumeroDocumento))) = 1";
+
                 SqlCmd.CommandType = CommandType.Text;
 
                 SqlCon.Open();
                 int ultimoNumero = Convert.ToInt32(SqlCmd.ExecuteScalar());
-                proximoNumero = ultimoNumero.ToString("D6"); // Formato 000001, 000002, etc.
+                proximoNumero = $"VTA-{ultimoNumero:D4}"; // Formato VTA-0001, VTA-0002, etc.
             }
             catch (Exception ex)
             {
-                proximoNumero = "000001";
+                // En caso de error, empezar desde VTA-0001
+                proximoNumero = "VTA-0001";
+                System.Diagnostics.Debug.WriteLine("Error en ObtenerProximoNumeroDocumento: " + ex.Message);
             }
             finally
             {

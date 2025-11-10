@@ -75,9 +75,9 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(20, 15);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(234, 38);
+            lblTitulo.Size = new Size(262, 38);
             lblTitulo.TabIndex = 0;
-            lblTitulo.Text = "Clientes - Ventas";
+            lblTitulo.Text = "Clientes - Compras";
             lblTitulo.Click += lblTitulo_Click;
             // 
             // tabControl1

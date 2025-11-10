@@ -61,7 +61,8 @@
             // 
             dataListado.AllowUserToAddRows = false;
             dataListado.AllowUserToDeleteRows = false;
-            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataListado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataListado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             dataListado.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataListado.BackgroundColor = Color.White;
             dataListado.BorderStyle = BorderStyle.Fixed3D;
@@ -75,7 +76,6 @@
             dataListado.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataListado.Size = new Size(953, 474);
             dataListado.TabIndex = 7;
-            dataListado.DoubleClick += dataListado_DoubleClick;
             // 
             // lblTotal
             // 
@@ -87,22 +87,22 @@
             lblTotal.Size = new Size(45, 20);
             lblTotal.TabIndex = 6;
             lblTotal.Text = "Total:";
-            // 
-            // btnImprimir
-            // 
-            btnImprimir.BackColor = Color.FromArgb(46, 204, 113);
-            btnImprimir.FlatAppearance.BorderSize = 0;
-            btnImprimir.FlatStyle = FlatStyle.Flat;
-            btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnImprimir.ForeColor = Color.White;
-            btnImprimir.Location = new Point(667, 104);
-            btnImprimir.Margin = new Padding(3, 4, 3, 4);
-            btnImprimir.Name = "btnImprimir";
-            btnImprimir.Size = new Size(108, 44);
-            btnImprimir.TabIndex = 5;
-            btnImprimir.Text = "&Imprimir";
-            btnImprimir.UseVisualStyleBackColor = false;
-            btnImprimir.Click += btnImprimir_Click;
+            //// 
+            //// btnImprimir
+            //// 
+            //btnImprimir.BackColor = Color.FromArgb(46, 204, 113);
+            //btnImprimir.FlatAppearance.BorderSize = 0;
+            //btnImprimir.FlatStyle = FlatStyle.Flat;
+            //btnImprimir.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            //btnImprimir.ForeColor = Color.White;
+            //btnImprimir.Location = new Point(667, 104);
+            //btnImprimir.Margin = new Padding(3, 4, 3, 4);
+            //btnImprimir.Name = "btnImprimir";
+            //btnImprimir.Size = new Size(108, 44);
+            //btnImprimir.TabIndex = 5;
+            //btnImprimir.Text = "&Imprimir";
+            //btnImprimir.UseVisualStyleBackColor = false;
+            //btnImprimir.Click += btnImprimir_Click;
             // 
             // btnBuscar
             // 

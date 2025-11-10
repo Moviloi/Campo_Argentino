@@ -261,7 +261,6 @@ namespace CampoArgentino.Datos
             return DtResultado;
         }
 
-        // En DCliente.cs - agregar este método
         public DataTable MostrarClientesConVentas()
         {
             DataTable DtResultado = new DataTable("ClientesConVentas");

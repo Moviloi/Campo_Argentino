@@ -114,14 +114,14 @@ namespace CampoArgentino.Presentacion
         }
 
         // Evento doble click para seleccionar proveedor
-        private void dataListado_DoubleClick(object sender, EventArgs e)
-        {
-            if (dataListado.CurrentRow != null)
-            {
-                DialogResult = DialogResult.OK;
-                this.Close();
-            }
-        }
+        //private void dataListado_DoubleClick(object sender, EventArgs e)
+        //{
+        //    if (dataListado.CurrentRow != null)
+        //    {
+        //        DialogResult = DialogResult.OK;
+        //        this.Close();
+        //    }
+        //}
 
         // Evento buscar al hacer click
         private void btnBuscar_Click(object sender, EventArgs e)
